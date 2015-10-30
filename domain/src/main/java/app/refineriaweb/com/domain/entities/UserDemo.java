@@ -1,26 +1,13 @@
 package app.refineriaweb.com.domain.entities;
 
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 public class UserDemo {
     private final int id;
-    private final String login, bio;
-
-    public UserDemo(int id, String login, String bio) {
-        this.id = id;
-        this.login = login;
-        this.bio = bio;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return login;
-    }
-
-    public String getBio() {
-        return bio != null ? bio : "";
-    }
-
-
+    private final String login = "", bio = "";
 }

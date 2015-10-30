@@ -38,6 +38,7 @@ ext {
     supportDesignVersion = '23.1.0'
 
     retrofitVersion = "2.0.0-beta1"
+    lombokVersion = "1.16.6"
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -54,7 +55,8 @@ ext {
             daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
-            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}"
+            javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            lombok:             "org.projectlombok:lombok:${lombokVersion}"
     ]
 
     domainTestDependencies = [

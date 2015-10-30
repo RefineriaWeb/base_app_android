@@ -4,3 +4,7 @@ It is divided in three modules:
 * **domain**: java library project. Every test is a unit test and all its dependencies are pure java libraries: dagger 2, rxjava, junit and mockito.
 * **data**: android library project. It’s the repository that supplies the data which will be consumed by the domain module. Dependencies: domain module, retrofit 2, dagger 2, rxjava, junit, mockito, roboelectric.
 * **presentation**: android app project. It links the two previous modules and implement all the views interfaces defined in domain module. Dependencies: domain and data module, dagger 2, rxAndroid, androidannotations and espresso.
+
+Notes:
+* **Lombok** lib (https://projectlombok.org/setup/android.html). You will need install the Plugin for IntelliJ IDEA to support Lombok annotations (https://github.com/mplushnikov/lombok-intellij-plugin)
+    

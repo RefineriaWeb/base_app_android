@@ -52,7 +52,7 @@ public class UserDemoFragment extends BaseFragment implements GetUserView {
     @Override public void showUser(UserDemo userDemo) {
         tv_id.setText(id + userDemo.getId());
         tv_bio.setText(bio + userDemo.getBio());
-        et_name.setText(userDemo.getName());
+        et_name.setText(userDemo.getLogin());
     }
 
     @ViewById protected EditText et_name;
