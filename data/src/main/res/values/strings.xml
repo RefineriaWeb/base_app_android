@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Data</string>
+    <string name="generic_error">Error happens...</string>
+</resources>
