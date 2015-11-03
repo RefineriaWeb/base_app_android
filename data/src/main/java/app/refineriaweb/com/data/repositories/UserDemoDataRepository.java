@@ -16,7 +16,6 @@ import app.refineriaweb.com.domain.entities.UserDemo;
 import app.refineriaweb.com.domain.repositories.demo.UserDemoRepository;
 import retrofit.Response;
 import rx.Observable;
-import rx.Subscriber;
 
 public class UserDemoDataRepository implements UserDemoRepository {
     private final RestApi restApi;
@@ -34,6 +33,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
             handleError(response);
 
             final UserDemo userDemo = response.body();
+            userDemo.setAvatar_url(userDemo.getAvatar_url().split("\\?")[0]);
             persistence.save(UserDemo.class.getName(), userDemo);
             return userDemo;
         });
@@ -46,11 +46,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
     }
 
     private <T> Observable<T> notCachedUserError() {
-        return Observable.create(new Observable.OnSubscribe<T>() {
-            @Override public void call(Subscriber<? super T> subscriber) {
-                subscriber.onError(new RuntimeException("Not cached user"));
-            }
-        });
+        return Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not cached user")));
     }
 
     private void handleError(Response response) {

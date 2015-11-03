@@ -85,6 +85,7 @@ dependencies {
     compile presentationDependencies.supportAppCompat
     compile presentationDependencies.supportRecyclerview
     compile presentationDependencies.supportDesign
+    compile presentationDependencies.glide
 
 
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies

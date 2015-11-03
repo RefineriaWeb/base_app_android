@@ -10,4 +10,5 @@ import lombok.Data;
 public class UserDemo {
     private final int id;
     private final String login = "", bio = "";
+    private String avatar_url = "";
 }

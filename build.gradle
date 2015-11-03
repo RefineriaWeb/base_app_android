@@ -48,6 +48,7 @@ ext {
     lombokVersion = "1.16.6"
     retrolambdaVersion = "3.2.3"
     androidAptVersion = "1.4"
+    glideVersion = "3.6.1"
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -101,7 +102,8 @@ ext {
             androidannotationsCompiler: "org.androidannotations:androidannotations:${androidannotationsVersion}",
             supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}",
             supportRecyclerview:"com.android.support:recyclerview-v7:${supportRecyclerviewVersion}",
-            supportDesign:      "com.android.support:design:${supportDesignVersion}"
+            supportDesign:      "com.android.support:design:${supportDesignVersion}",
+            glide:              "com.github.bumptech.glide:glide:${glideVersion}"
     ]
 
     presentationTestDependencies = [
