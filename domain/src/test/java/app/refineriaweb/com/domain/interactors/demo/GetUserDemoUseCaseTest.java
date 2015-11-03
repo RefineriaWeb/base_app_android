@@ -7,7 +7,6 @@ import app.refineriaweb.com.domain.entities.UserDemo;
 import app.refineriaweb.com.domain.interactors.BaseUseCaseTest;
 import app.refineriaweb.com.domain.repositories.demo.UserDemoRepository;
 import rx.Observable;
-import rx.Subscriber;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.core.Is.is;
@@ -25,12 +24,7 @@ public class GetUserDemoUseCaseTest extends BaseUseCaseTest {
         getUserDemoUseCase = new GetUserDemoUseCase(userDemoRepository, subscribeOn, observeOn);
 
         when(userDemoRepository.askForUser(A_VALID_USERNAME)).thenReturn(Observable.just(mock(UserDemo.class)));
-        when(userDemoRepository.askForUser(AN_VALID_USERNAME)).thenReturn(Observable.create(
-                        new Observable.OnSubscribe<UserDemo>() {
-                            @Override public void call(Subscriber<? super UserDemo> subscriber) {
-                                subscriber.onError(new RuntimeException("Not Great"));
-                            }
-                        })
+        when(userDemoRepository.askForUser(AN_VALID_USERNAME)).thenReturn(Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not Great")))
         );
     }
 

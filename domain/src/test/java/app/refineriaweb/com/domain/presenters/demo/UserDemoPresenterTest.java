@@ -10,7 +10,6 @@ import app.refineriaweb.com.domain.presenters.BasePresenterTest;
 import app.refineriaweb.com.domain.repositories.demo.UserDemoRepository;
 import app.refineriaweb.com.domain.views.demo.GetUserView;
 import rx.Observable;
-import rx.Subscriber;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -55,11 +54,7 @@ public class UserDemoPresenterTest extends BasePresenterTest {
         }
 
         @Override protected Observable<UserDemo> buildUseCaseObservable() {
-            return Observable.create(new Observable.OnSubscribe<UserDemo>() {
-                @Override public void call(Subscriber<? super UserDemo> subscriber) {
-                    subscriber.onError(new RuntimeException(any(String.class)));
-                }
-            });
+            return Observable.create(subscriber -> subscriber.onError(new RuntimeException(any(String.class))));
         }
     }
 }
