@@ -17,7 +17,6 @@ import app.refineriaweb.com.domain.repositories.demo.UserDemoRepository;
 import retrofit.Response;
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
 
 public class UserDemoDataRepository implements UserDemoRepository {
     private final RestApi restApi;
@@ -31,14 +30,12 @@ public class UserDemoDataRepository implements UserDemoRepository {
     }
 
     @Override public Observable<UserDemo> askForUser(final String  username) {
-        return restApi.askForUser(username).map(new Func1<Response<UserDemo>, UserDemo>() {
-            @Override public UserDemo call(Response<UserDemo> response) {
-                handleError(response);
+        return restApi.askForUser(username).map(response -> {
+            handleError(response);
 
-                final UserDemo userDemo = response.body();
-                persistence.save(UserDemo.class.getName(), userDemo);
-                return userDemo;
-            }
+            final UserDemo userDemo = response.body();
+            persistence.save(UserDemo.class.getName(), userDemo);
+            return userDemo;
         });
     }
 

@@ -12,7 +12,6 @@ import app.refineriaweb.com.domain.schedulers.ObserveOn;
 import app.refineriaweb.com.domain.schedulers.SubscribeOn;
 import dagger.Module;
 import dagger.Provides;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -32,18 +31,10 @@ import rx.schedulers.Schedulers;
     }
 
     @Singleton @Provides SubscribeOn provideSubscribeOn() {
-        return (new SubscribeOn() {
-            @Override public Scheduler getScheduler() {
-                return Schedulers.newThread();
-            }
-        });
+        return (() -> Schedulers.newThread());
     }
 
     @Singleton @Provides ObserveOn provideObserveOn() {
-        return (new ObserveOn() {
-            @Override public Scheduler getScheduler() {
-                return AndroidSchedulers.mainThread();
-            }
-        });
+        return (() -> AndroidSchedulers.mainThread());
     }
 }
