@@ -1,10 +1,13 @@
 package com.refineriaweb.app.presentation;
 
+import android.app.Activity;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 
 import com.refineriaweb.app.presentation.activities.demo.HostUserDemoActivity_;
+import com.refineriaweb.app.presentation.utilities.AndroidApplication;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,4 +39,9 @@ public abstract class BaseTest {
     @Rule public ActivityTestRule<HostUserDemoActivity_> mActivityRule = new ActivityTestRule<>(HostUserDemoActivity_.class);
 
     @Before public void init() {}
+
+    protected Activity getCurrentActivity() {
+        AndroidApplication app = (AndroidApplication) InstrumentationRegistry.getTargetContext().getApplicationContext();
+        return app.getCurrentActivity();
+    }
 }

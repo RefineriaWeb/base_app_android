@@ -1,8 +1,6 @@
 package com.refineriaweb.app.presentation.activities;
 
 
-import android.support.v7.app.AppCompatActivity;
-
 import com.refineriaweb.app.presentation.internal.di.ApplicationComponent;
 import com.refineriaweb.app.presentation.navigation.Navigator;
 import com.refineriaweb.app.presentation.utilities.AndroidApplication;
@@ -14,7 +12,7 @@ import org.androidannotations.annotations.EActivity;
 import javax.inject.Inject;
 
 @EActivity
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends BaseAppCompatActivity {
     @Inject Navigator navigator;
 
     @AfterInject protected void init() {

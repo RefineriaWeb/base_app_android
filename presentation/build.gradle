@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'spoon'
 
 
 buildscript {
@@ -12,6 +13,14 @@ buildscript {
     dependencies {
         classpath rootProject.ext.buildScriptDependencies.androidApt
         classpath rootProject.ext.buildScriptDependencies.retrolambda
+        classpath rootProject.ext.buildScriptDependencies.spoon
+    }
+}
+
+spoon {
+    debug = true
+    if (project.hasProperty('spoonClassName')) {
+        className = project.spoonClassName
     }
 }
 
@@ -90,6 +99,7 @@ dependencies {
 
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
+    androidTestCompile presentationTestDependencies.spoonScreenshots
     androidTestCompile presentationTestDependencies.supportTestRunner
     androidTestCompile presentationTestDependencies.supportTestRules
     androidTestCompile (presentationTestDependencies.espresso) {

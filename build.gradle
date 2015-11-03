@@ -49,6 +49,8 @@ ext {
     retrolambdaVersion = "3.2.3"
     androidAptVersion = "1.4"
     glideVersion = "3.6.1"
+    spoonVersion = "1.0.2"
+    spoonScreenshotsVersion = "1.1.9"
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -109,11 +111,13 @@ ext {
     presentationTestDependencies = [
             supportTestRunner:  "com.android.support.test:runner:${supportTestRunnerVersion}",
             supportTestRules:   "com.android.support.test:rules:${supportTestRulesVersion}",
-            espresso:           "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
+            espresso:           "com.android.support.test.espresso:espresso-contrib:${espressoVersion}",
+            spoonScreenshots:   "com.squareup.spoon:spoon-client:${spoonScreenshotsVersion}"
     ]
 
     buildScriptDependencies = [
-            androidApt:         "com.neenbedankt.gradle.plugins:android-apt:${rootProject.ext.androidAptVersion}",
-            retrolambda:        "me.tatarka:gradle-retrolambda:${rootProject.ext.retrolambdaVersion}"
+            androidApt:         "com.neenbedankt.gradle.plugins:android-apt:${androidAptVersion}",
+            retrolambda:        "me.tatarka:gradle-retrolambda:${retrolambdaVersion}",
+            spoon:              "com.stanfy.spoon:spoon-gradle-plugin:${spoonVersion}"
     ]
 }
