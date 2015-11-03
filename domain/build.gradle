@@ -1,7 +1,20 @@
 apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath rootProject.ext.buildScriptDependencies.androidApt
+        classpath rootProject.ext.buildScriptDependencies.retrolambda
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 configurations {
     provided

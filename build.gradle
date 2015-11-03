@@ -2,6 +2,7 @@
 
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -14,6 +15,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         jcenter()
     }
 }
@@ -23,8 +25,13 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdkVersion = 22
+    compileSdkVersion = 23
     buildToolsVersion = "23.0.1"
+    applicationId = "com.refineriaweb.app"
+    minSdkVersion = 16
+    targetSdkVersion = 23
+    versionCode = 100
+    versionName = "1.00"
 
     //Libraries
     daggerVersion = '2.0.1'
@@ -39,6 +46,8 @@ ext {
 
     retrofitVersion = "2.0.0-beta1"
     lombokVersion = "1.16.6"
+    retrolambdaVersion = "3.2.3"
+    androidAptVersion = "1.4"
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -72,7 +81,7 @@ ext {
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            supportAppCompat: "com.android.support:appcompat-v7:${supportAppCompatVersion}"
+            supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}"
     ]
 
     dataTestDependencies = [
@@ -90,14 +99,19 @@ ext {
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             androidannotations: "org.androidannotations:androidannotations-api:${androidannotationsVersion}",
             androidannotationsCompiler: "org.androidannotations:androidannotations:${androidannotationsVersion}",
-            supportAppCompat: "com.android.support:appcompat-v7:${supportAppCompatVersion}",
-            supportRecyclerview: "com.android.support:recyclerview-v7:${supportRecyclerviewVersion}",
-            supportDesign: "com.android.support:design:${supportDesignVersion}"
+            supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}",
+            supportRecyclerview:"com.android.support:recyclerview-v7:${supportRecyclerviewVersion}",
+            supportDesign:      "com.android.support:design:${supportDesignVersion}"
     ]
 
     presentationTestDependencies = [
             supportTestRunner:  "com.android.support.test:runner:${supportTestRunnerVersion}",
             supportTestRules:   "com.android.support.test:rules:${supportTestRulesVersion}",
-            espresso:    "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
+            espresso:           "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
+    ]
+
+    buildScriptDependencies = [
+            androidApt:         "com.neenbedankt.gradle.plugins:android-apt:${rootProject.ext.androidAptVersion}",
+            retrolambda:        "me.tatarka:gradle-retrolambda:${rootProject.ext.retrolambdaVersion}"
     ]
 }
