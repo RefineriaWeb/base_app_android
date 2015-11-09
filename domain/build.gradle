@@ -23,6 +23,7 @@ configurations {
 sourceSets {
     main {
         compileClasspath += configurations.provided
+        runtimeClasspath += configurations.provided
     }
 }
 
