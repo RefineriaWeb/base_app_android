@@ -1,4 +1,4 @@
-package app.refineriaweb.com.data.repositories;
+package app.refineriaweb.com.data.sesions.user_demo;
 
 import android.content.Context;
 
@@ -16,8 +16,6 @@ import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoRepository;
 import retrofit.Response;
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
 
 public class UserDemoDataRepository implements UserDemoRepository {
     private final RestApi restApi;
@@ -31,14 +29,12 @@ public class UserDemoDataRepository implements UserDemoRepository {
     }
 
     @Override public Observable<UserDemoEntity> askForUser(final String  username) {
-        return restApi.askForUser(username).map(new Func1<Response<UserDemoEntity>, UserDemoEntity>() {
-            @Override public UserDemoEntity call(Response<UserDemoEntity> response) {
-                handleError(response);
+        return restApi.askForUser(username).map(response -> {
+            handleError(response);
 
-                final UserDemoEntity userDemoEntity = response.body();
-                persistence.save(UserDemoEntity.class.getName(), userDemoEntity);
-                return userDemoEntity;
-            }
+            final UserDemoEntity user = response.body();
+            persistence.save(UserDemoEntity.class.getName(), user);
+            return user;
         });
     }
 
@@ -49,11 +45,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
     }
 
     private <T> Observable<T> notCachedUserError() {
-        return Observable.create(new Observable.OnSubscribe<T>() {
-            @Override public void call(Subscriber<? super T> subscriber) {
-                subscriber.onError(new RuntimeException("Not cached user"));
-            }
-        });
+        return Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not cached user")));
     }
 
     private void handleError(Response response) {

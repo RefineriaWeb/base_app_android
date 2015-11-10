@@ -1,4 +1,4 @@
-package app.refineriaweb.com.data.respositories;
+package app.refineriaweb.com.data.user_demo;
 
 import android.content.Context;
 
@@ -8,17 +8,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import app.refineriaweb.com.data.net.RestApi;
-import app.refineriaweb.com.data.repositories.UserDemoDataRepository;
+import app.refineriaweb.com.data.sesions.user_demo.UserDemoDataRepository;
 import app.refineriaweb.com.data.storage.Persistence;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 import retrofit.Response;
 import rx.Observable;
-import rx.Subscriber;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -35,7 +35,7 @@ public class UserDemoDataRepositoryTest {
     }
 
     @Test public void when_Get_User_With_Valid_User_Name_Then_Get_Demo_User_And_Saved_It() {
-        Response<UserDemoEntity> response = Response.success(null);
+        Response<UserDemoEntity> response = Response.success(mock(UserDemoEntity.class));
         when(restApi.askForUser(any(String.class))).thenReturn(Observable.just(response));
 
         TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
@@ -47,12 +47,8 @@ public class UserDemoDataRepositoryTest {
     }
 
     @Test public void when_Login_With_Invalid_Inputs_Then_Credentials_Is_Not_Saved() {
-        when(restApi.askForUser(any(String.class))).thenReturn(Observable.create(
-                        new Observable.OnSubscribe<Response<UserDemoEntity>>() {
-                            @Override  public void call(Subscriber<? super Response<UserDemoEntity>> subscriber) {
-                                subscriber.onError(new RuntimeException("Not Great"));
-                            }
-                        })
+        when(restApi.askForUser(any(String.class)))
+                .thenReturn(Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not Great")))
         );
 
         TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'spoon'
 
 
 buildscript {
@@ -12,6 +13,14 @@ buildscript {
     dependencies {
         classpath rootProject.ext.buildScriptDependencies.androidApt
         classpath rootProject.ext.buildScriptDependencies.retrolambda
+        classpath rootProject.ext.buildScriptDependencies.spoon
+    }
+}
+
+spoon {
+    debug = true
+    if (project.hasProperty('classNameTestTuRun')) {
+        className = project.classNameTestTuRun
     }
 }
 
@@ -50,6 +59,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // lint crash with retrolambda, prevent abort on error
+    lintOptions {
+        abortOnError false
+    }
 }
 
 apt {
@@ -68,8 +82,6 @@ dependencies {
     compile project(':data')
     compile project(':domain')
 
-    //compile project(':domain')
-
     def presentationDependencies = rootProject.ext.presentationDependencies
 
     apt presentationDependencies.daggerCompiler
@@ -85,10 +97,12 @@ dependencies {
     compile presentationDependencies.supportAppCompat
     compile presentationDependencies.supportRecyclerview
     compile presentationDependencies.supportDesign
+    compile presentationDependencies.glide
 
 
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
+    androidTestCompile presentationTestDependencies.spoonScreenshots
     androidTestCompile presentationTestDependencies.supportTestRunner
     androidTestCompile presentationTestDependencies.supportTestRules
     androidTestCompile (presentationTestDependencies.espresso) {

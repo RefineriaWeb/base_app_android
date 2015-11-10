@@ -3,7 +3,6 @@ package com.refineriaweb.app.presentation.foundation;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import com.refineriaweb.app.presentation.foundation.BaseActivity;
 import com.refineriaweb.app.presentation.internal.di.ApplicationComponent;
 import com.refineriaweb.app.presentation.navigation.Navigator;
 
@@ -24,7 +23,7 @@ public abstract class BaseFragment extends Fragment {
     @AfterViews protected void initViews() {}
 
     protected ApplicationComponent getApplicationComponent() {
-        return ((BaseActivity)getActivity()).getApplicationComponent();
+        return ((BaseCompatActivity)getActivity()).getApplicationComponent();
     }
 
     protected void showToast(String message) {

@@ -8,6 +8,7 @@ import com.refineriaweb.app.presentation.internal.di.DaggerApplicationComponent;
 
 public class BaseApp extends Application {
     private ApplicationComponent applicationComponent;
+    private BaseCompatActivity currentActivity = null;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -22,5 +23,12 @@ public class BaseApp extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
+    }
+
+    public BaseCompatActivity getCurrentActivity(){
+        return currentActivity;
+    }
+    public void setCurrentActivity(BaseCompatActivity currentActivity){
+        this.currentActivity = currentActivity;
     }
 }

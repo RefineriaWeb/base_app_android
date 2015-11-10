@@ -2,8 +2,10 @@ package com.refineriaweb.app.presentation.sections.demo;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.refineriaweb.app.R;
 import com.refineriaweb.app.presentation.foundation.BaseFragment;
 
@@ -48,11 +50,13 @@ public class UserDemoFragment extends BaseFragment implements UserView {
     }
 
     @ViewById protected TextView tv_id, tv_bio;
+    @ViewById protected ImageView iv_avatar;
     @StringRes protected String id, bio;
-    @Override public void showUser(UserDemoEntity userDemoEntity) {
-        tv_id.setText(id + userDemoEntity.getId());
-        tv_bio.setText(bio + userDemoEntity.getBio());
-        et_name.setText(userDemoEntity.getLogin());
+    @Override public void showUser(UserDemoEntity userDemo) {
+        Glide.with(this).load(userDemo.getAvatar_url()).into(iv_avatar);
+        tv_id.setText(id + userDemo.getId());
+        tv_bio.setText(bio + userDemo.getBio());
+        et_name.setText(userDemo.getLogin());
     }
 
     @ViewById protected EditText et_name;

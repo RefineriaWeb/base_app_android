@@ -1,4 +1,4 @@
-package app.refineriaweb.com.data.net.demo;
+package app.refineriaweb.com.data.net;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import app.refineriaweb.com.data.internal.di.DaggerDataComponent;
-import app.refineriaweb.com.data.net.Endpoints;
-import app.refineriaweb.com.data.net.RestApi;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 import retrofit.Response;
 import rx.observers.TestSubscriber;
