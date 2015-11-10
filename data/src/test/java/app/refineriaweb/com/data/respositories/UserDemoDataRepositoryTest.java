@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import app.refineriaweb.com.data.net.RestApi;
 import app.refineriaweb.com.data.repositories.UserDemoDataRepository;
 import app.refineriaweb.com.data.storage.Persistence;
-import app.refineriaweb.com.domain.entities.UserDemo;
+import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 import retrofit.Response;
 import rx.Observable;
 import rx.Subscriber;
@@ -35,10 +35,10 @@ public class UserDemoDataRepositoryTest {
     }
 
     @Test public void when_Get_User_With_Valid_User_Name_Then_Get_Demo_User_And_Saved_It() {
-        Response<UserDemo> response = Response.success(null);
+        Response<UserDemoEntity> response = Response.success(null);
         when(restApi.askForUser(any(String.class))).thenReturn(Observable.just(response));
 
-        TestSubscriber<UserDemo> subscriber = new TestSubscriber<>();
+        TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
         userDemoDataRepository.askForUser(any(String.class)).subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 
@@ -48,14 +48,14 @@ public class UserDemoDataRepositoryTest {
 
     @Test public void when_Login_With_Invalid_Inputs_Then_Credentials_Is_Not_Saved() {
         when(restApi.askForUser(any(String.class))).thenReturn(Observable.create(
-                        new Observable.OnSubscribe<Response<UserDemo>>() {
-                            @Override  public void call(Subscriber<? super Response<UserDemo>> subscriber) {
+                        new Observable.OnSubscribe<Response<UserDemoEntity>>() {
+                            @Override  public void call(Subscriber<? super Response<UserDemoEntity>> subscriber) {
                                 subscriber.onError(new RuntimeException("Not Great"));
                             }
                         })
         );
 
-        TestSubscriber<UserDemo> subscriber = new TestSubscriber<>();
+        TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
         userDemoDataRepository.askForUser(any(String.class)).subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 

@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 import app.refineriaweb.com.data.net.ConfigEndpoints;
 import app.refineriaweb.com.data.net.Endpoints;
 import app.refineriaweb.com.data.repositories.UserDemoDataRepository;
-import app.refineriaweb.com.domain.repositories.demo.UserDemoRepository;
+import app.refineriaweb.com.domain.sections.user_demo.UserDemoRepository;
 import dagger.Module;
 import dagger.Provides;
 import retrofit.GsonConverterFactory;

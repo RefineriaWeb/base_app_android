@@ -3,13 +3,13 @@ package com.refineriaweb.app.presentation.internal.di;
 import android.content.Context;
 
 import com.refineriaweb.app.presentation.navigation.Navigator;
-import com.refineriaweb.app.presentation.utilities.AndroidApplication;
+import com.refineriaweb.app.presentation.foundation.BaseApp;
 
 import javax.inject.Singleton;
 
 import app.refineriaweb.com.data.internal.di.DataModule;
-import app.refineriaweb.com.domain.schedulers.ObserveOn;
-import app.refineriaweb.com.domain.schedulers.SubscribeOn;
+import app.refineriaweb.com.domain.foundation.schedulers.ObserveOn;
+import app.refineriaweb.com.domain.foundation.schedulers.SubscribeOn;
 import dagger.Module;
 import dagger.Provides;
 import rx.Scheduler;
@@ -17,9 +17,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 @Module(includes = DataModule.class) public class ApplicationModule {
-    private final AndroidApplication application;
+    private final BaseApp application;
 
-    public ApplicationModule(AndroidApplication application) {
+    public ApplicationModule(BaseApp application) {
         this.application = application;
     }
 

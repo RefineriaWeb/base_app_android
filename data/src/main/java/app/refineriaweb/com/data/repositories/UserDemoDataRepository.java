@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import app.refineriaweb.com.data.R;
 import app.refineriaweb.com.data.net.RestApi;
 import app.refineriaweb.com.data.storage.Persistence;
-import app.refineriaweb.com.domain.entities.UserDemo;
-import app.refineriaweb.com.domain.repositories.demo.UserDemoRepository;
+import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
+import app.refineriaweb.com.domain.sections.user_demo.UserDemoRepository;
 import retrofit.Response;
 import rx.Observable;
 import rx.Subscriber;
@@ -30,22 +30,22 @@ public class UserDemoDataRepository implements UserDemoRepository {
         this.persistence = persistence;
     }
 
-    @Override public Observable<UserDemo> askForUser(final String  username) {
-        return restApi.askForUser(username).map(new Func1<Response<UserDemo>, UserDemo>() {
-            @Override public UserDemo call(Response<UserDemo> response) {
+    @Override public Observable<UserDemoEntity> askForUser(final String  username) {
+        return restApi.askForUser(username).map(new Func1<Response<UserDemoEntity>, UserDemoEntity>() {
+            @Override public UserDemoEntity call(Response<UserDemoEntity> response) {
                 handleError(response);
 
-                final UserDemo userDemo = response.body();
-                persistence.save(UserDemo.class.getName(), userDemo);
-                return userDemo;
+                final UserDemoEntity userDemoEntity = response.body();
+                persistence.save(UserDemoEntity.class.getName(), userDemoEntity);
+                return userDemoEntity;
             }
         });
     }
 
-    @Override public Observable<UserDemo> askForCachedUser() {
-        UserDemo userDemo = persistence.retrieve(UserDemo.class.getName(), UserDemo.class);
-        if (userDemo == null) return notCachedUserError();
-        return Observable.just(userDemo);
+    @Override public Observable<UserDemoEntity> askForCachedUser() {
+        UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
+        if (userDemoEntity == null) return notCachedUserError();
+        return Observable.just(userDemoEntity);
     }
 
     private <T> Observable<T> notCachedUserError() {

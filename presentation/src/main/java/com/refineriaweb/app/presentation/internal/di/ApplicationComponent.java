@@ -1,9 +1,9 @@
 package com.refineriaweb.app.presentation.internal.di;
 
-import com.refineriaweb.app.presentation.activities.BaseActivity;
-import com.refineriaweb.app.presentation.activities.demo.HostUserDemoActivity;
-import com.refineriaweb.app.presentation.fragments.BaseFragment;
-import com.refineriaweb.app.presentation.fragments.demo.UserDemoFragment;
+import com.refineriaweb.app.presentation.foundation.BaseActivity;
+import com.refineriaweb.app.presentation.sections.demo.HostUserDemoActivity;
+import com.refineriaweb.app.presentation.foundation.BaseFragment;
+import com.refineriaweb.app.presentation.sections.demo.UserDemoFragment;
 
 import javax.inject.Singleton;
 
