@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">BaseApp</string>
+    <string name="user">User</string>
+    <string name="users">Users</string>
+    <string name="go_to_list_user">Go to list users</string>
     <string name="find_user">Find user</string>
     <string name="user_name">Username on Github</string>
-    <string name="id">Id: </string>
-    <string name="bio">Bio: </string>
 </resources>

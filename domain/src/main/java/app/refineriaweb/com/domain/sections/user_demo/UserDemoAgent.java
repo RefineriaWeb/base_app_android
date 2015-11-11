@@ -1,5 +1,7 @@
 package app.refineriaweb.com.domain.sections.user_demo;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import app.refineriaweb.com.domain.foundation.Agent;
@@ -14,11 +16,18 @@ public class UserDemoAgent extends Agent<UserDemoRepository> {
     }
 
     public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
-        execute(repository.askForUser(name), subscriber);
+        execute(repository.searchByUserName(name), subscriber);
     }
 
-    public void getCachedUser(Subscriber<UserDemoEntity> subscriber) {
-        execute(repository.askForCachedUser(), subscriber);
+    public void getSelectedDemoUserList(Subscriber<UserDemoEntity> subscriber) {
+        execute(repository.getSelectedUserDemoList(), subscriber);
     }
 
+    public void getUsers(Subscriber<List<UserDemoEntity>> subscriber) {
+        execute(repository.askForUsers(), subscriber);
+    }
+
+    public void saveSelectedUserDemoList(UserDemoEntity user, Subscriber subscriber) {
+        execute(repository.saveSelectedUserDemoList(user), subscriber);
+    }
 }

@@ -54,6 +54,18 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/sections/common',
+                            'src/main/res/sections/user_demo',
+                            'src/main/res/sections',
+                            'src/main/res'
+                    ]
+        }
+    }
+
     // retrolambda
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

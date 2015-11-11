@@ -36,7 +36,7 @@ public class UserDemoDataRepositoryTest {
 
     @Test public void when_Get_User_With_Valid_User_Name_Then_Get_Demo_User_And_Saved_It() {
         Response<UserDemoEntity> response = Response.success(mock(UserDemoEntity.class));
-        when(restApi.askForUser(any(String.class))).thenReturn(Observable.just(response));
+        when(restApi.getUser(any(String.class))).thenReturn(Observable.just(response));
 
         TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
         userDemoDataRepository.askForUser(any(String.class)).subscribe(subscriber);
@@ -46,10 +46,10 @@ public class UserDemoDataRepositoryTest {
         verify(persistence).save(any(String.class), any(Object.class));
     }
 
-    @Test public void when_Login_With_Invalid_Inputs_Then_Credentials_Is_Not_Saved() {
-        when(restApi.askForUser(any(String.class)))
+    @Test public void when_Login_With_Invalid_Inputs_Then_Demo_User_Is_Not_Saved() {
+        when(restApi.getUser(any(String.class)))
                 .thenReturn(Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not Great")))
-        );
+                );
 
         TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
         userDemoDataRepository.askForUser(any(String.class)).subscribe(subscriber);

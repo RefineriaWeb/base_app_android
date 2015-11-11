@@ -9,11 +9,11 @@ import lombok.Data;
 @Data
 public class UserDemoEntity {
     private final int id;
-    private final String login = "", bio = "";
+    private final String login;
     private String avatar_url = "";
 
-    public String getAvatar_url() {
-        if (avatar_url == null || avatar_url.isEmpty()) return "";
+    public String getAvatarUrl() {
+        if (avatar_url.isEmpty()) return avatar_url;
         return avatar_url.split("\\?")[0];
     }
 }

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,8 +29,8 @@ public class UserDemoDataRepository implements UserDemoRepository {
         this.persistence = persistence;
     }
 
-    @Override public Observable<UserDemoEntity> askForUser(final String  username) {
-        return restApi.askForUser(username).map(response -> {
+    @Override public Observable<UserDemoEntity> searchByUserName(final String  username) {
+        return restApi.getUser(username).map(response -> {
             handleError(response);
 
             final UserDemoEntity user = response.body();
@@ -38,14 +39,27 @@ public class UserDemoDataRepository implements UserDemoRepository {
         });
     }
 
-    @Override public Observable<UserDemoEntity> askForCachedUser() {
-        UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
-        if (userDemoEntity == null) return notCachedUserError();
-        return Observable.just(userDemoEntity);
+    @Override public Observable<List<UserDemoEntity>> askForUsers() {
+        return restApi.getUsers().map(response -> {
+            handleError(response);
+            return response.body();
+        });
     }
 
-    private <T> Observable<T> notCachedUserError() {
-        return Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not cached user")));
+    @Override public Observable saveSelectedUserDemoList(UserDemoEntity user) {
+        return Observable.create(subscriber -> {
+            boolean success = persistence.save(UserDemoEntity.class.getName(), user);
+            if (success) subscriber.onCompleted();
+            else subscriber.onError(new RuntimeException("Can't saved user"));
+        });
+    }
+
+    @Override public Observable<UserDemoEntity> getSelectedUserDemoList() {
+        return Observable.create(subscriber -> {
+            UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
+            if (userDemoEntity != null) subscriber.onNext(userDemoEntity);
+            else subscriber.onError(new RuntimeException("Can't get user"));
+        });
     }
 
     private void handleError(Response response) {

@@ -7,19 +7,19 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
-public abstract class Agent<T extends Repository> implements Disposable {
-    protected final T repository;
+public abstract class Agent<R extends Repository> implements Disposable {
+    protected final R repository;
     private final SubscribeOn subscribeOn;
     private final ObserveOn observeOn;
     private Subscription subscription = Subscriptions.empty();
 
-    public Agent(T repository, SubscribeOn subscribeOn, ObserveOn observeOn) {
+    public Agent(R repository, SubscribeOn subscribeOn, ObserveOn observeOn) {
         this.repository = repository;
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;
     }
 
-    public void execute(Observable observable, Subscriber subscriber) {
+    public <T> void execute(Observable<T> observable, Subscriber<T> subscriber) {
         subscription.unsubscribe();
 
         subscription = observable

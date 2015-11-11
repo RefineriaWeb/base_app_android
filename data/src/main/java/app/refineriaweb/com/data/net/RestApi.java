@@ -1,19 +1,19 @@
 package app.refineriaweb.com.data.net;
 
-import javax.inject.Inject;
+import java.util.List;
 
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 import retrofit.Response;
+import retrofit.http.GET;
+import retrofit.http.Headers;
+import retrofit.http.Path;
 import rx.Observable;
 
-public class RestApi {
-    private final Endpoints endpoints;
+public interface RestApi {
+    String URL_BASE = "https://api.github.com";
+    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
-    @Inject public RestApi(Endpoints endpoints) {
-        this.endpoints = endpoints;
-    }
-
-    public Observable<Response<UserDemoEntity>> askForUser(final String username) {
-        return endpoints.getUser(username);
-    }
+    @Headers({HEADER_API_VERSION})
+    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
+    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
 }

@@ -5,10 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        GetUserTestRefineriaWeb.class,
-        GetUserTestJakeWharton.class
+        UsersTest.class
 })
-
 public class SuiteIntegration {
     
 }

@@ -8,15 +8,15 @@ import com.refineriaweb.app.presentation.internal.di.DaggerApplicationComponent;
 
 public class BaseApp extends Application {
     private ApplicationComponent applicationComponent;
-    private BaseCompatActivity currentActivity = null;
+    private BaseCompatActivity currentActivity;
 
     @Override public void onCreate() {
         super.onCreate();
-        this.initializeInjector();
+        initInject();
     }
 
-    private void initializeInjector() {
-        this.applicationComponent = DaggerApplicationComponent.builder()
+    private void initInject() {
+        applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
