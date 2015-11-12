@@ -1,16 +1,14 @@
-package app.refineriaweb.com.data.user_demo;
-
-import android.content.Context;
+package data.user_demo;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import app.refineriaweb.com.data.net.RestApi;
-import app.refineriaweb.com.data.sesions.user_demo.UserDemoDataRepository;
-import app.refineriaweb.com.data.storage.Persistence;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
+import data.net.RestApi;
+import data.sesions.user_demo.UserDemoDataRepository;
+import data.storage.Persistence;
 import retrofit.Response;
 import rx.Observable;
 import rx.observers.TestSubscriber;
@@ -24,12 +22,11 @@ import static org.mockito.Mockito.when;
 public class UserDemoDataRepositoryTest {
     @Mock private RestApi restApi;
     @Mock private Persistence persistence;
-    @Mock private Context context;
     private UserDemoDataRepository userDemoDataRepository;
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
-        userDemoDataRepository = new UserDemoDataRepository(context, restApi, persistence);
+        userDemoDataRepository = new UserDemoDataRepository(restApi, persistence);
     }
 
     @Test public void When_Search_With_Valid_User_Name_Then_Get_Demo_User() {

@@ -56,7 +56,6 @@ ext {
     jUnitVersion = "4.12"
     mockitoVersion = "1.10.19"
     hamcrestVersion = "1.1"
-    robolectricVersion = "3.0"
 
     //Integration testing
     supportTestRunnerVersion = "0.3"
@@ -78,20 +77,18 @@ ext {
     ]
 
     dataDependencies = [
-            retrofitreactive:   "com.squareup.retrofit:adapter-rxjava:${retrofitVersion}",
-            retrofitGson:       "com.squareup.retrofit:converter-gson:${retrofitVersion}",
             daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}"
+            retrofitreactive:   "com.squareup.retrofit:adapter-rxjava:${retrofitVersion}",
+            retrofitGson:       "com.squareup.retrofit:converter-gson:${retrofitVersion}"
     ]
 
     dataTestDependencies = [
             junit:              "junit:junit:${jUnitVersion}",
             mockito:            "org.mockito:mockito-core:${mockitoVersion}",
             hamcrest:           "org.hamcrest:hamcrest-library:${hamcrestVersion}",
-            robolectric:        "org.robolectric:robolectric:${robolectricVersion}"
     ]
 
     presentationDependencies = [

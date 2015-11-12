@@ -1,4 +1,4 @@
-package app.refineriaweb.com.data.net;
+package data.net;
 
 import java.util.List;
 

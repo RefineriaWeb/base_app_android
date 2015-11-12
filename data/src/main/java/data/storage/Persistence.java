@@ -1,7 +1,4 @@
-package app.refineriaweb.com.data.storage;
-
-import android.content.Context;
-import android.support.annotation.Nullable;
+package data.storage;
 
 import com.google.gson.Gson;
 
@@ -13,16 +10,16 @@ import java.io.FileWriter;
 import javax.inject.Inject;
 
 public class Persistence {
-    private final Context context;
+    private final RepositoryAdapter adapter;
 
-    @Inject public Persistence(Context context) {
-        this.context = context;
+    @Inject public Persistence(RepositoryAdapter adapter) {
+        this.adapter = adapter;
     }
 
     public boolean save(String key, Object data) {
         String wrapperJSONSerialized = new Gson().toJson(data);
         try {
-            File file = new File(context.getFilesDir(), key);
+            File file = new File(adapter.cacheDirectory(), key);
 
             FileWriter fileWriter = new FileWriter(file, false);
             fileWriter.write(wrapperJSONSerialized);
@@ -36,13 +33,13 @@ public class Persistence {
     }
 
     public boolean delete(String key) {
-        File file = new File(context.getFilesDir(), key);
+        File file = new File(adapter.cacheDirectory(), key);
         return file.delete();
     }
 
-    @Nullable public <T> T retrieve(String key, Class<T> clazz) {
+    public <T> T retrieve(String key, Class<T> clazz) {
         try {
-            File file = new File(context.getFilesDir(), key);
+            File file = new File(adapter.cacheDirectory(), key);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
             return new Gson().fromJson(bufferedReader, clazz);
         } catch (Exception e) {

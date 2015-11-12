@@ -1,4 +1,4 @@
-package app.refineriaweb.com.data.net;
+package data.net;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -7,9 +7,11 @@ import org.junit.runners.MethodSorters;
 
 import java.util.List;
 
-import app.refineriaweb.com.data.internal.di.DaggerDataComponent;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
+import retrofit.GsonConverterFactory;
 import retrofit.Response;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +26,11 @@ public class RestApiTest {
     private RestApi restApi;
 
     @Before public void setUp() {
-        restApi = DaggerDataComponent.create().restApi();
+        restApi = new Retrofit.Builder()
+                .baseUrl(RestApi.URL_BASE)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(RestApi.class);
     }
 
     @Test public void _1_When_Get_User_With_Valid_User_Name_Then_Get_UserDemo() {

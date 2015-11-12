@@ -1,6 +1,5 @@
-package app.refineriaweb.com.data.sesions.user_demo;
+package data.sesions.user_demo;
 
-import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -10,21 +9,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import app.refineriaweb.com.data.R;
-import app.refineriaweb.com.data.net.RestApi;
-import app.refineriaweb.com.data.storage.Persistence;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoRepository;
+import data.net.RestApi;
+import data.storage.Persistence;
 import retrofit.Response;
 import rx.Observable;
 
 public class UserDemoDataRepository implements UserDemoRepository {
     private final RestApi restApi;
     private final Persistence persistence;
-    private final Context context;
 
-    @Inject public UserDemoDataRepository(Context context, RestApi restApi, Persistence persistence) {
-        this.context = context;
+    @Inject public UserDemoDataRepository(RestApi restApi, Persistence persistence) {
         this.restApi = restApi;
         this.persistence = persistence;
     }
@@ -67,7 +63,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
             ResponseError responseError = new Gson().fromJson(response.errorBody().string(), ResponseError.class);
             throw new RuntimeException(responseError.getMessage());
         } catch (JsonParseException|IOException exception) {
-            String message = context.getString(R.string.generic_error);
+            String message = "Generic error";
             throw new RuntimeException(message);
         }
     }
