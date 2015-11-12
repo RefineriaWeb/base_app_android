@@ -32,9 +32,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
     @Override public Observable<UserDemoEntity> searchByUserName(final String  username) {
         return restApi.getUser(username).map(response -> {
             handleError(response);
-
             final UserDemoEntity user = response.body();
-            persistence.save(UserDemoEntity.class.getName(), user);
             return user;
         });
     }

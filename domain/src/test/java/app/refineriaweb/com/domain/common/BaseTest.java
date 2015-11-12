@@ -12,12 +12,12 @@ import static org.mockito.Mockito.when;
 
 public abstract class BaseTest {
     protected final static int WAIT = 50;
-    @Mock protected ObserveOn observeOn;
-    @Mock protected SubscribeOn subscribeOn;
+    @Mock protected ObserveOn observeOnMock;
+    @Mock protected SubscribeOn subscribeOnMock;
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
-        when(observeOn.getScheduler()).thenReturn(Schedulers.newThread());
-        when(subscribeOn.getScheduler()).thenReturn(Schedulers.newThread());
+        when(observeOnMock.getScheduler()).thenReturn(Schedulers.newThread());
+        when(subscribeOnMock.getScheduler()).thenReturn(Schedulers.newThread());
     }
 }

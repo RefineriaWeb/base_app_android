@@ -27,6 +27,10 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
 
     public void goToDetail(UserDemoEntity user) {
         saveUserDemoSelectedListUseCase.saveUser(user, new DefaultPresenterSubscriber() {
+            @Override public void onError(Throwable e) {
+                view.showError(e.getMessage());
+            }
+
             @Override public void onCompleted() {
                 wireframe.userScreen();
             }

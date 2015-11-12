@@ -19,7 +19,7 @@ public abstract class Agent<R extends Repository> implements Disposable {
         this.observeOn = observeOn;
     }
 
-    public <T> void execute(Observable<T> observable, Subscriber<T> subscriber) {
+    protected <T> void execute(Observable<T> observable, Subscriber<T> subscriber) {
         subscription.unsubscribe();
 
         subscription = observable

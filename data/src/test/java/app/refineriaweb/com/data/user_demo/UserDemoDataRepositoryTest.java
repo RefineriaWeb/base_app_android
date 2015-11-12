@@ -19,8 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 public class UserDemoDataRepositoryTest {
@@ -34,28 +32,14 @@ public class UserDemoDataRepositoryTest {
         userDemoDataRepository = new UserDemoDataRepository(context, restApi, persistence);
     }
 
-    @Test public void when_Get_User_With_Valid_User_Name_Then_Get_Demo_User_And_Saved_It() {
+    @Test public void When_Search_With_Valid_User_Name_Then_Get_Demo_User() {
         Response<UserDemoEntity> response = Response.success(mock(UserDemoEntity.class));
         when(restApi.getUser(any(String.class))).thenReturn(Observable.just(response));
 
         TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
-        userDemoDataRepository.askForUser(any(String.class)).subscribe(subscriber);
+        userDemoDataRepository.searchByUserName(any(String.class)).subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 
         assertThat(subscriber.getOnNextEvents().size(), is(1));
-        verify(persistence).save(any(String.class), any(Object.class));
-    }
-
-    @Test public void when_Login_With_Invalid_Inputs_Then_Demo_User_Is_Not_Saved() {
-        when(restApi.getUser(any(String.class)))
-                .thenReturn(Observable.create(subscriber -> subscriber.onError(new RuntimeException("Not Great")))
-                );
-
-        TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
-        userDemoDataRepository.askForUser(any(String.class)).subscribe(subscriber);
-        subscriber.awaitTerminalEvent();
-
-        assertThat(subscriber.getOnErrorEvents().size(), is(1));
-        verifyZeroInteractions(persistence);
     }
 }
