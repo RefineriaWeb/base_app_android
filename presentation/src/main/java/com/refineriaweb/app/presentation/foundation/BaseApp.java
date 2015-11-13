@@ -1,5 +1,6 @@
 package com.refineriaweb.app.presentation.foundation;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.refineriaweb.app.presentation.internal.di.ApplicationComponent;
@@ -8,11 +9,11 @@ import com.refineriaweb.app.presentation.internal.di.DaggerApplicationComponent;
 
 public class BaseApp extends Application {
     private ApplicationComponent applicationComponent;
-    private BaseCompatActivity currentActivity;
 
     @Override public void onCreate() {
         super.onCreate();
         initInject();
+        AppCare.YesSir.takeCareOn(this);
     }
 
     private void initInject() {
@@ -25,10 +26,7 @@ public class BaseApp extends Application {
         return applicationComponent;
     }
 
-    public BaseCompatActivity getCurrentActivity(){
-        return currentActivity;
-    }
-    public void setCurrentActivity(BaseCompatActivity currentActivity){
-        this.currentActivity = currentActivity;
+    public Activity getLiveActivity(){
+        return AppCare.YesSir.getLiveActivityOrNull();
     }
 }

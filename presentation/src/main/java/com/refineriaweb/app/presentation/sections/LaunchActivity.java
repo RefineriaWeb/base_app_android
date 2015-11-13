@@ -6,8 +6,9 @@ import org.androidannotations.annotations.EActivity;
 
 @EActivity
 public class LaunchActivity extends BaseCompatActivity {
-    @Override protected void init() {
-        super.init();
+
+    @Override protected void onStart() {
+        super.onStart();
         wireframe.usersScreen();
     }
 }

@@ -41,6 +41,6 @@ public abstract class BaseTest {
 
     protected Activity getCurrentActivity() {
         BaseApp app = (BaseApp) InstrumentationRegistry.getTargetContext().getApplicationContext();
-        return app.getCurrentActivity();
+        return app.getLiveActivity();
     }
 }

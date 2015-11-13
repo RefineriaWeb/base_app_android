@@ -15,7 +15,7 @@ import org.androidannotations.annotations.ViewById;
 
 import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
 
-@EViewGroup(R.layout.user_item_list) public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity>{
+@EViewGroup(R.layout.user_view_group) public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity>{
     @ViewById protected ImageView iv_avatar;
     @ViewById protected TextView tv_name;
 

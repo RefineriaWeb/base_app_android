@@ -13,7 +13,7 @@ import retrofit.RxJavaCallAdapterFactory;
 
 
 @Module public class DataModule {
-    @Provides RestApi provideRestApi() {
+    @Singleton @Provides RestApi provideRestApi() {
         return new Retrofit.Builder()
                 .baseUrl(RestApi.URL_BASE)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

@@ -45,10 +45,10 @@ ext {
     supportDesignVersion = '23.1.0'
 
     retrofitVersion = "2.0.0-beta1"
-    lombokVersion = "1.16.6"
     retrolambdaVersion = "3.2.3"
     androidAptVersion = "1.4"
     glideVersion = "3.6.1"
+    phoenixVersion = '1.0.2'
     spoonVersion = "1.0.2"
     spoonScreenshotsVersion = "1.1.9"
 
@@ -67,7 +67,6 @@ ext {
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            lombok:             "org.projectlombok:lombok:${lombokVersion}"
     ]
 
     domainTestDependencies = [
@@ -88,7 +87,7 @@ ext {
     dataTestDependencies = [
             junit:              "junit:junit:${jUnitVersion}",
             mockito:            "org.mockito:mockito-core:${mockitoVersion}",
-            hamcrest:           "org.hamcrest:hamcrest-library:${hamcrestVersion}",
+            hamcrest:           "org.hamcrest:hamcrest-library:${hamcrestVersion}"
     ]
 
     presentationDependencies = [
@@ -102,7 +101,8 @@ ext {
             supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}",
             supportRecyclerview:"com.android.support:recyclerview-v7:${supportRecyclerviewVersion}",
             supportDesign:      "com.android.support:design:${supportDesignVersion}",
-            glide:              "com.github.bumptech.glide:glide:${glideVersion}"
+            glide:              "com.github.bumptech.glide:glide:${glideVersion}",
+            phoenix:            "com.jakewharton:process-phoenix:${phoenixVersion}"
     ]
 
     presentationTestDependencies = [
