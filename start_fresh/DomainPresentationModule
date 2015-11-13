@@ -27,8 +27,6 @@ import domain.foundation.schedulers.ObserveOn;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
 import presentation.foundation.BaseToolbarActivity;
-import presentation.sections.user_demo.user.HostUserActivity_;
-import presentation.sections.user_demo.users.HostUsersActivity_;
 import rx.android.schedulers.AndroidSchedulers;
 
 @Module(includes = {DomainModule.class, ApplicationModule.class})

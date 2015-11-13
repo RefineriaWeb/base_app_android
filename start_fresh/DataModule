@@ -18,11 +18,9 @@ package data.internal.di;
 
 import javax.inject.Singleton;
 
-import domain.sections.user_demo.UserDemoRepository;
 import dagger.Module;
 import dagger.Provides;
 import data.net.RestApi;
-import data.sections.user_demo.UserDemoDataRepository;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
