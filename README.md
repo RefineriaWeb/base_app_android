@@ -13,7 +13,7 @@ Also, it contains several packages named as "demo", which contain "demo" clases 
 + [Spoon](https://github.com/square/spoon) has a [Spoon Gradle Plugin](https://github.com/stanfy/spoon-gradle-plugin) that allows you running a specific test suite or a test class by passing a parameter, e.g:
 ```
         $ ./gradlew clean build spoon -P classNameTestTuRun=fully.qualified.TestCase
-        $ ./gradlew clean build spoon -P classNameTestTuRun=com.refineriaweb.app.presentation.sections.demo.SuiteIntegration
+        $ ./gradlew clean build spoon -P classNameTestTuRun=fff.SuiteIntegration
 ```
 + This project uses retrolamdba, so please make sure that JAVA8_HOME and JAVA7_HOME has been added to the path of the system
 ```

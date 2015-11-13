@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-package data.net;
+package presentation.sections.user_demo.users;
 
-import java.util.List;
+import org.androidannotations.annotations.EActivity;
 
-import domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+import base.app.android.R;
+import presentation.foundation.BaseToolbarActivity;
 
+@EActivity(R.layout.host_users_activity)
+public class HostUsersActivity extends BaseToolbarActivity {
 
-public interface RestApi {
-    String URL_BASE = "https://api.github.com";
-    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
-
-    @Headers({HEADER_API_VERSION})
-    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
-    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
 }

@@ -18,11 +18,11 @@ package data.internal.di;
 
 import javax.inject.Singleton;
 
-import domain.sections.user_demo.UserDemoRepository;
+import app.refineriaweb.com.domain.sections.user_demo.UserDemoRepository;
 import dagger.Module;
 import dagger.Provides;
 import data.net.RestApi;
-import data.sections.user_demo.UserDemoDataRepository;
+import data.sesions.user_demo.UserDemoDataRepository;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -35,11 +35,6 @@ import retrofit.RxJavaCallAdapterFactory;
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RestApi.class);
-    }
-
-
-    @Provides @Singleton public UserDemoRepository provideUserDemoDataRepository(UserDemoDataRepository userDemoDataRepository) {
-        return userDemoDataRepository;
     }
 }
 

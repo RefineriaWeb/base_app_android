@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/fragment_users"
-        android:name="com.refineriaweb.app.presentation.sections.user_demo.users.UsersFragment_"
+        android:name="presentation.sections.user_demo.users.UsersFragment_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout="@layout/users_fragment" />

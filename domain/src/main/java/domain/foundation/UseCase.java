@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package data.net;
+package domain.foundation;
 
-import java.util.List;
+public abstract class UseCase <T extends Agent> implements Disposable {
+    protected final T agent;
 
-import domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+    public UseCase(T agent) {
+        this.agent = agent;
+    }
 
-
-public interface RestApi {
-    String URL_BASE = "https://api.github.com";
-    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
-
-    @Headers({HEADER_API_VERSION})
-    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
-    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
+    @Override public void dispose() {
+        agent.dispose();
+    }
 }

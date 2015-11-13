@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-package data.net;
+package presentation.utilities.recyclerview_adapter;
 
-import java.util.List;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+public class ViewWrapper<T, V extends View & ViewWrapper.Binder<T>> extends RecyclerView.ViewHolder {
+    private final V view;
 
+    public ViewWrapper(V itemView) {
+        super(itemView);
+        view = itemView;
+    }
 
-public interface RestApi {
-    String URL_BASE = "https://api.github.com";
-    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
+    public V getView() {
+        return view;
+    }
 
-    @Headers({HEADER_API_VERSION})
-    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
-    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
+    public interface Binder<T> {
+        void bind(T data);
+    }
 }

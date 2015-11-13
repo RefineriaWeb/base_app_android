@@ -21,9 +21,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.UserDemoEntity;
 import data.net.RestApi;
-import data.sesions.user_demo.UserDemoDataRepository;
+import data.sections.user_demo.UserDemoDataRepository;
 import data.storage.Persistence;
 import retrofit.Response;
 import rx.Observable;

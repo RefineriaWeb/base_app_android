@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package data.net;
+package domain.sections.user_demo.detail;
 
-import java.util.List;
+import javax.inject.Inject;
 
-import domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+import domain.foundation.UseCase;
+import rx.Subscriber;
 
+public class GetUserDemoUseCase extends UseCase<domain.sections.user_demo.UserDemoAgent> {
 
-public interface RestApi {
-    String URL_BASE = "https://api.github.com";
-    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
+    @Inject public GetUserDemoUseCase(domain.sections.user_demo.UserDemoAgent agent) {
+        super(agent);
+    }
 
-    @Headers({HEADER_API_VERSION})
-    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
-    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
+    public void getUser(String name, Subscriber<domain.sections.user_demo.UserDemoEntity> subscriber) {
+        agent.getUser(name, subscriber);
+    }
+
 }

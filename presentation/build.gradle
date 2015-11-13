@@ -66,13 +66,13 @@ android {
         }
     }
 
-    // retrolambda
+    //Retrolambda
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // lint crash with retrolambda, prevent abort on error
+    //Lint crash with retrolambda, prevent abort on error
     lintOptions {
         abortOnError false
     }

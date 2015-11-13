@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package data.net;
-
-import java.util.List;
-
-import domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+package domain.sections.user_demo;
 
 
-public interface RestApi {
-    String URL_BASE = "https://api.github.com";
-    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    @Headers({HEADER_API_VERSION})
-    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
-    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
+public class UserDemoEntity {
+    private final int id;
+    private final String login;
+    private String avatar_url = "";
+
+    public String getAvatarUrl() {
+        if (avatar_url.isEmpty()) return avatar_url;
+        return avatar_url.split("\\?")[0];
+    }
 }

@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package data.net;
+package presentation.internal.di;
 
-import java.util.List;
+import presentation.foundation.BaseCompatActivity;
+import presentation.sections.user_demo.user.UserFragment;
+import presentation.sections.user_demo.users.UsersFragment;
 
-import domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+import javax.inject.Singleton;
 
+import dagger.Component;
 
-public interface RestApi {
-    String URL_BASE = "https://api.github.com";
-    String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
+@Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
+public interface ApplicationComponent {
+    void inject(BaseCompatActivity baseCompatActivity);
 
-    @Headers({HEADER_API_VERSION})
-    @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
-    @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
+    void inject(UserFragment userFragment);
+    void inject(UsersFragment usersFragment);
 }

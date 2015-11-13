@@ -23,7 +23,7 @@ import org.junit.runners.MethodSorters;
 
 import java.util.List;
 
-import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.UserDemoEntity;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
