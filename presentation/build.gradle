@@ -110,7 +110,6 @@ dependencies {
     compile presentationDependencies.supportRecyclerview
     compile presentationDependencies.supportDesign
     compile presentationDependencies.glide
-    compile presentationDependencies.phoenix
 
 
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies

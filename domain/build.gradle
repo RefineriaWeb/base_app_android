@@ -44,6 +44,9 @@ dependencies {
 
     compile domainDependencies.rxJava
 
+    provided domainDependencies.lombok
+    apt domainDependencies.lombok
+
     def domainTestDependencies = rootProject.ext.domainTestDependencies
 
     testCompile domainTestDependencies.junit
