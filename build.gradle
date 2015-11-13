@@ -127,6 +127,7 @@ task('freshStart') << {
 
     Helper.removeDir(data+"sections/user_demo")
     Helper.removeDir(dataTest+"user_demo")
+    Helper.removeDir(dataTest+"net")
 
     Helper.moveFileDeleting(startFresh+"DataModule", data+"internal/di/", "DataModule.java")
     Helper.moveFileDeleting(startFresh+"RestApi", data+"net/", "RestApi.java")
