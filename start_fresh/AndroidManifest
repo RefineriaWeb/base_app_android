@@ -14,23 +14,12 @@
         <activity
             android:name="presentation.sections.LaunchActivity_"
             android:label="@string/app_name"
-            android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="presentation.sections.user_demo.user.HostUserActivity_"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="presentation.sections.user_demo.users.HostUsersActivity_"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
 
     </application>
 

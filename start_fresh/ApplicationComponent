@@ -17,8 +17,6 @@
 package presentation.internal.di;
 
 import presentation.foundation.BaseCompatActivity;
-import presentation.sections.user_demo.user.UserFragment;
-import presentation.sections.user_demo.users.UsersFragment;
 
 import javax.inject.Singleton;
 
