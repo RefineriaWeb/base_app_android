@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.integration;
+package presentation.common;
 
 import android.app.Activity;
 import android.support.test.InstrumentationRegistry;

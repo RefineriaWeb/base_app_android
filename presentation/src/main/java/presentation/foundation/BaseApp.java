@@ -23,6 +23,7 @@ import presentation.internal.di.ApplicationComponent;
 import presentation.internal.di.ApplicationModule;
 import presentation.internal.di.DaggerApplicationComponent;
 
+
 public class BaseApp extends Application {
     private ApplicationComponent applicationComponent;
 

@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package presentation.integration;
+package presentation.internal.di;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import presentation.foundation.BaseCompatActivity;
+import presentation.sections.user_demo.user.UserFragment;
+import presentation.sections.user_demo.users.UsersFragment;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-        UsersTest.class
-})
-public class SuiteIntegration {
-    
+import javax.inject.Singleton;
+
+import dagger.Component;
+
+@Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
+public interface ApplicationComponent {
+    void inject(BaseCompatActivity baseCompatActivity);
 }
+

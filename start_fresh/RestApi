@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-package app.refineriaweb.com.domain.sections;
+package data.net;
 
-public interface Wireframe {
-    void userScreen();
-    void usersScreen();
+import java.util.List;
+
+import domain.sections.user_demo.UserDemoEntity;
+import retrofit.Response;
+import retrofit.http.GET;
+import retrofit.http.Headers;
+import retrofit.http.Path;
+import rx.Observable;
+
+
+public interface RestApi {
+    String URL_BASE = "you.com";
 }

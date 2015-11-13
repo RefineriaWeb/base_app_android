@@ -14,17 +14,8 @@
  * limitations under the License.
  */
 
-package presentation.di;
+package domain.sections;
 
-import presentation.foundation.BaseCompatActivity;
-import presentation.sections.user_demo.user.UserFragment;
-import presentation.sections.user_demo.users.UsersFragment;
+public interface Wireframe {
 
-import javax.inject.Singleton;
-
-import dagger.Component;
-
-@Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
-public interface ApplicationComponent {
-    void inject(BaseCompatActivity baseCompatActivity);
 }

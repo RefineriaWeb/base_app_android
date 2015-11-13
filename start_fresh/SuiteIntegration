@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package data.net;
+package presentation.common;
 
-import java.util.List;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-import app.refineriaweb.com.domain.sections.user_demo.UserDemoEntity;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
+import presentation.sections.UsersTest;
 
+@RunWith(Suite.class)
+@Suite.SuiteClasses({})
+public class SuiteIntegration {
 
-public interface RestApi {
-    String URL_BASE = "you.com";
 }

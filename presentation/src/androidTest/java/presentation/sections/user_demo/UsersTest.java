@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.integration;
+package presentation.sections.user_demo;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
 
@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import base.app.android.R;
+import presentation.common.BaseTest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

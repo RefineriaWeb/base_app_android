@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package presentation.di;
+package presentation.internal.di;
 
 
-import com.refineriaweb.app.R;
+import javax.inject.Singleton;
+
+import base.app.android.R;
+import dagger.Module;
+import dagger.Provides;
+import domain.di.DomainModule;
+import domain.foundation.schedulers.ObserveOn;
+import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
 import presentation.foundation.BaseToolbarActivity;
 import presentation.sections.user_demo.user.HostUserActivity_;
 import presentation.sections.user_demo.users.HostUsersActivity_;
-
-import javax.inject.Singleton;
-
-import domain.foundation.schedulers.ObserveOn;
-import app.refineriaweb.com.domain.internal.di.DomainModule;
-import app.refineriaweb.com.domain.sections.Wireframe;
-import dagger.Module;
-import dagger.Provides;
 import rx.android.schedulers.AndroidSchedulers;
 
 @Module(includes = {DomainModule.class, ApplicationModule.class})
