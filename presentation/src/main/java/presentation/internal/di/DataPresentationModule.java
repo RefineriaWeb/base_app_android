@@ -16,18 +16,25 @@
 
 package presentation.internal.di;
 
-import presentation.foundation.BaseApp;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import data.internal.di.DataModule;
 import data.storage.RepositoryAdapter;
+import presentation.foundation.BaseApp;
 
+
+/**
+ * Dependencies required by the data layer need to be provided in this dagger module
+ */
 @Module(includes = {DataModule.class, ApplicationModule.class})
 public class DataPresentationModule {
 
+    /**
+     * Provides the file system for the data layer
+     * @see RepositoryAdapter
+     */
     @Singleton @Provides RepositoryAdapter provideRepositoryAdapter(BaseApp baseApp) {
         return () -> baseApp.getFilesDir();
     }

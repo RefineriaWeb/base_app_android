@@ -21,6 +21,9 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+/**
+ * Track the current activity using the LifecycleCallback application
+ */
 public enum AppCare {
     YesSir;
 
@@ -55,10 +58,12 @@ public enum AppCare {
         });
     }
 
+    /**
+     * In case you want to ensure exceptions are informed without user submission
+     */
     private void setDefaultUncaughtExceptionHandler() {
         Thread.UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> {
-            //Do you want to send the exception to a cloud repository?
             defaultHandler.uncaughtException(thread, ex);
         });
     }

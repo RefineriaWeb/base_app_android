@@ -23,7 +23,9 @@ import presentation.internal.di.ApplicationComponent;
 import presentation.internal.di.ApplicationModule;
 import presentation.internal.di.DaggerApplicationComponent;
 
-
+/**
+ * Custom Application
+ */
 public class BaseApp extends Application {
     private ApplicationComponent applicationComponent;
 
@@ -33,6 +35,9 @@ public class BaseApp extends Application {
         AppCare.YesSir.takeCareOn(this);
     }
 
+    /**
+     * Custom Application
+     */
     private void initInject() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))

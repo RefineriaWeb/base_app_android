@@ -25,6 +25,9 @@ import retrofit.http.Path;
 import rx.Observable;
 
 
+/**
+ * Definition for Retrofit of every endpoint required by the Api.
+ */
 public interface RestApi {
     String URL_BASE = "you.com";
 }

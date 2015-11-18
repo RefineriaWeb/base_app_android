@@ -25,7 +25,9 @@ import java.io.FileWriter;
 
 import javax.inject.Inject;
 
-
+/**
+ * Save objects in disk and delete them too. It uses Gson as json parser.
+ */
 public class Persistence {
     private final RepositoryAdapter adapter;
 
@@ -33,6 +35,10 @@ public class Persistence {
         this.adapter = adapter;
     }
 
+    /** Save in disk the object passed.
+     * @param key the key whereby the object could be retrieved/deleted later. @see delete and @see retrieve.
+     * @param data the object to be persisted.
+     * */
     public boolean save(String key, Object data) {
         String wrapperJSONSerialized = new Gson().toJson(data);
         try {
@@ -49,11 +55,18 @@ public class Persistence {
         }
     }
 
+    /** Delete the object previously saved.
+     * @param key the key whereby the object could be deleted.
+     * */
     public boolean delete(String key) {
         File file = new File(adapter.cacheDirectory(), key);
         return file.delete();
     }
 
+    /** Retrieve the object previously saved.
+     * @param key the key whereby the object could be retrieved.
+     * @param clazz the type of class against the object need to be serialized
+     * */
     public <T> T retrieve(String key, Class<T> clazz) {
         try {
             File file = new File(adapter.cacheDirectory(), key);

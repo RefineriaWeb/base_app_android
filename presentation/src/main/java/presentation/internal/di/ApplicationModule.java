@@ -16,13 +16,12 @@
 
 package presentation.internal.di;
 
-import presentation.foundation.BaseApp;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import data.internal.di.DataModule;
+import presentation.foundation.BaseApp;
 
 @Module(includes = DataModule.class) public class ApplicationModule {
     private final BaseApp baseApp;

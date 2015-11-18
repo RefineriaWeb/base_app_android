@@ -18,6 +18,10 @@ package domain.foundation;
 
 import rx.Subscriber;
 
+/**
+ * Provides a default subscriber for any
+ * @see domain.foundation.Presenter
+ */
 public abstract class DefaultPresenterSubscriber<T> extends Subscriber<T> {
     @Override public void onCompleted() {}
 

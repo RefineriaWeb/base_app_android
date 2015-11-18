@@ -16,6 +16,12 @@
 
 package domain.foundation;
 
+/**
+ * Base class for any UseCase.
+ * The use case asks for defined operations to the Agent, which is responsible for execute them.
+ * @param <T> The Agent used for this UseCase.
+ */
+
 public abstract class UseCase <T extends Agent> implements Disposable {
     protected final T agent;
 

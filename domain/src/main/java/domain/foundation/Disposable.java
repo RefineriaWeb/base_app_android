@@ -16,6 +16,10 @@
 
 package domain.foundation;
 
+/**
+ * It is implemented for any Agent, Presenter and UseCase in order to specify what resources need to be released
+ * when the screen is closed
+ */
 public interface Disposable {
     void dispose();
 }

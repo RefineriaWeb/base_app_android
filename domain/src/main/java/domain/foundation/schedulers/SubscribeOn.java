@@ -18,6 +18,11 @@ package domain.foundation.schedulers;
 
 import rx.Scheduler;
 
+/**
+ * Provides the Scheduler for any Observable to subscribeOn
+ * This interfaces is injected by dagger and implemented in the presentation layer.
+ * For example, in Android system you can use AndroidSchedulers.mainThread() using RxAndroid library
+ */
 public interface SubscribeOn {
     Scheduler getScheduler();
 }

@@ -18,6 +18,13 @@ package domain.foundation;
 
 import domain.sections.Wireframe;
 
+/**
+ * Base class for any Presenter.
+ * The presenter is responsible for linking the uses cases in order to create a logical unit
+ * which will be represented as a screen in the application.
+ * @param <V> The view interface attached to this presenter.
+ * @see  BaseView
+ */
 public abstract class Presenter<V extends BaseView> implements Disposable {
     protected V view;
     protected final Wireframe wireframe;

@@ -27,8 +27,16 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
+/**
+ * Dagger module for data layer. {@link #provideRestApi} define the interface used by retrofit in order
+ * to generate every endpoint required
+ *
+ * {@link #provideUserDemoDataRepository} is an example of repository. UserDemoDataRepository implements the interface defined
+ * in the domain layer, it required to be able to launch the application.
+ */
+@Module
+public class DataModule {
 
-@Module public class DataModule {
     @Singleton @Provides RestApi provideRestApi() {
         return new Retrofit.Builder()
                 .baseUrl(RestApi.URL_BASE)
@@ -41,5 +49,6 @@ import retrofit.RxJavaCallAdapterFactory;
     @Provides @Singleton public UserDemoRepository provideUserDemoDataRepository(UserDemoDataRepository userDemoDataRepository) {
         return userDemoDataRepository;
     }
+
 }
 

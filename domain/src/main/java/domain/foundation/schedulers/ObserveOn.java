@@ -18,6 +18,10 @@ package domain.foundation.schedulers;
 
 import rx.Scheduler;
 
+/**
+ * Provides the Scheduler for any Observable to observeOn
+ * This interfaces is injected by dagger and implemented by
+ */
 public interface ObserveOn {
     Scheduler getScheduler();
 }

@@ -16,5 +16,9 @@
 
 package domain.foundation;
 
+/**
+ * Base interface for any repository.
+ * These interfaces will be implemented in the data layer.
+ */
 public interface Repository {
 }

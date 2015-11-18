@@ -16,14 +16,17 @@
 
 package presentation.internal.di;
 
+import javax.inject.Singleton;
+
+import dagger.Component;
 import presentation.foundation.BaseCompatActivity;
 import presentation.sections.user_demo.user.UserFragment;
 import presentation.sections.user_demo.users.UsersFragment;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
-
+/**
+ * Every fragment or activity which needs to be part of the dependency system provided by Dagger needs
+ * to be declared in this component in order to be injected later
+ */
 @Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(BaseCompatActivity baseCompatActivity);

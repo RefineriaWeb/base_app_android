@@ -18,6 +18,11 @@ package data.storage;
 
 import java.io.File;
 
+/**
+ * Provides the file system which will be injected in the Persistence class through Dagger.
+ * @see data.storage.Persistence
+ * {@link #cacheDirectory()} will be provided by the presentation layer.
+ */
 public interface RepositoryAdapter {
     File cacheDirectory();
 }

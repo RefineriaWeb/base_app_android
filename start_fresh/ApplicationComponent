@@ -22,6 +22,10 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+/**
+ * Every fragment or activity which needs to be part of the dependency system provided by Dagger needs
+ * to be declared in this component in order to be injected later
+ */
 @Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(BaseCompatActivity baseCompatActivity);

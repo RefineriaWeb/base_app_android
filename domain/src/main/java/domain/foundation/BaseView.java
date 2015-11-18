@@ -16,6 +16,9 @@
 
 package domain.foundation;
 
-
+/**
+ * Base interface for any interface of type view. These interfaces will be implemented for the pertinent
+ * screen in the presentation layer
+ */
 public interface BaseView {
 }

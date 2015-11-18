@@ -18,6 +18,10 @@ package domain.foundation.lce;
 
 import domain.foundation.BaseView;
 
+/**
+ * Interface for any presenter eligible for implement an Loading-Content-Error (LCE) functionality
+ * @param <D> Describes the type parameter of the data
+ */
 public interface LceView<D> extends BaseView {
     void showProgress();
     void hideProgress();

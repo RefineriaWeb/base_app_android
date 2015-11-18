@@ -17,18 +17,25 @@
 package domain.foundation;
 
 import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
+/**
+ * Base class for any Agent.
+ * The agent is in charge of retrieving from the repository the pertinent data and processing it for any use case
+ * @param <R> The repository interface used by this agent
+ * @see  Repository
+ */
 public abstract class Agent<R extends Repository> implements domain.foundation.Disposable {
     protected final R repository;
     private final domain.foundation.schedulers.SubscribeOn subscribeOn;
     private final ObserveOn observeOn;
     private Subscription subscription = Subscriptions.empty();
 
-    public Agent(R repository, domain.foundation.schedulers.SubscribeOn subscribeOn, ObserveOn observeOn) {
+    public Agent(R repository, SubscribeOn subscribeOn, ObserveOn observeOn) {
         this.repository = repository;
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;

@@ -31,13 +31,24 @@ import presentation.sections.user_demo.user.HostUserActivity_;
 import presentation.sections.user_demo.users.HostUsersActivity_;
 import rx.android.schedulers.AndroidSchedulers;
 
+/**
+ * Dependencies required by the domain layer need to be provided in this dagger module
+ */
 @Module(includes = {DomainModule.class, ApplicationModule.class})
 public class DomainPresentationModule {
 
+    /**
+     * Provides the Scheduler which will be use for any Observable at the domain layer
+     * to observeOn
+     */
     @Singleton @Provides ObserveOn provideObserveOn() {
         return (() -> AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Implements the navigation system required by the domain layer
+     * using intents in order to load the following screens
+     */
     @Singleton @Provides Wireframe provideAndroidWireframe(BaseApp baseApp) {
         return new Wireframe() {
             @Override public void userScreen() {

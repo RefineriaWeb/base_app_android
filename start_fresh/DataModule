@@ -25,7 +25,10 @@ import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
-
+/**
+ * Dagger module for the data layer. {@link #provideRestApi} define the interface used by retrofit in order
+ * to generate every endpoint required
+ */
 @Module public class DataModule {
     @Singleton @Provides RestApi provideRestApi() {
         return new Retrofit.Builder()

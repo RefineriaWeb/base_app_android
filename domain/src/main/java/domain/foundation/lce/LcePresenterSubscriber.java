@@ -18,7 +18,13 @@ package domain.foundation.lce;
 
 import rx.Subscriber;
 
-
+/**
+ * Provides a default subscriber for any
+ * @see domain.foundation.Presenter which implements
+ * @see LceView
+ * @param <D> Describes the type parameter of the data which will be process by the Subscriber
+ * @param <V> Describes the type parameter of the LceView
+ */
 public abstract class LcePresenterSubscriber<D, V extends LceView<D>> extends Subscriber<D> {
     private final V lceView;
 

@@ -26,6 +26,10 @@ import retrofit.http.Path;
 import rx.Observable;
 
 
+/**
+ * Definition for Retrofit of every endpoint required by the Api.
+ * {@link #getUsers()} and {@link #getUser(String)} are both and example of endpoint}
+ */
 public interface RestApi {
     String URL_BASE = "https://api.github.com";
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
