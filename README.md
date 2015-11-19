@@ -22,7 +22,7 @@ $ ./gradlew freshStart
 + [Spoon](https://github.com/square/spoon) has a [Spoon Gradle Plugin](https://github.com/stanfy/spoon-gradle-plugin) that allows you running a specific test suite or a test class by passing a parameter, e.g:
 ```
         $ ./gradlew clean build spoon -P classNameTestTuRun=fully.qualified.TestCase
-        $ ./gradlew clean build spoon -P classNameTestTuRun=fff.SuiteIntegration
+        $ ./gradlew clean build spoon -P classNameTestTuRun=presentation.common.SuiteIntegration
 ```
 
 + To use [Gradle Retrolambda Plugin](https://github.com/evant/gradle-retrolambda) you will need to install [JDK 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html) and create JAVA8_HOME environment variable. The same for your previous JDK (e.g: JAVA7_HOME). So please make sure that JAVA8_HOME and JAVA7_HOME has been added to the path of the system
