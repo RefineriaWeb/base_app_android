@@ -26,7 +26,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import presentation.foundation.BaseApp;
-import presentation.sections.user_demo.users.HostUsersActivity_;
+import presentation.sections.LaunchActivity_;
 
 @RunWith(AndroidJUnit4.class)
 public abstract class BaseTest {
@@ -51,7 +51,7 @@ public abstract class BaseTest {
         } catch (InterruptedException e) { e.printStackTrace();}
     }
 
-    @Rule public ActivityTestRule<HostUsersActivity_> mActivityRule = new ActivityTestRule<>(HostUsersActivity_.class);
+    @Rule public ActivityTestRule<LaunchActivity_> mActivityRule = new ActivityTestRule<>(LaunchActivity_.class);
 
     @Before public void init() {}
 

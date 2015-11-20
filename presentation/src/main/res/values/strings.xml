@@ -2,7 +2,6 @@
     <string name="app_name">BaseApp</string>
     <string name="generic_error">Generic error</string>
 
-    <string name="cant_not_get_user">BaseApp</string>
     <string name="user">User</string>
     <string name="users">Users</string>
     <string name="go_to_list_user">Go to list users</string>

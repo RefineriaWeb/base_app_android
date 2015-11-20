@@ -18,5 +18,4 @@ package data.sections;
 
 public interface Locale {
     String genericError();
-    String canNotGetUser();
 }

@@ -19,8 +19,6 @@ package presentation.common;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import presentation.sections.UsersTest;
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({})
 public class SuiteIntegration {

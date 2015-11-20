@@ -62,7 +62,7 @@ public class UserDemoDataRepository extends DataRepository implements UserDemoRe
         return Observable.create(subscriber -> {
             UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
             if (userDemoEntity != null) subscriber.onNext(userDemoEntity);
-            else subscriber.onError(new RuntimeException(locale.canNotGetUser()));
+            else subscriber.onError(new RuntimeException(locale.genericError()));
         });
     }
 }

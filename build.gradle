@@ -147,12 +147,13 @@ task('freshStart') << {
     Helper.moveFileDeleting(startFresh+"ApplicationComponent", presentation+"internal/di/", "ApplicationComponent.java")
     Helper.moveFileDeleting(startFresh+"DomainPresentationModule", presentation+"internal/di/", "DomainPresentationModule.java")
 
-    String presentationTest = "presentation/src/androidTest/presentation"
-    Helper.removeDir(presentationTest+"sections/user_demo")
-    Helper.moveFileDeleting(startFresh+"SuiteIntegration", presentationTest+"common/", "SuiteIntegration.java")
-
     Helper.removeDir("presentation/src/main/res/sections/user_demo")
     Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
+    Helper.moveFileDeleting(startFresh+"strings", "presentation/src/main/res/values/", "strings.xml")
+
+    String presentationTest = "presentation/src/androidTest/java/presentation/"
+    Helper.removeDir(presentationTest+"sections/user_demo")
+    Helper.moveFileDeleting(startFresh+"SuiteIntegration", presentationTest+"common/", "SuiteIntegration.java")
 
     Helper.moveFileDeleting(startFresh+"build", ".", "build.gradle")
     Helper.moveFileDeleting(startFresh+"README.md", ".", "README.md")

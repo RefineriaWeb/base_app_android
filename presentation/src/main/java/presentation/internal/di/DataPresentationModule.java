@@ -43,16 +43,12 @@ public class DataPresentationModule {
 
     /**
      * Provides the locale for the data layer
-     * @see RepositoryAdapter
+     * @see Locale
      */
     @Singleton @Provides Locale provideLocale(BaseApp baseApp) {
         return new Locale() {
             @Override public String genericError() {
                 return baseApp.getString(R.string.generic_error);
-            }
-
-            @Override public String canNotGetUser() {
-                return baseApp.getString(R.string.cant_not_get_user);
             }
         };
     }
