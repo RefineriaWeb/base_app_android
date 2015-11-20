@@ -19,11 +19,12 @@ package domain.sections.user_demo.detail;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
+import domain.sections.user_demo.UserDemoAgent;
 import domain.sections.user_demo.UserDemoEntity;
 import rx.Subscriber;
 
-public class GetSelectedDemoUserListUseCase extends UseCase<domain.sections.user_demo.UserDemoAgent> {
-    @Inject public GetSelectedDemoUserListUseCase(domain.sections.user_demo.UserDemoAgent agent) {
+public class GetSelectedDemoUserListUseCase extends UseCase<UserDemoAgent> {
+    @Inject public GetSelectedDemoUserListUseCase(UserDemoAgent agent) {
         super(agent);
     }
 

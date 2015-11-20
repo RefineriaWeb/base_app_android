@@ -21,15 +21,17 @@ import java.util.List;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
+import domain.sections.user_demo.UserDemoAgent;
+import domain.sections.user_demo.UserDemoEntity;
 import rx.Subscriber;
 
-public class GetUsersDemoUseCase extends UseCase<domain.sections.user_demo.UserDemoAgent> {
+public class GetUsersDemoUseCase extends UseCase<UserDemoAgent> {
 
-    @Inject public GetUsersDemoUseCase(domain.sections.user_demo.UserDemoAgent agent) {
+    @Inject public GetUsersDemoUseCase(UserDemoAgent agent) {
         super(agent);
     }
 
-    public void getUsers(Subscriber<List<domain.sections.user_demo.UserDemoEntity>> subscriber) {
+    public void getUsers(Subscriber<List<UserDemoEntity>> subscriber) {
         agent.getUsers(subscriber);
     }
 

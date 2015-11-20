@@ -31,19 +31,19 @@ public class UserDemoAgent extends Agent<UserDemoRepository> {
         super(repository, subscribeOn, observeOn);
     }
 
-    public void getUser(String name, Subscriber<domain.sections.user_demo.UserDemoEntity> subscriber) {
+    public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
         execute(repository.searchByUserName(name), subscriber);
     }
 
-    public void getSelectedDemoUserList(Subscriber<domain.sections.user_demo.UserDemoEntity> subscriber) {
+    public void getSelectedDemoUserList(Subscriber<UserDemoEntity> subscriber) {
         execute(repository.getSelectedUserDemoList(), subscriber);
     }
 
-    public void getUsers(Subscriber<List<domain.sections.user_demo.UserDemoEntity>> subscriber) {
+    public void getUsers(Subscriber<List<UserDemoEntity>> subscriber) {
         execute(repository.askForUsers(), subscriber);
     }
 
-    public void saveSelectedUserDemoList(domain.sections.user_demo.UserDemoEntity user, Subscriber subscriber) {
+    public void saveSelectedUserDemoList(UserDemoEntity user, Subscriber subscriber) {
         execute(repository.saveSelectedUserDemoList(user), subscriber);
     }
 }

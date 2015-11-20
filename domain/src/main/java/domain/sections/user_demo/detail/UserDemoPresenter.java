@@ -23,7 +23,7 @@ import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.UserDemoEntity;
 
-public class UserDemoPresenter extends Presenter<domain.sections.user_demo.detail.UserView> {
+public class UserDemoPresenter extends Presenter<UserView> {
     private final GetUserDemoUseCase getUserDemo;
     private final GetSelectedDemoUserListUseCase getSelectedDemoUserListUseCase;
 
@@ -34,13 +34,13 @@ public class UserDemoPresenter extends Presenter<domain.sections.user_demo.detai
         this.getSelectedDemoUserListUseCase = getSelectedDemoUserListUseCase;
     }
 
-    @Override public void attachView(domain.sections.user_demo.detail.UserView view) {
+    @Override public void attachView(UserView view) {
         super.attachView(view);
-        getSelectedDemoUserListUseCase.getCachedUser(new LcePresenterSubscriber<UserDemoEntity, domain.sections.user_demo.detail.UserView>(view) {});
+        getSelectedDemoUserListUseCase.getCachedUser(new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {});
     }
 
     public void getUserByUserName(String username) {
-        getUserDemo.getUser(username, new LcePresenterSubscriber<UserDemoEntity, domain.sections.user_demo.detail.UserView>(view) {
+        getUserDemo.getUser(username, new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {
         });
     }
 

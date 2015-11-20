@@ -19,15 +19,17 @@ package domain.sections.user_demo.detail;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
+import domain.sections.user_demo.UserDemoAgent;
+import domain.sections.user_demo.UserDemoEntity;
 import rx.Subscriber;
 
-public class GetUserDemoUseCase extends UseCase<domain.sections.user_demo.UserDemoAgent> {
+public class GetUserDemoUseCase extends UseCase<UserDemoAgent> {
 
-    @Inject public GetUserDemoUseCase(domain.sections.user_demo.UserDemoAgent agent) {
+    @Inject public GetUserDemoUseCase(UserDemoAgent agent) {
         super(agent);
     }
 
-    public void getUser(String name, Subscriber<domain.sections.user_demo.UserDemoEntity> subscriber) {
+    public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
         agent.getUser(name, subscriber);
     }
 

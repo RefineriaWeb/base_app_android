@@ -24,6 +24,7 @@ import domain.foundation.DefaultPresenterSubscriber;
 import domain.foundation.Presenter;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Wireframe;
+import domain.sections.user_demo.UserDemoEntity;
 
 public class UsersDemoPresenter extends Presenter<UsersView> {
     private final GetUsersDemoUseCase getUsersDemoUseCase;
@@ -37,10 +38,10 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
 
     @Override public void attachView(UsersView view) {
         super.attachView(view);
-        getUsersDemoUseCase.getUsers(new LcePresenterSubscriber<List<domain.sections.user_demo.UserDemoEntity>, UsersView>(view) {});
+        getUsersDemoUseCase.getUsers(new LcePresenterSubscriber<List<UserDemoEntity>, UsersView>(view) {});
     }
 
-    public void goToDetail(domain.sections.user_demo.UserDemoEntity user) {
+    public void goToDetail(UserDemoEntity user) {
         saveUserDemoSelectedListUseCase.saveUser(user, new DefaultPresenterSubscriber() {
             @Override public void onError(Throwable e) {
                 view.showError(e.getMessage());

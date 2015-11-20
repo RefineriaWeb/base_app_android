@@ -17,6 +17,7 @@
 package domain.sections.user_demo.detail;
 
 import domain.foundation.lce.LceView;
+import domain.sections.user_demo.UserDemoEntity;
 
-public interface UserView extends LceView<domain.sections.user_demo.UserDemoEntity> {
+public interface UserView extends LceView<UserDemoEntity> {
 }
