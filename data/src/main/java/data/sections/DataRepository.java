@@ -27,9 +27,7 @@ import domain.foundation.Repository;
 import lombok.Data;
 import retrofit.Response;
 
-/**
- * Created by victor on 20/11/15.
- */
+
 public abstract class DataRepository implements Repository {
     protected final RestApi restApi;
     protected final Persistence persistence;
@@ -52,8 +50,7 @@ public abstract class DataRepository implements Repository {
         }
     }
 
-    @Data
-    private static class ResponseError {
+    @Data private static class ResponseError {
         private final String message;
     }
 }

@@ -51,6 +51,7 @@ ext {
     glideVersion = "3.6.1"
     spoonVersion = "1.0.2"
     spoonScreenshotsVersion = "1.1.9"
+    javaAptVersion = "0.4"
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -116,7 +117,8 @@ ext {
     buildScriptDependencies = [
             androidApt:         "com.neenbedankt.gradle.plugins:android-apt:${androidAptVersion}",
             retrolambda:        "me.tatarka:gradle-retrolambda:${retrolambdaVersion}",
-            spoon:              "com.stanfy.spoon:spoon-gradle-plugin:${spoonVersion}"
+            spoon:              "com.stanfy.spoon:spoon-gradle-plugin:${spoonVersion}",
+            javaApt:            "net.ltgt.gradle:gradle-apt-plugin:${javaAptVersion}"
     ]
 }
 
