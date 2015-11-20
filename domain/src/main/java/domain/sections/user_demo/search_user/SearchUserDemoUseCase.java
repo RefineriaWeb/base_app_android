@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.detail;
+package domain.sections.user_demo.search_user;
 
-import domain.foundation.lce.LceView;
+import javax.inject.Inject;
+
+import domain.foundation.UseCase;
+import domain.sections.user_demo.UserDemoAgent;
 import domain.sections.user_demo.UserDemoEntity;
+import rx.Subscriber;
 
-public interface UserView extends LceView<UserDemoEntity> {
+public class SearchUserDemoUseCase extends UseCase<UserDemoAgent> {
+
+    @Inject public SearchUserDemoUseCase(UserDemoAgent agent) {
+        super(agent);
+    }
+
+    public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
+        agent.getUser(name, subscriber);
+    }
+
 }

@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package domain.sections;
+package domain.sections.user_demo.common;
 
-/**
- * Provides the routing for the application screens. Its behaviour is defined in the presentation layer.
- */
-public interface Wireframe {
-    void searchUserScreen();
-    void userScreen();
-    void usersScreen();
+import domain.foundation.lce.LceView;
+import domain.sections.user_demo.UserDemoEntity;
+
+public interface UserView extends LceView<UserDemoEntity> {
 }

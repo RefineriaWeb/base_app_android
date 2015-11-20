@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package presentation.sections.user_demo.user;
+package presentation.sections.user_demo.search_user;
 
 import android.view.View;
+import android.widget.EditText;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -25,13 +26,14 @@ import org.androidannotations.annotations.ViewById;
 import base.app.android.R;
 import domain.sections.user_demo.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
-import domain.sections.user_demo.detail.UserDemoPresenter;
+import domain.sections.user_demo.search_user.SearchUserDemoPresenter;
 import presentation.foundation.BaseFragment;
 import presentation.sections.user_demo.UserViewGroup;
 
-@EFragment(R.layout.user_fragment)
-public class UserFragment extends BaseFragment<UserDemoPresenter> implements UserView {
-    @ViewById protected View pb_loading;
+@EFragment(R.layout.user_search_fragment)
+public class SearchUserFragment extends BaseFragment<SearchUserDemoPresenter> implements UserView {
+    @ViewById protected View pb_loading, bt_find_user;
+    @ViewById protected UserViewGroup user_view_group;
 
     @Override protected void init() {
         super.init();
@@ -40,22 +42,26 @@ public class UserFragment extends BaseFragment<UserDemoPresenter> implements Use
 
     @Override public void showProgress() {
         pb_loading.setVisibility(View.VISIBLE);
+        bt_find_user.setVisibility(View.GONE);
+        user_view_group.setVisibility(View.GONE);
     }
 
     @Override public void hideProgress() {
         pb_loading.setVisibility(View.GONE);
+        bt_find_user.setVisibility(View.VISIBLE);
+        user_view_group.setVisibility(View.VISIBLE);
     }
 
     @Override public void showError(String message) {
         super.showToast(message);
     }
 
-    @ViewById protected UserViewGroup user_view_group;
     @Override public void showData(UserDemoEntity user) {
         user_view_group.bind(user);
     }
 
-    @Click protected void bt_go_to_search_user() {
-        presenter.goToSearchScreen();
+    @ViewById protected EditText et_name;
+    @Click protected void bt_find_user() {
+        presenter.getUserByUserName(et_name.getText().toString());
     }
 }

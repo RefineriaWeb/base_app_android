@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.detail;
+package presentation.sections.user_demo.search_user;
 
-import javax.inject.Inject;
+import org.androidannotations.annotations.EActivity;
 
-import domain.foundation.UseCase;
-import domain.sections.user_demo.UserDemoAgent;
-import domain.sections.user_demo.UserDemoEntity;
-import rx.Subscriber;
+import base.app.android.R;
+import presentation.foundation.BaseToolbarActivity;
 
-public class GetUserDemoUseCase extends UseCase<UserDemoAgent> {
-
-    @Inject public GetUserDemoUseCase(UserDemoAgent agent) {
-        super(agent);
-    }
-
-    public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
-        agent.getUser(name, subscriber);
-    }
+@EActivity(R.layout.host_search_user_activity)
+public class HostSearchUserActivity extends BaseToolbarActivity {
 
 }

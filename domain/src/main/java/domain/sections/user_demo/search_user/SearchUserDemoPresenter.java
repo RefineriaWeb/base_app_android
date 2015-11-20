@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.detail;
+package domain.sections.user_demo.search_user;
 
 import javax.inject.Inject;
 
@@ -24,19 +24,14 @@ import domain.sections.Wireframe;
 import domain.sections.user_demo.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 
-public class UserDemoPresenter extends PresenterSingleUseCase<UserView, GetSelectedDemoUserListUseCase> {
+public class SearchUserDemoPresenter extends PresenterSingleUseCase<UserView, SearchUserDemoUseCase> {
 
-    @Inject public UserDemoPresenter(Wireframe wireframe, GetSelectedDemoUserListUseCase useCase) {
-        super(wireframe, useCase);
+    @Inject public SearchUserDemoPresenter(Wireframe wireframe, SearchUserDemoUseCase searchUserDemoUseCase) {
+        super(wireframe, searchUserDemoUseCase);
     }
 
-    @Override public void attachView(UserView view) {
-        super.attachView(view);
-        useCase.getCachedUser(new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {
+    public void getUserByUserName(String username) {
+        useCase.getUser(username, new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {
         });
-    }
-
-    public void goToSearchScreen() {
-        wireframe.searchUserScreen();
     }
 }

@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import presentation.foundation.BaseCompatActivity;
+import presentation.sections.user_demo.search_user.SearchUserFragment;
 import presentation.sections.user_demo.user.UserFragment;
 import presentation.sections.user_demo.users.UsersFragment;
 
@@ -33,4 +34,5 @@ public interface ApplicationComponent {
 
     void inject(UserFragment userFragment);
     void inject(UsersFragment usersFragment);
+    void inject(SearchUserFragment searchUserFragment);
 }

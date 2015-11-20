@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import domain.foundation.DefaultPresenterSubscriber;
+import domain.foundation.DefaultSubscriber;
 import domain.foundation.Presenter;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Wireframe;
@@ -42,7 +42,7 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
     }
 
     public void goToDetail(UserDemoEntity user) {
-        saveUserDemoSelectedListUseCase.saveUser(user, new DefaultPresenterSubscriber() {
+        saveUserDemoSelectedListUseCase.saveUser(user, new DefaultSubscriber() {
             @Override public void onError(Throwable e) {
                 view.showError(e.getMessage());
             }

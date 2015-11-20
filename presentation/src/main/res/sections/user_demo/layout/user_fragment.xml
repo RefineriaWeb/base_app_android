@@ -10,20 +10,6 @@
         android:layout_margin="@dimen/_10dp"
         android:orientation="vertical">
 
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/usernameWrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/user_name" />
-
-        </android.support.design.widget.TextInputLayout>
-
         <ProgressBar
             android:id="@+id/pb_loading"
             style="@android:style/Widget.ProgressBar.Small"
@@ -31,16 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 
-        <Button
-            android:id="@+id/bt_find_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/find_user" />
-
         <presentation.sections.user_demo.UserViewGroup_
             android:id="@+id/user_view_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt_go_to_search_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/find_user" />
 
     </LinearLayout>
 

@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package domain.sections;
+package domain.foundation;
+
+import rx.Subscriber;
 
 /**
- * Provides the routing for the application screens. Its behaviour is defined in the presentation layer.
+ * Provides a default subscriber for any
+ * @see domain.foundation.Presenter
  */
-public interface Wireframe {
-    void searchUserScreen();
-    void userScreen();
-    void usersScreen();
+public abstract class DefaultSubscriber<T> extends Subscriber<T> {
+    @Override public void onCompleted() {}
+
+    @Override public void onError(Throwable e) {}
+
+    @Override public void onNext(T t) {}
 }

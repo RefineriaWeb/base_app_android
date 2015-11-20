@@ -16,16 +16,25 @@
 
 package domain.foundation;
 
-import rx.Subscriber;
+import domain.sections.Wireframe;
 
 /**
- * Provides a default subscriber for any
- * @see domain.foundation.Presenter
+ * Base class for any Presenter with only one use case.
+ * @param <V> The view interface attached to this presenter.
+ * @param <U> The use case used in this presenter.
+ * @see  Presenter
+ * @see  BaseView
+ * @see  UseCase
  */
-public abstract class DefaultPresenterSubscriber<T> extends Subscriber<T> {
-    @Override public void onCompleted() {}
+public abstract class PresenterSingleUseCase<V extends BaseView, U extends UseCase> extends Presenter<V> {
+    protected final U useCase;
 
-    @Override public void onError(Throwable e) {}
+    public PresenterSingleUseCase(Wireframe wireframe, U useCase) {
+        super(wireframe);
+        this.useCase = useCase;
+    }
 
-    @Override public void onNext(T t) {}
+    @Override public void dispose() {
+        useCase.dispose();
+    }
 }
