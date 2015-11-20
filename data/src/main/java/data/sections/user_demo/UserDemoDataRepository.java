@@ -17,28 +17,22 @@
 package data.sections.user_demo;
 
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import data.net.RestApi;
+import data.sections.DataRepository;
+import data.sections.Locale;
+import data.storage.Persistence;
 import domain.sections.user_demo.UserDemoEntity;
 import domain.sections.user_demo.UserDemoRepository;
-import data.net.RestApi;
-import data.storage.Persistence;
-import retrofit.Response;
 import rx.Observable;
 
-public class UserDemoDataRepository implements UserDemoRepository {
-    private final RestApi restApi;
-    private final Persistence persistence;
+public class UserDemoDataRepository extends DataRepository implements UserDemoRepository {
 
-    @Inject public UserDemoDataRepository(RestApi restApi, Persistence persistence) {
-        this.restApi = restApi;
-        this.persistence = persistence;
+    @Inject public UserDemoDataRepository(RestApi restApi, Persistence persistence, Locale locale) {
+        super(restApi, persistence, locale);
     }
 
     @Override public Observable<UserDemoEntity> searchByUserName(final String  username) {
@@ -60,7 +54,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
         return Observable.create(subscriber -> {
             boolean success = persistence.save(UserDemoEntity.class.getName(), user);
             if (success) subscriber.onCompleted();
-            else subscriber.onError(new RuntimeException("Can't saved user"));
+            else subscriber.onError(new RuntimeException(locale.genericError()));
         });
     }
 
@@ -68,30 +62,7 @@ public class UserDemoDataRepository implements UserDemoRepository {
         return Observable.create(subscriber -> {
             UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
             if (userDemoEntity != null) subscriber.onNext(userDemoEntity);
-            else subscriber.onError(new RuntimeException("Can't get user"));
+            else subscriber.onError(new RuntimeException(locale.canNotGetUser()));
         });
-    }
-
-    private void handleError(Response response) {
-        if (response.isSuccess()) return;
-
-        try {
-            ResponseError responseError = new Gson().fromJson(response.errorBody().string(), ResponseError.class);
-            throw new RuntimeException(responseError.getMessage());
-        } catch (JsonParseException|IOException exception) {
-            throw new RuntimeException("Generic error");
-        }
-    }
-
-    private static class ResponseError {
-        private final String message;
-
-        public ResponseError(String message) {
-            this.message = message;
-        }
-
-        public String getMessage() {
-            return message;
-        }
     }
 }

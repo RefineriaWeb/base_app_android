@@ -82,7 +82,8 @@ ext {
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             retrofitreactive:   "com.squareup.retrofit:adapter-rxjava:${retrofitVersion}",
-            retrofitGson:       "com.squareup.retrofit:converter-gson:${retrofitVersion}"
+            retrofitGson:       "com.squareup.retrofit:converter-gson:${retrofitVersion}",
+            lombok:             "org.projectlombok:lombok:${lombokVersion}"
     ]
 
     dataTestDependencies = [

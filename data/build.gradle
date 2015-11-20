@@ -48,6 +48,8 @@ dependencies {
     provided dataDependencies.javaxAnnotation
     compile dataDependencies.rxJava
 
+    provided dataDependencies.lombok
+    apt dataDependencies.lombok
 
     def dataTestDependencies = rootProject.ext.dataTestDependencies
     testCompile dataTestDependencies.junit

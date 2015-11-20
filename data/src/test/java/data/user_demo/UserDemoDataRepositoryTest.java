@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import data.sections.Locale;
 import domain.sections.user_demo.UserDemoEntity;
 import data.net.RestApi;
 import data.sections.user_demo.UserDemoDataRepository;
@@ -38,11 +39,12 @@ import static org.mockito.Mockito.when;
 public class UserDemoDataRepositoryTest {
     @Mock private RestApi restApi;
     @Mock private Persistence persistence;
+    @Mock private Locale locale;
     private UserDemoDataRepository userDemoDataRepository;
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
-        userDemoDataRepository = new UserDemoDataRepository(restApi, persistence);
+        userDemoDataRepository = new UserDemoDataRepository(restApi, persistence, locale);
     }
 
     @Test public void When_Search_With_Valid_User_Name_Then_Get_Demo_User() {
