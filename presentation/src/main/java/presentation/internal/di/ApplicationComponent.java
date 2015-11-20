@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import presentation.foundation.BaseCompatActivity;
+import presentation.sections.launch.LaunchActivity;
 import presentation.sections.user_demo.search_user.SearchUserFragment;
 import presentation.sections.user_demo.user.UserFragment;
 import presentation.sections.user_demo.users.UsersFragment;
@@ -31,6 +32,7 @@ import presentation.sections.user_demo.users.UsersFragment;
 @Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(BaseCompatActivity baseCompatActivity);
+    void inject(LaunchActivity launchActivity);
 
     void inject(UserFragment userFragment);
     void inject(UsersFragment usersFragment);

@@ -14,29 +14,23 @@
  * limitations under the License.
  */
 
-package presentation.foundation;
+package presentation.sections.launch;
 
-import android.support.v7.app.AppCompatActivity;
-
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
-import presentation.internal.di.ApplicationComponent;
+import javax.inject.Inject;
+
+import domain.sections.launch.LaunchPresenter;
+import domain.sections.launch.LaunchView;
+import presentation.foundation.BaseCompatActivity;
 
 @EActivity
-public abstract class BaseCompatActivity extends AppCompatActivity  {
-    @AfterInject protected void init() {
+public class LaunchActivity extends BaseCompatActivity implements LaunchView {
+    @Inject protected LaunchPresenter launchPresenter;
+
+    @Override protected void onStart() {
+        super.onStart();
         getApplicationComponent().inject(this);
-    }
-
-    @AfterViews protected void initViews() {}
-
-    public BaseApp getBaseApp() {
-        return ((BaseApp)getApplication());
-    }
-
-    public ApplicationComponent getApplicationComponent() {
-        return getBaseApp().getApplicationComponent();
+        launchPresenter.attachView(this);
     }
 }

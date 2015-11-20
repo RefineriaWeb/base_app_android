@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-package presentation.sections;
+package domain.sections.launch;
 
-import presentation.foundation.BaseCompatActivity;
+import domain.foundation.BaseView;
 
-import org.androidannotations.annotations.EActivity;
 
-@EActivity
-public class LaunchActivity extends BaseCompatActivity {
-
-    @Override protected void onStart() {
-        super.onStart();
-        //start point for your wireframe
-    }
-}
+public interface LaunchView extends BaseView {}

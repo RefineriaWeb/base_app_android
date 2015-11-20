@@ -139,11 +139,11 @@ task('freshStart') << {
     String domain = "domain/src/main/java/domain/"
     Helper.removeDir(domain+"sections/user_demo")
     Helper.moveFileDeleting(startFresh+"Wireframe", domain+"sections/", "Wireframe.java")
+    Helper.moveFileDeleting(startFresh+"LaunchPresenter", domain+"sections/launch/", "LaunchPresenter.java")
 
 
     String presentation = "presentation/src/main/java/presentation/"
     Helper.removeDir(presentation+"sections/user_demo")
-    Helper.moveFileDeleting(startFresh+"LaunchActivity", presentation+"sections/", "LaunchActivity.java")
     Helper.moveFileDeleting(startFresh+"ApplicationComponent", presentation+"internal/di/", "ApplicationComponent.java")
     Helper.moveFileDeleting(startFresh+"DomainPresentationModule", presentation+"internal/di/", "DomainPresentationModule.java")
 

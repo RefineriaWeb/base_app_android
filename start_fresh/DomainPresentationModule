@@ -24,9 +24,11 @@ import dagger.Module;
 import dagger.Provides;
 import domain.di.DomainModule;
 import domain.foundation.schedulers.ObserveOn;
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
 import presentation.foundation.BaseToolbarActivity;
+import presentation.sections.LocaleDomain;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -41,6 +43,14 @@ public class DomainPresentationModule {
      */
     @Singleton @Provides ObserveOn provideObserveOn() {
         return (() -> AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Provides the locale for the domain layer
+     * @see Locale
+     */
+    @Singleton @Provides Locale provideLocale(BaseApp baseApp) {
+        return new LocaleDomain(baseApp);
     }
 
     /**

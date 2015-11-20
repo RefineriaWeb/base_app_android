@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="presentation.sections.LaunchActivity_"
+            android:name="presentation.sections.launch.LaunchActivity_"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait">

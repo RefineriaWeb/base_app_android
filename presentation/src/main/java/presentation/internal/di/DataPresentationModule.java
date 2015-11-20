@@ -18,13 +18,13 @@ package presentation.internal.di;
 
 import javax.inject.Singleton;
 
-import base.app.android.R;
 import dagger.Module;
 import dagger.Provides;
 import data.internal.di.DataModule;
 import data.sections.Locale;
 import data.storage.RepositoryAdapter;
 import presentation.foundation.BaseApp;
+import presentation.sections.LocaleData;
 
 
 /**
@@ -46,11 +46,7 @@ public class DataPresentationModule {
      * @see Locale
      */
     @Singleton @Provides Locale provideLocale(BaseApp baseApp) {
-        return new Locale() {
-            @Override public String genericError() {
-                return baseApp.getString(R.string.generic_error);
-            }
-        };
+        return new LocaleData(baseApp);
     }
 
 }

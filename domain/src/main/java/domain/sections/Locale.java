@@ -14,17 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.sections;
+package domain.sections;
 
-import presentation.foundation.BaseCompatActivity;
-
-import org.androidannotations.annotations.EActivity;
-
-@EActivity
-public class LaunchActivity extends BaseCompatActivity {
-
-    @Override protected void onStart() {
-        super.onStart();
-        wireframe.usersScreen();
-    }
+public interface Locale {
 }

@@ -18,6 +18,7 @@ package presentation.foundation;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.Nullable;
 
 import presentation.internal.di.ApplicationComponent;
 import presentation.internal.di.ApplicationModule;
@@ -35,9 +36,6 @@ public class BaseApp extends Application {
         AppCare.YesSir.takeCareOn(this);
     }
 
-    /**
-     * Custom Application
-     */
     private void initInject() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
@@ -48,7 +46,7 @@ public class BaseApp extends Application {
         return applicationComponent;
     }
 
-    public Activity getLiveActivity(){
+    @Nullable public Activity getLiveActivity(){
         return AppCare.YesSir.getLiveActivityOrNull();
     }
 }
