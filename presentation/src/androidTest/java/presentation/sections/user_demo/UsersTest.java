@@ -61,6 +61,8 @@ public class UsersTest extends BaseTest {
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.scrollToPosition(INDEX_LIST));
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.actionOnItemAtPosition(INDEX_LIST, click()));
 
+        onView(withId(R.id.bt_go_to_search_user)).perform(click());
+
         onView(withId(R.id.et_name)).perform(click(), replaceText(USERNAME_REFINERIA), closeSoftKeyboard());
         onView(withId(R.id.bt_find_user)).perform(click());
         mediumWait();
