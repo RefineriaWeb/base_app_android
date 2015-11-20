@@ -152,7 +152,10 @@ task('freshStart') << {
     Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
 
     Helper.moveFileDeleting(startFresh+"build", ".", "build.gradle")
+    Helper.moveFileDeleting(startFresh+"README.md", ".", "README.md")
+    Helper.moveFileDeleting(startFresh+"LICENSE", ".", "LICENSE")
 
+    Helper.removeDir(".git")
     Helper.removeDir(startFresh)
 }
 
