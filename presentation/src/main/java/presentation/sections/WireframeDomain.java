@@ -20,9 +20,11 @@ import base.app.android.R;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
 import presentation.foundation.BaseToolbarActivity;
-import presentation.sections.user_demo.search_user.HostSearchUserActivity_;
-import presentation.sections.user_demo.user.HostUserActivity_;
-import presentation.sections.user_demo.users.HostUsersActivity_;
+import presentation.foundation.SingleFragmentActivity;
+import presentation.foundation.SingleFragmentActivity_;
+import presentation.sections.user_demo.search_user.SearchUserFragment_;
+import presentation.sections.user_demo.user.UserFragment_;
+import presentation.sections.user_demo.users.UsersFragment_;
 
 public class WireframeDomain implements Wireframe {
     private  final BaseApp baseApp;
@@ -33,23 +35,26 @@ public class WireframeDomain implements Wireframe {
 
     @Override public void usersScreen() {
         String title = baseApp.getString(R.string.users);
-        HostUsersActivity_.intent(baseApp.getLiveActivity())
+        SingleFragmentActivity_.intent(baseApp.getLiveActivity())
                 .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
                 .extra(BaseToolbarActivity.Behaviour.SHOW_BACK_KEY, false)
+                .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UsersFragment_.class)
                 .start();
     }
 
     @Override public void userScreen() {
         String title = baseApp.getString(R.string.user);
-        HostUserActivity_.intent(baseApp.getLiveActivity())
+        SingleFragmentActivity_.intent(baseApp.getLiveActivity())
                 .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
+                .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UserFragment_.class)
                 .start();
     }
 
     @Override public void searchUserScreen() {
         String title = baseApp.getString(R.string.user);
-        HostSearchUserActivity_.intent(baseApp.getLiveActivity())
+        SingleFragmentActivity_.intent(baseApp.getLiveActivity())
                 .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
+                .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment_.class)
                 .start();
     }
 }
