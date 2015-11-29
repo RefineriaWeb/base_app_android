@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class DemoAgentTest extends BaseTest {
+public class AgentTest extends BaseTest {
     private final String SUCCESS = "success";
     private AgentUnderTest agentUT;
 

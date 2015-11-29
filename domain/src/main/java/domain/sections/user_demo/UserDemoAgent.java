@@ -40,7 +40,6 @@ public class UserDemoAgent extends Agent<UserDemoRepository> {
             execute(repository.searchByUserName(name), subscriber);
     }
 
-
     public void getSelectedDemoUserList(Subscriber<UserDemoEntity> subscriber) {
         execute(repository.getSelectedUserDemoList(), subscriber);
     }
