@@ -1,4 +1,4 @@
-package domain.user_demo;
+package domain.sections.user_demo;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import domain.common.BaseTest;
-import domain.sections.user_demo.UserDemoAgent;
-import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 import rx.observers.TestSubscriber;

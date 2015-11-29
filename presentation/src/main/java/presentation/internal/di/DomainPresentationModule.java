@@ -19,7 +19,6 @@ package presentation.internal.di;
 
 import javax.inject.Singleton;
 
-import base.app.android.R;
 import dagger.Module;
 import dagger.Provides;
 import domain.di.DomainModule;
@@ -27,11 +26,8 @@ import domain.foundation.schedulers.ObserveOn;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
-import presentation.foundation.BaseToolbarActivity;
 import presentation.sections.LocaleDomain;
-import presentation.sections.user_demo.search_user.HostSearchUserActivity_;
-import presentation.sections.user_demo.user.HostUserActivity_;
-import presentation.sections.user_demo.users.HostUsersActivity_;
+import presentation.sections.WireframeDomain;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -61,29 +57,6 @@ public class DomainPresentationModule {
      * using intents in order to load the following screens
      */
     @Singleton @Provides Wireframe provideAndroidWireframe(BaseApp baseApp) {
-        return new Wireframe() {
-
-            @Override public void usersScreen() {
-                String title = baseApp.getString(R.string.users);
-                HostUsersActivity_.intent(baseApp.getLiveActivity())
-                        .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
-                        .extra(BaseToolbarActivity.Behaviour.SHOW_BACK_KEY, false)
-                        .start();
-            }
-
-            @Override public void userScreen() {
-                String title = baseApp.getString(R.string.user);
-                HostUserActivity_.intent(baseApp.getLiveActivity())
-                        .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
-                        .start();
-            }
-
-            @Override public void searchUserScreen() {
-                String title = baseApp.getString(R.string.user);
-                HostSearchUserActivity_.intent(baseApp.getLiveActivity())
-                        .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
-                        .start();
-            }
-        };
+        return new WireframeDomain(baseApp);
     }
 }
