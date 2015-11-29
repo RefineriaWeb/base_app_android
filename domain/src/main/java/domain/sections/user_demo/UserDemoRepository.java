@@ -26,5 +26,5 @@ public interface UserDemoRepository extends Repository {
     Observable<UserDemoEntity> searchByUserName(String nameUser);
     Observable<List<UserDemoEntity>> askForUsers();
     Observable<UserDemoEntity> getSelectedUserDemoList();
-    Observable saveSelectedUserDemoList(UserDemoEntity user);
+    Observable<Boolean> saveSelectedUserDemoList(UserDemoEntity user);
 }

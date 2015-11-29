@@ -23,7 +23,7 @@ import domain.sections.user_demo.UserDemoAgent;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Subscriber;
 
-public class SaveUserDemoSelectedListUseCase extends UseCaseSingleAgent<UserDemoAgent, Object> {
+public class SaveUserDemoSelectedListUseCase extends UseCaseSingleAgent<UserDemoAgent, Boolean> {
     private UserDemoEntity userDemoEntity;
 
     @Inject public SaveUserDemoSelectedListUseCase(UserDemoAgent agent) {
@@ -34,7 +34,7 @@ public class SaveUserDemoSelectedListUseCase extends UseCaseSingleAgent<UserDemo
         this.userDemoEntity = userDemoEntity;
     }
 
-    @Override public void execute(Subscriber subscriber) {
+    @Override public void execute(Subscriber<Boolean> subscriber) {
         agent.saveSelectedUserDemoList(userDemoEntity, subscriber);
     }
 }

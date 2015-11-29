@@ -44,12 +44,13 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
 
     public void goToDetail(UserDemoEntity user) {
         saveUserDemoSelectedListUseCase.setUserDemoEntity(user);
-        saveUserDemoSelectedListUseCase.execute(new DefaultSubscriber() {
+        saveUserDemoSelectedListUseCase.execute(new DefaultSubscriber<Boolean>() {
             @Override public void onError(Throwable e) {
                 view.showError(e.getMessage());
             }
 
-            @Override public void onCompleted() {
+            @Override public void onNext(Boolean saved) {
+                assert saved;
                 wireframe.userScreen();
             }
         });

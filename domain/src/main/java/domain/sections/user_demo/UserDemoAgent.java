@@ -49,7 +49,7 @@ public class UserDemoAgent extends Agent<UserDemoRepository> {
         execute(repository.askForUsers(), subscriber);
     }
 
-    public void saveSelectedUserDemoList(UserDemoEntity user, Subscriber subscriber) {
+    public void saveSelectedUserDemoList(UserDemoEntity user, Subscriber<Boolean> subscriber) {
         assert user != null;
         execute(repository.saveSelectedUserDemoList(user), subscriber);
     }
