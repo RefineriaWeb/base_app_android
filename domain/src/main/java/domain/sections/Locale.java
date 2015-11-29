@@ -17,4 +17,5 @@
 package domain.sections;
 
 public interface Locale {
+    String errorNonEmptyFields();
 }

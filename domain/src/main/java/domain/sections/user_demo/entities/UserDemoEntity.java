@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo;
+package domain.sections.user_demo.entities;
 
 
 import lombok.AccessLevel;

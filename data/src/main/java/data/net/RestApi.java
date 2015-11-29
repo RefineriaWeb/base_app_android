@@ -18,7 +18,7 @@ package data.net;
 
 import java.util.List;
 
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import retrofit.Response;
 import retrofit.http.GET;
 import retrofit.http.Headers;

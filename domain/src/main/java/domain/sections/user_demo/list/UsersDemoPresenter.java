@@ -24,7 +24,7 @@ import domain.foundation.DefaultSubscriber;
 import domain.foundation.Presenter;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Wireframe;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 
 public class UsersDemoPresenter extends Presenter<UsersView> {
     private final GetUsersDemoUseCase getUsersDemoUseCase;

@@ -22,7 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import data.sections.Locale;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import data.net.RestApi;
 import data.sections.user_demo.UserDemoDataRepository;
 import data.storage.Persistence;

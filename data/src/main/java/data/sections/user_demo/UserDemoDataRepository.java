@@ -25,7 +25,7 @@ import data.net.RestApi;
 import data.sections.DataRepository;
 import data.sections.Locale;
 import data.storage.Persistence;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.UserDemoRepository;
 import rx.Observable;
 

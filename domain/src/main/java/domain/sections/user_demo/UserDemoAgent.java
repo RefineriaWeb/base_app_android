@@ -23,17 +23,23 @@ import javax.inject.Inject;
 import domain.foundation.Agent;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Subscriber;
 
 public class UserDemoAgent extends Agent<UserDemoRepository> {
 
-    @Inject public UserDemoAgent(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn) {
-        super(repository, subscribeOn, observeOn);
+    @Inject public UserDemoAgent(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        super(repository, subscribeOn, observeOn, locale);
     }
 
     public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
-        execute(repository.searchByUserName(name), subscriber);
+        if (name == null || name.isEmpty())
+            executeError(locale.errorNonEmptyFields(), subscriber);
+        else
+            execute(repository.searchByUserName(name), subscriber);
     }
+
 
     public void getSelectedDemoUserList(Subscriber<UserDemoEntity> subscriber) {
         execute(repository.getSelectedUserDemoList(), subscriber);
@@ -44,6 +50,7 @@ public class UserDemoAgent extends Agent<UserDemoRepository> {
     }
 
     public void saveSelectedUserDemoList(UserDemoEntity user, Subscriber subscriber) {
+        assert user != null;
         execute(repository.saveSelectedUserDemoList(user), subscriber);
     }
 }

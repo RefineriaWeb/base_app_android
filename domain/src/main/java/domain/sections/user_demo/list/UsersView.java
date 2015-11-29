@@ -19,7 +19,7 @@ package domain.sections.user_demo.list;
 import java.util.List;
 
 import domain.foundation.lce.LceView;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 
 public interface UsersView extends LceView<List<UserDemoEntity>> {
 }

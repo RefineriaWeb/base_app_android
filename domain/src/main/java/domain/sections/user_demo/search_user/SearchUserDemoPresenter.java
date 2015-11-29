@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import domain.foundation.PresenterSingleUseCase;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Wireframe;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 
 public class SearchUserDemoPresenter extends PresenterSingleUseCase<UserView, SearchUserDemoUseCase> {

@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import domain.foundation.UseCase;
 import domain.sections.user_demo.UserDemoAgent;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Subscriber;
 
 public class GetUsersDemoUseCase extends UseCase<UserDemoAgent> {

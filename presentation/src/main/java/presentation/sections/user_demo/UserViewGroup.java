@@ -28,7 +28,7 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 import base.app.android.R;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import presentation.utilities.recyclerview_adapter.ViewWrapper;
 
 @EViewGroup(R.layout.user_view_group) public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity>{

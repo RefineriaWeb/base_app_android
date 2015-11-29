@@ -19,6 +19,7 @@ package domain.sections.user_demo;
 import java.util.List;
 
 import domain.foundation.Repository;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
 public interface UserDemoRepository extends Repository {

@@ -18,6 +18,7 @@ package domain.foundation;
 
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -31,20 +32,31 @@ import rx.subscriptions.Subscriptions;
  */
 public abstract class Agent<R extends Repository> implements domain.foundation.Disposable {
     protected final R repository;
-    private final domain.foundation.schedulers.SubscribeOn subscribeOn;
+    protected final Locale locale;
+    private final SubscribeOn subscribeOn;
     private final ObserveOn observeOn;
     private Subscription subscription = Subscriptions.empty();
 
-    public Agent(R repository, SubscribeOn subscribeOn, ObserveOn observeOn) {
+    public Agent(R repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
         this.repository = repository;
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;
+        this.locale = locale;
     }
 
     protected <T> void execute(Observable<T> observable, Subscriber<T> subscriber) {
         subscription.unsubscribe();
 
         subscription = observable
+                .subscribeOn(subscribeOn.getScheduler())
+                .observeOn(observeOn.getScheduler())
+                .subscribe(subscriber);
+    }
+
+    protected void executeError(String message, Subscriber subscriber) {
+        subscription.unsubscribe();
+
+        subscription = Observable.create(it -> it.onError(new RuntimeException(message)))
                 .subscribeOn(subscribeOn.getScheduler())
                 .observeOn(observeOn.getScheduler())
                 .subscribe(subscriber);

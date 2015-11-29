@@ -66,7 +66,7 @@ public class DemoAgentTest extends BaseTest {
     private class AgentUnderTest extends Agent<RepositorySuccessMock> {
 
         public AgentUnderTest() {
-            super(new RepositorySuccessMock(), subscribeOnMock, observeOnMock);
+            super(new RepositorySuccessMock(), subscribeOnMock, observeOnMock, localeMock);
         }
 
         public void execute(Subscriber<String> subscriber) {

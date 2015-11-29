@@ -17,7 +17,7 @@
 package domain.sections.user_demo.common;
 
 import domain.foundation.lce.LceView;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 
 public interface UserView extends LceView<UserDemoEntity> {
 }

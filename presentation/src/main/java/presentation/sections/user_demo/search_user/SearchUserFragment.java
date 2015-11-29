@@ -24,7 +24,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import base.app.android.R;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.search_user.SearchUserDemoPresenter;
 import presentation.foundation.BaseFragment;

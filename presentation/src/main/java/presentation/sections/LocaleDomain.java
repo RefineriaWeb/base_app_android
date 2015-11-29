@@ -16,6 +16,7 @@
 
 package presentation.sections;
 
+import base.app.android.R;
 import domain.sections.Locale;
 import presentation.foundation.BaseApp;
 
@@ -24,5 +25,9 @@ public class LocaleDomain implements Locale {
 
     public LocaleDomain(BaseApp baseApp) {
         this.baseApp = baseApp;
+    }
+
+    @Override public String errorNonEmptyFields() {
+        return baseApp.getString(R.string.fill_missing_fields);
     }
 }

@@ -31,7 +31,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import base.app.android.R;
-import domain.sections.user_demo.UserDemoEntity;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.list.UsersDemoPresenter;
 import domain.sections.user_demo.list.UsersView;
 import presentation.foundation.BaseFragment;
