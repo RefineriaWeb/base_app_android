@@ -21,7 +21,6 @@ import javax.inject.Inject;
 import domain.foundation.PresenterSingleUseCase;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Wireframe;
-import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 
 public class UserDemoPresenter extends PresenterSingleUseCase<UserView, GetSelectedDemoUserListUseCase> {
@@ -32,7 +31,7 @@ public class UserDemoPresenter extends PresenterSingleUseCase<UserView, GetSelec
 
     @Override public void attachView(UserView view) {
         super.attachView(view);
-        useCase.execute(new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {});
+        useCase.execute(new LcePresenterSubscriber(view));
     }
 
     public void goToSearchScreen() {

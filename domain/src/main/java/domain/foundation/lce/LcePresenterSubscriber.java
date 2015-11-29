@@ -25,7 +25,7 @@ import rx.Subscriber;
  * @param <D> Describes the type parameter of the data which will be process by the Subscriber
  * @param <V> Describes the type parameter of the LceView
  */
-public abstract class LcePresenterSubscriber<D, V extends LceView<D>> extends Subscriber<D> {
+public class LcePresenterSubscriber<D, V extends LceView<D>> extends Subscriber<D> {
     private final V lceView;
 
     public LcePresenterSubscriber(V lceView) {

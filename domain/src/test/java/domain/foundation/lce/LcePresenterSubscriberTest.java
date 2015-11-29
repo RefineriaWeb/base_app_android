@@ -27,12 +27,12 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 public class LcePresenterSubscriberTest extends BaseTest {
-    private domain.foundation.lce.LcePresenterSubscriber presenterSubscriberUT;
+    private LcePresenterSubscriber presenterSubscriberUT;
     @Mock protected LceView lceViewMock;
 
     @Override public void setUp() {
         super.setUp();
-        presenterSubscriberUT = new domain.foundation.lce.LcePresenterSubscriber(lceViewMock) {};
+        presenterSubscriberUT = new LcePresenterSubscriber(lceViewMock);
     }
 
     @Test public void when_Observable_Emits_Any_Object_LceView_Reacts_Accordingly() {
