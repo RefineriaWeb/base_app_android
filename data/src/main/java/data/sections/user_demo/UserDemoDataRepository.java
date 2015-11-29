@@ -61,5 +61,4 @@ public class UserDemoDataRepository extends DataRepository implements UserDemoRe
         if (userDemoEntity != null) return buildObservable(userDemoEntity);
         else return buildObservableError(locale.genericError());
     }
-
 }

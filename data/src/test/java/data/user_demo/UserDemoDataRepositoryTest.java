@@ -37,22 +37,22 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class UserDemoDataRepositoryTest {
-    @Mock private RestApi restApi;
-    @Mock private Persistence persistence;
-    @Mock private Locale locale;
-    private UserDemoDataRepository userDemoDataRepository;
+    @Mock private RestApi restApiMock;
+    @Mock private Persistence persistenceMock;
+    @Mock private Locale localeMock;
+    private UserDemoDataRepository userDemoDataRepositoryUT;
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
-        userDemoDataRepository = new UserDemoDataRepository(restApi, persistence, locale);
+        userDemoDataRepositoryUT = new UserDemoDataRepository(restApiMock, persistenceMock, localeMock);
     }
 
     @Test public void When_Search_With_Valid_User_Name_Then_Get_Demo_User() {
         Response<UserDemoEntity> response = Response.success(mock(UserDemoEntity.class));
-        when(restApi.getUser(any(String.class))).thenReturn(Observable.just(response));
+        when(restApiMock.getUser(any(String.class))).thenReturn(Observable.just(response));
 
         TestSubscriber<UserDemoEntity> subscriber = new TestSubscriber<>();
-        userDemoDataRepository.searchByUserName(any(String.class)).subscribe(subscriber);
+        userDemoDataRepositoryUT.searchByUserName(any(String.class)).subscribe(subscriber);
         subscriber.awaitTerminalEvent();
 
         assertThat(subscriber.getOnNextEvents().size(), is(1));

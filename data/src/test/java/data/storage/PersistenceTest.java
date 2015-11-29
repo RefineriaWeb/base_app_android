@@ -28,37 +28,37 @@ import static org.hamcrest.core.IsNot.not;
 
 
 public class PersistenceTest {
-    private Persistence persistence;
+    private Persistence persistenceUT;
     private final static String KEY = "store";
     private final static String VALUE = "dummy";
     @Rule public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Before public void setUp() {
-        persistence = new Persistence(() -> temporaryFolder.getRoot());
+        persistenceUT = new Persistence(() -> temporaryFolder.getRoot());
     }
 
     @Test public void when_A_Valid_Pair_Is_Supplied_Then_Get_True() {
-        boolean result = persistence.save(KEY, VALUE);
+        boolean result = persistenceUT.save(KEY, VALUE);
         assertThat(result, is(true));
     }
 
     @Test public void when_An_Invalid_Pair_Is_Supplied_Then_Get_False() {
-        boolean result = persistence.save(null, null);
+        boolean result = persistenceUT.save(null, null);
         assertThat(result, is(not(true)));
     }
 
     @Test public void when_A_Valid_Pair_Is_Supplied_And_Retrieve_Then_Get_It() {
-        persistence.save(KEY, VALUE);
+        persistenceUT.save(KEY, VALUE);
 
-        String result = persistence.retrieve(KEY, String.class);
+        String result = persistenceUT.retrieve(KEY, String.class);
         assertThat(result, is(VALUE));
     }
 
     @Test public void when_A_Valid_Pair_Is_Supplied_And_Delete_Then_Do_Not_Retrieve_It() {
-        persistence.save(KEY, VALUE);
-        persistence.delete(KEY);
+        persistenceUT.save(KEY, VALUE);
+        persistenceUT.delete(KEY);
 
-        String result = persistence.retrieve(KEY, String.class);
+        String result = persistenceUT.retrieve(KEY, String.class);
         assertThat(result, is(nullValue()));
     }
 }

@@ -38,11 +38,10 @@ import static org.hamcrest.Matchers.nullValue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RestApiTest {
     private static final String VALID_USERNAME = "RefineriaWeb", INVALID_USERNAME = "";
-
-    private RestApi restApi;
+    private RestApi restApiUT;
 
     @Before public void setUp() {
-        restApi = new Retrofit.Builder()
+        restApiUT = new Retrofit.Builder()
                 .baseUrl(RestApi.URL_BASE)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,7 +50,7 @@ public class RestApiTest {
 
     @Test public void _1_When_Get_User_With_Valid_User_Name_Then_Get_UserDemo() {
         TestSubscriber<Response<UserDemoEntity>> subscriber = new TestSubscriber<>();
-        restApi.getUser(VALID_USERNAME).subscribe(subscriber);
+        restApiUT.getUser(VALID_USERNAME).subscribe(subscriber);
 
         subscriber.awaitTerminalEvent();
         Response<UserDemoEntity> userDemo = subscriber.getOnNextEvents().get(0);
@@ -61,7 +60,7 @@ public class RestApiTest {
 
     @Test public void _2_When_Get_User_With_Invalid_User_Name_Then_Throw_An_ExceptionOnSubscriber() {
         TestSubscriber<Response<UserDemoEntity>> subscriber = new TestSubscriber<>();
-        restApi.getUser(INVALID_USERNAME).subscribe(subscriber);
+        restApiUT.getUser(INVALID_USERNAME).subscribe(subscriber);
 
         subscriber.awaitTerminalEvent();
         Response<UserDemoEntity> userDemo = subscriber.getOnNextEvents().get(0);
@@ -70,7 +69,7 @@ public class RestApiTest {
 
     @Test public void _3_When_Get_Users_Then_Get_Users() {
         TestSubscriber<Response<List<UserDemoEntity>>> subscriber = new TestSubscriber<>();
-        restApi.getUsers().subscribe(subscriber);
+        restApiUT.getUsers().subscribe(subscriber);
 
         subscriber.awaitTerminalEvent();
         assertThat(subscriber.getOnNextEvents().size(), is(not(0)));
