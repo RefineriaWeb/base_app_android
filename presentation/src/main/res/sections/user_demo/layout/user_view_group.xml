@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_150dp"
     android:orientation="vertical">
@@ -8,7 +9,8 @@
         android:id="@+id/iv_avatar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:src="@drawable/geek" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -18,6 +20,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:textAllCaps="true"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/colorAccent"
+        tools:text="@string/user_name" />
 
 </RelativeLayout>
