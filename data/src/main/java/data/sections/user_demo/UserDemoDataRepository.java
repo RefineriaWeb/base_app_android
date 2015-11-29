@@ -51,18 +51,15 @@ public class UserDemoDataRepository extends DataRepository implements UserDemoRe
     }
 
     @Override public Observable<Boolean> saveSelectedUserDemoList(UserDemoEntity user) {
-        return Observable.create(subscriber -> {
-            boolean success = persistence.save(UserDemoEntity.class.getName(), user);
-            if (success) subscriber.onNext(true);
-            else subscriber.onError(new RuntimeException(locale.genericError()));
-        });
+        boolean success = persistence.save(UserDemoEntity.class.getName(), user);
+        if (success) return buildObservable(success);
+        else return buildObservableError(locale.genericError());
     }
 
     @Override public Observable<UserDemoEntity> getSelectedUserDemoList() {
-        return Observable.create(subscriber -> {
-            UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
-            if (userDemoEntity != null) subscriber.onNext(userDemoEntity);
-            else subscriber.onError(new RuntimeException(locale.genericError()));
-        });
+        UserDemoEntity userDemoEntity = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
+        if (userDemoEntity != null) return buildObservable(userDemoEntity);
+        else return buildObservableError(locale.genericError());
     }
+
 }

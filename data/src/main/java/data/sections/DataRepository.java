@@ -26,6 +26,7 @@ import data.storage.Persistence;
 import domain.foundation.Repository;
 import lombok.Data;
 import retrofit.Response;
+import rx.Observable;
 
 
 public abstract class DataRepository implements Repository {
@@ -52,5 +53,13 @@ public abstract class DataRepository implements Repository {
 
     @Data private static class ResponseError {
         private final String message;
+    }
+
+    protected Observable buildObservableError(String message) {
+        return Observable.create(subscriber -> subscriber.onError(new RuntimeException(message)));
+    }
+
+    protected <T> Observable<T> buildObservable(T t) {
+        return Observable.just(t);
     }
 }
