@@ -138,6 +138,7 @@ task('freshStart') << {
 
     String domain = "domain/src/main/java/domain/"
     Helper.removeDir(domain+"sections/user_demo")
+    Helper.removeDir(domain+"sections/dashboard")
     Helper.moveFileDeleting(startFresh+"Wireframe", domain+"sections/", "Wireframe.java")
     Helper.moveFileDeleting(startFresh+"LaunchPresenter", domain+"sections/launch/", "LaunchPresenter.java")
 
@@ -147,15 +148,20 @@ task('freshStart') << {
 
     String presentation = "presentation/src/main/java/presentation/"
     Helper.removeDir(presentation+"sections/user_demo")
+    Helper.removeDir(presentation+"sections/dashboard")
     Helper.moveFileDeleting(startFresh+"ApplicationComponent", presentation+"internal/di/", "ApplicationComponent.java")
     Helper.moveFileDeleting(startFresh+"WireframeDomain", presentation+"sections", "WireframeDomain.java")
 
     Helper.removeDir("presentation/src/main/res/sections/user_demo")
+    Helper.removeDir("presentation/src/main/res/sections/dashboard")
+    Helper.removeDir("presentation/src/main/res/drawable-xxxhdpi")
+
     Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
     Helper.moveFileDeleting(startFresh+"strings", "presentation/src/main/res/values/", "strings.xml")
 
     String presentationTest = "presentation/src/androidTest/java/presentation/"
     Helper.removeDir(presentationTest+"sections/user_demo")
+    Helper.removeDir(presentationTest+"sections/dashboard")
     Helper.moveFileDeleting(startFresh+"SuiteIntegration", presentationTest+"common/", "SuiteIntegration.java")
 
     Helper.moveFileDeleting(startFresh+"build", ".", "build.gradle")
