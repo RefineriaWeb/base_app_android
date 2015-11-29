@@ -28,7 +28,7 @@ public class LaunchPresenter extends Presenter<LaunchView> {
 
     @Override public void attachView(LaunchView view) {
         super.attachView(view);
-        wireframe.usersScreen();
+        wireframe.dashboard();
     }
 
     @Override public void dispose() {}

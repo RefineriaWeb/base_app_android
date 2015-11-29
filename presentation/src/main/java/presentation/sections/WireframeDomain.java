@@ -22,6 +22,7 @@ import presentation.foundation.BaseApp;
 import presentation.foundation.BaseToolbarActivity;
 import presentation.foundation.SingleFragmentActivity;
 import presentation.foundation.SingleFragmentActivity_;
+import presentation.sections.dashboard.DashBoardActivity_;
 import presentation.sections.user_demo.search_user.SearchUserFragment_;
 import presentation.sections.user_demo.user.UserFragment_;
 import presentation.sections.user_demo.users.UsersFragment_;
@@ -31,6 +32,11 @@ public class WireframeDomain implements Wireframe {
 
     public WireframeDomain(BaseApp baseApp) {
         this.baseApp = baseApp;
+    }
+
+    @Override public void dashboard() {
+        DashBoardActivity_.intent(baseApp.getLiveActivity())
+                .start();
     }
 
     @Override public void usersScreen() {
@@ -51,7 +57,7 @@ public class WireframeDomain implements Wireframe {
     }
 
     @Override public void searchUserScreen() {
-        String title = baseApp.getString(R.string.user);
+        String title = baseApp.getString(R.string.find_user);
         SingleFragmentActivity_.intent(baseApp.getLiveActivity())
                 .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
                 .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment_.class)

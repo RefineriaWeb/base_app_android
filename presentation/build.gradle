@@ -60,6 +60,7 @@ android {
                     [
                             'src/main/res/sections/common',
                             'src/main/res/sections/user_demo',
+                            'src/main/res/sections/dashboard',
                             'src/main/res/sections',
                             'src/main/res'
                     ]

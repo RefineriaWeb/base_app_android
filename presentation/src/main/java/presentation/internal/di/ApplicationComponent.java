@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import presentation.foundation.BaseCompatActivity;
+import presentation.sections.dashboard.DashBoardActivity;
 import presentation.sections.launch.LaunchActivity;
 import presentation.sections.user_demo.search_user.SearchUserFragment;
 import presentation.sections.user_demo.user.UserFragment;
@@ -34,6 +35,7 @@ public interface ApplicationComponent {
     void inject(BaseCompatActivity baseCompatActivity);
     void inject(LaunchActivity launchActivity);
 
+    void inject(DashBoardActivity dashBoardActivity);
     void inject(UserFragment userFragment);
     void inject(UsersFragment usersFragment);
     void inject(SearchUserFragment searchUserFragment);

@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package domain.foundation;
+package domain.sections.dashboard;
 
-/**
- * Base class for any UseCase which required only one Agent.
- * The use case asks for defined operations to the Agent, which is responsible for execute them.
- * @param <T> The Agent used for this UseCase.
- */
-
-public abstract class UseCaseSingleAgent<T extends Agent, D> extends UseCase<D> {
-    protected final T agent;
-
-    public UseCaseSingleAgent(T agent) {
-        this.agent = agent;
-    }
-
-    @Override public void dispose() {
-        agent.dispose();
-    }
+public interface DashboardItemsMenu {
+    void configureUsers(ItemMenu itemMenu);
+    void configureUser(ItemMenu itemMenu);
+    void configureSearchUser(ItemMenu itemMenu);
 }

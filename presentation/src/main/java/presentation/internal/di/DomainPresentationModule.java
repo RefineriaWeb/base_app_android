@@ -25,9 +25,11 @@ import domain.di.DomainModule;
 import domain.foundation.schedulers.ObserveOn;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
+import domain.sections.dashboard.DashboardItemsMenu;
 import presentation.foundation.BaseApp;
 import presentation.sections.LocaleDomain;
 import presentation.sections.WireframeDomain;
+import presentation.sections.dashboard.DashboardItemsMenuDomain;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -58,5 +60,12 @@ public class DomainPresentationModule {
      */
     @Singleton @Provides Wireframe provideAndroidWireframe(BaseApp baseApp) {
         return new WireframeDomain(baseApp);
+    }
+
+    /**
+     * Implements the DashboardItemsMenu
+     */
+    @Singleton @Provides DashboardItemsMenu provideDashboardItemsMenuDomain(BaseApp baseApp) {
+        return new DashboardItemsMenuDomain(baseApp);
     }
 }

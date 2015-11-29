@@ -17,6 +17,7 @@
 package presentation.foundation;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import org.androidannotations.annotations.EActivity;
 
@@ -35,15 +36,18 @@ public class SingleFragmentActivity extends BaseToolbarActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
-            throw new IllegalStateException("When using HostCommonActivity you need to supply " +
+            Log.w("SingleFragmentActivity", "When using HostCommonActivity you need to supply " +
                     "a valid type BaseFragment class by extra argument in the intent" +
                     "with key " + Behaviour.FRAGMENT_CLASS_KEY);
+            return;
         }
 
         Serializable serializable = bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY);
+        replaceFragment((Class<BaseFragment>) serializable);
+    }
 
+    public  <T extends BaseFragment> void replaceFragment(Class<T> clazz) {
         try {
-            Class<BaseFragment> clazz = (Class<BaseFragment>) serializable;
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, clazz.newInstance()).commit();
         } catch (InstantiationException e) {
             throw new IllegalStateException(e.getMessage());

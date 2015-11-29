@@ -14,22 +14,13 @@
  * limitations under the License.
  */
 
-package domain.foundation;
+package domain.sections.dashboard;
 
-/**
- * Base class for any UseCase which required only one Agent.
- * The use case asks for defined operations to the Agent, which is responsible for execute them.
- * @param <T> The Agent used for this UseCase.
- */
+import lombok.Data;
 
-public abstract class UseCaseSingleAgent<T extends Agent, D> extends UseCase<D> {
-    protected final T agent;
-
-    public UseCaseSingleAgent(T agent) {
-        this.agent = agent;
-    }
-
-    @Override public void dispose() {
-        agent.dispose();
-    }
+@Data
+public class ItemMenu<T> {
+    public final int id;
+    public String title;
+    public T imageResource;
 }

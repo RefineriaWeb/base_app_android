@@ -19,7 +19,7 @@ package domain.foundation;
 import rx.Subscriber;
 
 /**
- * Base class for any UseCase which required only one Agent.
+ * Base class for any UseCase.
  * @param <D> The type of data associated with the Subscriber.
  */
 public abstract class UseCase<D> implements Disposable {

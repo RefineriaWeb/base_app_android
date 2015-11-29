@@ -20,6 +20,7 @@ package domain.sections;
  * Provides the routing for the application screens. Its behaviour is defined in the presentation layer.
  */
 public interface Wireframe {
+    void dashboard();
     void searchUserScreen();
     void userScreen();
     void usersScreen();
