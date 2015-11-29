@@ -150,6 +150,8 @@ task('freshStart') << {
     Helper.removeDir(presentation+"sections/user_demo")
     Helper.removeDir(presentation+"sections/dashboard")
     Helper.moveFileDeleting(startFresh+"ApplicationComponent", presentation+"internal/di/", "ApplicationComponent.java")
+    Helper.moveFileDeleting(startFresh+"DomainPresentationModule", presentation+"internal/di/", "DomainPresentationModule.java")
+
     Helper.moveFileDeleting(startFresh+"WireframeDomain", presentation+"sections", "WireframeDomain.java")
 
     Helper.removeDir("presentation/src/main/res/sections/user_demo")
