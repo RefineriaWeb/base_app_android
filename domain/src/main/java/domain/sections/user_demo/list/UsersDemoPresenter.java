@@ -38,11 +38,13 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
 
     @Override public void attachView(UsersView view) {
         super.attachView(view);
-        getUsersDemoUseCase.getUsers(new LcePresenterSubscriber<List<UserDemoEntity>, UsersView>(view) {});
+        getUsersDemoUseCase.execute(new LcePresenterSubscriber<List<UserDemoEntity>, UsersView>(view) {
+        });
     }
 
     public void goToDetail(UserDemoEntity user) {
-        saveUserDemoSelectedListUseCase.saveUser(user, new DefaultSubscriber() {
+        saveUserDemoSelectedListUseCase.setUserDemoEntity(user);
+        saveUserDemoSelectedListUseCase.execute(new DefaultSubscriber() {
             @Override public void onError(Throwable e) {
                 view.showError(e.getMessage());
             }

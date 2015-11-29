@@ -18,19 +18,23 @@ package domain.sections.user_demo.search_user;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
+import domain.foundation.UseCaseSingleAgent;
 import domain.sections.user_demo.UserDemoAgent;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Subscriber;
 
-public class SearchUserDemoUseCase extends UseCase<UserDemoAgent> {
+public class SearchUserDemoUseCase extends UseCaseSingleAgent<UserDemoAgent, UserDemoEntity> {
+    private String name;
 
     @Inject public SearchUserDemoUseCase(UserDemoAgent agent) {
         super(agent);
     }
 
-    public void getUser(String name, Subscriber<UserDemoEntity> subscriber) {
-        agent.getUser(name, subscriber);
+    public void setName(String name) {
+        this.name = name;
     }
 
+    @Override public void execute(Subscriber<UserDemoEntity> subscriber) {
+        agent.getUser(name, subscriber);
+    }
 }

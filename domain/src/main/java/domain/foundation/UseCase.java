@@ -16,20 +16,12 @@
 
 package domain.foundation;
 
+import rx.Subscriber;
+
 /**
- * Base class for any UseCase.
- * The use case asks for defined operations to the Agent, which is responsible for execute them.
- * @param <T> The Agent used for this UseCase.
+ * Base class for any UseCase which required only one Agent.
+ * @param <D> The type of data associated with the Subscriber.
  */
-
-public abstract class UseCase <T extends Agent> implements Disposable {
-    protected final T agent;
-
-    public UseCase(T agent) {
-        this.agent = agent;
-    }
-
-    @Override public void dispose() {
-        agent.dispose();
-    }
+public abstract class UseCase<D> implements Disposable {
+    public abstract void execute(Subscriber<D> subscriber);
 }

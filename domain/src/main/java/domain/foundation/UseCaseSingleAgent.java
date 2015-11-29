@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.detail;
+package domain.foundation;
 
-import javax.inject.Inject;
+/**
+ * Base class for any UseCase.
+ * The use case asks for defined operations to the Agent, which is responsible for execute them.
+ * @param <T> The Agent used for this UseCase.
+ */
 
-import domain.foundation.UseCaseSingleAgent;
-import domain.sections.user_demo.UserDemoAgent;
-import domain.sections.user_demo.entities.UserDemoEntity;
-import rx.Subscriber;
+public abstract class UseCaseSingleAgent<T extends Agent, D> extends UseCase<D> {
+    protected final T agent;
 
-public class GetSelectedDemoUserListUseCase extends UseCaseSingleAgent<UserDemoAgent, UserDemoEntity> {
-    @Inject public GetSelectedDemoUserListUseCase(UserDemoAgent agent) {
-        super(agent);
+    public UseCaseSingleAgent(T agent) {
+        this.agent = agent;
     }
 
-    @Override public void execute(Subscriber<UserDemoEntity> subscriber) {
-        agent.getSelectedDemoUserList(subscriber);
+    @Override public void dispose() {
+        agent.dispose();
     }
 }

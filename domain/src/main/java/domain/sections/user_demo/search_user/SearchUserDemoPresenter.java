@@ -31,7 +31,7 @@ public class SearchUserDemoPresenter extends PresenterSingleUseCase<UserView, Se
     }
 
     public void getUserByUserName(String username) {
-        useCase.getUser(username, new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {
-        });
+        useCase.setName(username);
+        useCase.execute(new LcePresenterSubscriber<UserDemoEntity, UserView>(view){});
     }
 }

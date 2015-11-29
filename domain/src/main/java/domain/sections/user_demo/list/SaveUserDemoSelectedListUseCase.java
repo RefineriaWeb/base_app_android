@@ -18,18 +18,23 @@ package domain.sections.user_demo.list;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
+import domain.foundation.UseCaseSingleAgent;
 import domain.sections.user_demo.UserDemoAgent;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Subscriber;
 
-public class SaveUserDemoSelectedListUseCase extends UseCase<UserDemoAgent> {
+public class SaveUserDemoSelectedListUseCase extends UseCaseSingleAgent<UserDemoAgent, Object> {
+    private UserDemoEntity userDemoEntity;
 
     @Inject public SaveUserDemoSelectedListUseCase(UserDemoAgent agent) {
         super(agent);
     }
 
-    public void saveUser(UserDemoEntity user, Subscriber subscriber) {
-        agent.saveSelectedUserDemoList(user, subscriber);
+    public void setUserDemoEntity(UserDemoEntity userDemoEntity) {
+        this.userDemoEntity = userDemoEntity;
+    }
+
+    @Override public void execute(Subscriber subscriber) {
+        agent.saveSelectedUserDemoList(userDemoEntity, subscriber);
     }
 }

@@ -32,8 +32,7 @@ public class UserDemoPresenter extends PresenterSingleUseCase<UserView, GetSelec
 
     @Override public void attachView(UserView view) {
         super.attachView(view);
-        useCase.getCachedUser(new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {
-        });
+        useCase.execute(new LcePresenterSubscriber<UserDemoEntity, UserView>(view) {});
     }
 
     public void goToSearchScreen() {

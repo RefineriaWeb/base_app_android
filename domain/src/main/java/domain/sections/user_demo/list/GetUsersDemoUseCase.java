@@ -20,19 +20,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
+import domain.foundation.UseCaseSingleAgent;
 import domain.sections.user_demo.UserDemoAgent;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Subscriber;
 
-public class GetUsersDemoUseCase extends UseCase<UserDemoAgent> {
+public class GetUsersDemoUseCase extends UseCaseSingleAgent<UserDemoAgent, List<UserDemoEntity>> {
 
     @Inject public GetUsersDemoUseCase(UserDemoAgent agent) {
         super(agent);
     }
 
-    public void getUsers(Subscriber<List<UserDemoEntity>> subscriber) {
+    @Override public void execute(Subscriber<List<UserDemoEntity>> subscriber) {
         agent.getUsers(subscriber);
     }
-
 }
