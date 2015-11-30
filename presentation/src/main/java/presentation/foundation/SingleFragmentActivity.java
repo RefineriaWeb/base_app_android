@@ -46,7 +46,13 @@ public class SingleFragmentActivity extends BaseToolbarActivity {
         replaceFragment((Class<BaseFragment>) serializable);
     }
 
-    public  <T extends BaseFragment> void replaceFragment(Class<T> clazz) {
+    protected <T extends BaseFragment> void replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
+        BaseFragment current = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
+        if (current != null && current.getClass() == clazz) return;
+        replaceFragment(clazz);
+    }
+
+    protected <T extends BaseFragment> void replaceFragment(Class<T> clazz) {
         try {
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, clazz.newInstance()).commit();
         } catch (InstantiationException e) {
@@ -54,6 +60,10 @@ public class SingleFragmentActivity extends BaseToolbarActivity {
         } catch (IllegalAccessException e) {
             throw new IllegalStateException(e.getMessage());
         }
+    }
+
+    @Override public void setTitle(CharSequence title) {
+        getSupportActionBar().setTitle(title);
     }
 
     public interface Behaviour {

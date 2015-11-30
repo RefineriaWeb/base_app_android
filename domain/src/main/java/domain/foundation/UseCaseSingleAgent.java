@@ -19,13 +19,13 @@ package domain.foundation;
 /**
  * Base class for any UseCase which required only one Agent.
  * The use case asks for defined operations to the Agent, which is responsible for execute them.
- * @param <T> The Agent used for this UseCase.
+ * @param <A> The Agent used for this UseCase.
  */
 
-public abstract class UseCaseSingleAgent<T extends Agent, D> extends UseCase<D> {
-    protected final T agent;
+public abstract class UseCaseSingleAgent<A extends Agent, D> extends UseCase<D> {
+    protected final A agent;
 
-    public UseCaseSingleAgent(T agent) {
+    public UseCaseSingleAgent(A agent) {
         this.agent = agent;
     }
 

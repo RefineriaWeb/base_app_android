@@ -22,10 +22,10 @@ import rx.Subscriber;
  * Provides a default subscriber for any
  * @see domain.foundation.Presenter
  */
-public abstract class DefaultSubscriber<T> extends Subscriber<T> {
+public abstract class DefaultSubscriber<D> extends Subscriber<D> {
     @Override public void onCompleted() {}
 
     @Override public void onError(Throwable e) {}
 
-    @Override public void onNext(T t) {}
+    @Override public void onNext(D data) {}
 }

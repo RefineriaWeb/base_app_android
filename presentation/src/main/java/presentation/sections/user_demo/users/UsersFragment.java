@@ -16,16 +16,12 @@
 
 package presentation.sections.user_demo.users;
 
-import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -43,7 +39,7 @@ import presentation.utilities.recyclerview_adapter.RecyclerViewAdapterBase;
 public class UsersFragment extends BaseFragment<UsersDemoPresenter> implements UsersView {
     @ViewById protected View pb_loading;
     @ViewById protected RecyclerView rv_users;
-    @Bean protected UserAdapter userAdapter;
+    private RecyclerViewAdapterBase<UserDemoEntity, UserViewGroup> adapter;
 
     @Override protected void init() {
         super.init();
@@ -60,8 +56,14 @@ public class UsersFragment extends BaseFragment<UsersDemoPresenter> implements U
         rv_users.setHasFixedSize(true);
         rv_users.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        userAdapter.addListener((user, userViewGroup) -> presenter.goToDetail(user));
-        rv_users.setAdapter(userAdapter);
+        adapter = new RecyclerViewAdapterBase<UserDemoEntity, UserViewGroup>() {
+            @Override protected UserViewGroup onCreateItemView(ViewGroup parent, int viewType) {
+                return UserViewGroup_.build(getActivity());
+            }
+        };
+
+        adapter.addListener((user, userViewGroup) -> presenter.goToDetail(user));
+        rv_users.setAdapter(adapter);
     }
 
     @Override public void showProgress() {
@@ -75,18 +77,11 @@ public class UsersFragment extends BaseFragment<UsersDemoPresenter> implements U
     }
 
     @Override public void showData(List<UserDemoEntity> users) {
-        userAdapter.setAll(users);
+        adapter.setAll(users);
     }
 
     @Override public void showError(String message) {
         showToast(message);
     }
 
-    @EBean static protected class UserAdapter extends RecyclerViewAdapterBase<UserDemoEntity, UserViewGroup> {
-        @RootContext protected Context context;
-
-        @Override protected UserViewGroup onCreateItemView(ViewGroup parent, int viewType) {
-            return UserViewGroup_.build(context);
-        }
-    }
 }

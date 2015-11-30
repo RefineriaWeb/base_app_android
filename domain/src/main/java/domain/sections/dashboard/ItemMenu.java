@@ -19,8 +19,8 @@ package domain.sections.dashboard;
 import lombok.Data;
 
 @Data
-public class ItemMenu<T> {
+public class ItemMenu {
     public final int id;
     public String title;
-    public T imageResource;
+    public Object imageResource;
 }

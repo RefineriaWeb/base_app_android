@@ -105,20 +105,20 @@ public class DashBoardActivity extends SingleFragmentActivity implements Dashboa
 
     @StringRes protected String users;
     @Override public void showUsers() {
-        replaceFragment(UsersFragment_.class);
-        getSupportActionBar().setTitle(users);
+        replaceFragmentIfItIsNotCurrentDisplayed(UsersFragment_.class);
+        setTitle(users);
     }
 
     @StringRes protected String user;
     @Override public void showUser() {
-        replaceFragment(UserFragment_.class);
-        getSupportActionBar().setTitle(user);
+        replaceFragmentIfItIsNotCurrentDisplayed(UserFragment_.class);
+        setTitle(user);
     }
 
     @StringRes protected String find_user;
     @Override public void showUserSearch() {
-        replaceFragment(SearchUserFragment_.class);
-        getSupportActionBar().setTitle(find_user);
+        replaceFragmentIfItIsNotCurrentDisplayed(SearchUserFragment_.class);
+        setTitle(find_user);
     }
 
     @Override protected void onPostCreate(Bundle savedInstanceState) {
