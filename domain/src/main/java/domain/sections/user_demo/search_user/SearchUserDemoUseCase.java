@@ -35,6 +35,7 @@ public class SearchUserDemoUseCase extends UseCaseSingleAgent<UserDemoAgent, Use
     }
 
     @Override public void execute(Subscriber<UserDemoEntity> subscriber) {
+        assert name != null;
         agent.getUser(name, subscriber);
     }
 }

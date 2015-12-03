@@ -35,6 +35,7 @@ public class SaveUserDemoSelectedListUseCase extends UseCaseSingleAgent<UserDemo
     }
 
     @Override public void execute(Subscriber<Boolean> subscriber) {
+        assert userDemoEntity != null;
         agent.saveSelectedUserDemoList(userDemoEntity, subscriber);
     }
 }

@@ -45,6 +45,8 @@ public abstract class Agent<R extends Repository> implements domain.foundation.D
     }
 
     protected <T> void execute(Observable<T> observable, Subscriber<T> subscriber) {
+        assert subscriber != null;
+
         subscription.unsubscribe();
 
         subscription = observable
@@ -54,6 +56,8 @@ public abstract class Agent<R extends Repository> implements domain.foundation.D
     }
 
     protected void executeError(String message, Subscriber subscriber) {
+        assert subscriber != null;
+
         subscription.unsubscribe();
 
         subscription = Observable.create(it -> it.onError(new RuntimeException(message)))
