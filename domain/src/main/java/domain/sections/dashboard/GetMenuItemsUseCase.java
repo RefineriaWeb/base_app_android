@@ -21,13 +21,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCaseNoRepo;
+import domain.foundation.UseCase;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
 import rx.Observable;
 
-public class GetMenuItemsUseCase extends UseCaseNoRepo<List<ItemMenu>> {
+public class GetMenuItemsUseCase extends UseCase<List<ItemMenu>> {
     public static final int ID_USERS = 1, ID_USER = 2, ID_SEARCH_USER = 3;
     private final DashboardItemsMenu dashboardItemsMenu;
 
@@ -37,7 +37,7 @@ public class GetMenuItemsUseCase extends UseCaseNoRepo<List<ItemMenu>> {
         this.dashboardItemsMenu = dashboardItemsMenu;
     }
 
-    @Override protected Observable<List<ItemMenu>> observable() {
+    @Override protected Observable<List<ItemMenu>> buildObservable() {
         ItemMenu users = new ItemMenu(ID_USERS);
         dashboardItemsMenu.configureUsers(users);
 

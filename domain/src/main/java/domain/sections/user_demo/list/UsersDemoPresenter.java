@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import domain.foundation.DefaultSubscriber;
 import domain.foundation.Presenter;
 import domain.foundation.lce.LcePresenterSubscriber;
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.entities.UserDemoEntity;
 
@@ -28,8 +29,8 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
     private final GetUsersDemoUseCase getUsersDemoUseCase;
     private final SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase;
 
-    @Inject public UsersDemoPresenter(Wireframe wireframe, GetUsersDemoUseCase getUsersDemoUseCase, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
-        super(wireframe);
+    @Inject public UsersDemoPresenter(Wireframe wireframe, Locale locale, GetUsersDemoUseCase getUsersDemoUseCase, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
+        super(wireframe, locale);
         this.getUsersDemoUseCase = getUsersDemoUseCase;
         this.saveUserDemoSelectedListUseCase = saveUserDemoSelectedListUseCase;
     }

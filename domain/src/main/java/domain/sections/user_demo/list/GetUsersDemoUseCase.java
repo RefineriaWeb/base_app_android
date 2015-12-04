@@ -20,7 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
+import domain.foundation.UseCaseSingleRepository;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
@@ -28,13 +28,13 @@ import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class GetUsersDemoUseCase extends UseCase<UserDemoRepository, List<UserDemoEntity>> {
+public class GetUsersDemoUseCase extends UseCaseSingleRepository<UserDemoRepository, List<UserDemoEntity>> {
 
     @Inject public GetUsersDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
         super(repository, subscribeOn, observeOn, locale);
     }
 
-    @Override protected Observable<List<UserDemoEntity>> observable() {
+    @Override protected Observable<List<UserDemoEntity>> buildObservable() {
         return repository.askForUsers();
     }
 }

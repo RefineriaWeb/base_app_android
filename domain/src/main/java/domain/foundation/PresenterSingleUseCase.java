@@ -16,6 +16,7 @@
 
 package domain.foundation;
 
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 
 /**
@@ -24,13 +25,13 @@ import domain.sections.Wireframe;
  * @param <U> The use case used in this presenter.
  * @see  Presenter
  * @see  BaseView
- * @see  UseCase
+ * @see  UseCaseSingleRepository
  */
-public abstract class PresenterSingleUseCase<V extends BaseView, U extends UseCase> extends Presenter<V> {
+public abstract class PresenterSingleUseCase<V extends BaseView, U extends UseCaseSingleRepository> extends Presenter<V> {
     protected final U useCase;
 
-    public PresenterSingleUseCase(Wireframe wireframe, U useCase) {
-        super(wireframe);
+    public PresenterSingleUseCase(Wireframe wireframe, Locale locale, U useCase) {
+        super(wireframe, locale);
         this.useCase = useCase;
     }
 

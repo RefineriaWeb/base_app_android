@@ -19,11 +19,12 @@ package domain.sections.launch;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 
 public class LaunchPresenter extends Presenter<LaunchView> {
-    @Inject public LaunchPresenter(Wireframe wireframe) {
-        super(wireframe);
+    @Inject public LaunchPresenter(Wireframe wireframe, Locale locale) {
+        super(wireframe, locale);
     }
 
     @Override public void attachView(LaunchView view) {

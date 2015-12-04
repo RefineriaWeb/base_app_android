@@ -21,11 +21,18 @@ import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
 
 /**
- * Base class for any UseCase which has not need to get the data from the data layer
+ * Base class for any UseCase.
+ * UseCase which retrieves its data from an specific repository
+ * @param <R> The repository interface used by this agent
+ * @see  Repository
  */
-public abstract class UseCaseNoRepo<D> extends UseCase<Repository, D> {
 
-    public UseCaseNoRepo(SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
-        super(null, subscribeOn, observeOn, locale);
+public abstract class UseCaseSingleRepository<R extends Repository, D> extends UseCase<D> implements Disposable {
+    protected final R repository;
+
+    public UseCaseSingleRepository(R repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        super(subscribeOn, observeOn, locale);
+        this.repository = repository;
     }
 }
+

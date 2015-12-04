@@ -30,16 +30,16 @@ import static org.junit.Assert.assertThat;
 
 public class UseCaseTest extends BaseTest {
     private final String SUCCESS = "success";
-    private UseCaseUnderTest agentUT;
+    private UseCaseUnderTest useCaseUT;
 
     @Override public void setUp() {
         super.setUp();
-        agentUT = new UseCaseUnderTest();
+        useCaseUT = new UseCaseUnderTest();
     }
 
     @Test public void When_Subscribe_Get_Response() {
         TestSubscriber<String> subscriberMock = new TestSubscriber<>();
-        agentUT.execute(subscriberMock);
+        useCaseUT.execute(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         String response = subscriberMock.getOnNextEvents().get(0);
@@ -53,28 +53,22 @@ public class UseCaseTest extends BaseTest {
             }
         };
 
-        agentUT.execute(subscriberMock);
+        useCaseUT.execute(subscriberMock);
         try {
             Thread.sleep(100);
-            agentUT.dispose();
+            useCaseUT.dispose();
             Thread.sleep(1000);
             assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
         } catch (InterruptedException e) {e.printStackTrace();}
     }
 
-    private class UseCaseUnderTest extends UseCase<RepositorySuccessMock, String> {
+    private class UseCaseUnderTest extends UseCase<String> {
 
         public UseCaseUnderTest() {
-            super(new RepositorySuccessMock(), subscribeOnMock, observeOnMock, localeMock);
+            super(subscribeOnMock, observeOnMock, localeMock);
         }
 
-        @Override protected Observable<String> observable() {
-            return repository.testResponse();
-        }
-    }
-
-    private class RepositorySuccessMock implements domain.foundation.Repository {
-        public Observable<String> testResponse() {
+        @Override protected Observable<String> buildObservable() {
             return Observable.just(SUCCESS).delay(1, TimeUnit.SECONDS);
         }
     }

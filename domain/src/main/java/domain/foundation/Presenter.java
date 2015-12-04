@@ -16,6 +16,7 @@
 
 package domain.foundation;
 
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 
 /**
@@ -28,9 +29,11 @@ import domain.sections.Wireframe;
 public abstract class Presenter<V extends BaseView> implements Disposable {
     protected V view;
     protected final Wireframe wireframe;
+    protected final Locale locale;
 
-    public Presenter(Wireframe wireframe) {
+    public Presenter(Wireframe wireframe, Locale locale) {
         this.wireframe = wireframe;
+        this.locale = locale;
     }
 
     public void attachView(V view) {

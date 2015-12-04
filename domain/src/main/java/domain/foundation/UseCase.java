@@ -26,20 +26,16 @@ import rx.subscriptions.Subscriptions;
 
 /**
  * Base class for any UseCase.
- * The UseCase is in charge of retrieving from the repository the pertinent data and processing it for any presenter
- * @param <R> The repository interface used by this agent
- * @param <D> The The type of data associated with the Subscriber..
- * @see  Repository
+ * The UseCase is in charge of processing data  for any presenter.
+ * @param <D> The type of data associated with the Subscriber.
  */
-public abstract class UseCase<R extends Repository, D> implements Disposable {
-    protected final R repository;
+public abstract class UseCase<D> implements Disposable {
     protected final Locale locale;
     private final SubscribeOn subscribeOn;
     private final ObserveOn observeOn;
     private Subscription subscription = Subscriptions.empty();
 
-    public UseCase(R repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
-        this.repository = repository;
+    public UseCase(SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;
         this.locale = locale;
@@ -50,17 +46,13 @@ public abstract class UseCase<R extends Repository, D> implements Disposable {
 
         unsubscribe();
 
-        subscription = observable()
+        subscription = buildObservable()
                 .subscribeOn(subscribeOn.getScheduler())
                 .observeOn(observeOn.getScheduler())
                 .subscribe(subscriber);
     }
 
-    protected abstract Observable<D> observable();
-
-    protected Observable<D> errorObservable(String message) {
-        return Observable.create(it -> it.onError(new RuntimeException(message)));
-    }
+    protected abstract Observable<D> buildObservable();
 
     private void unsubscribe() {
         if (!subscription.isUnsubscribed()) {

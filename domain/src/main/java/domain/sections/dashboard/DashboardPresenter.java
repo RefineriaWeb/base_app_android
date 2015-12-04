@@ -22,13 +22,14 @@ import javax.inject.Inject;
 
 import domain.foundation.DefaultSubscriber;
 import domain.foundation.Presenter;
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 
 public class DashboardPresenter extends Presenter<DashboardView> {
     private final GetMenuItemsUseCase getMenuItemsUseCase;
 
-    @Inject public DashboardPresenter(Wireframe wireframe, GetMenuItemsUseCase getMenuItemsUseCase) {
-        super(wireframe);
+    @Inject public DashboardPresenter(Wireframe wireframe, Locale locale, GetMenuItemsUseCase getMenuItemsUseCase) {
+        super(wireframe, locale);
         this.getMenuItemsUseCase = getMenuItemsUseCase;
     }
 

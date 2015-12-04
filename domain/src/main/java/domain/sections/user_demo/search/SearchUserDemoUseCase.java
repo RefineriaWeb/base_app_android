@@ -18,7 +18,7 @@ package domain.sections.user_demo.search;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
+import domain.foundation.UseCaseSingleRepository;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
@@ -26,7 +26,7 @@ import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class SearchUserDemoUseCase extends UseCase<UserDemoRepository, UserDemoEntity> {
+public class SearchUserDemoUseCase extends UseCaseSingleRepository<UserDemoRepository, UserDemoEntity> {
     private String name;
 
     @Inject public SearchUserDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
@@ -37,8 +37,8 @@ public class SearchUserDemoUseCase extends UseCase<UserDemoRepository, UserDemoE
         this.name = name;
     }
 
-    @Override protected Observable<UserDemoEntity> observable() {
-        if (name == null) return errorObservable(locale.errorNonEmptyFields());
+    @Override protected Observable<UserDemoEntity> buildObservable() {
+        assert name != null;
         return repository.searchByUserName(name);
     }
 }

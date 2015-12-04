@@ -20,17 +20,19 @@ import javax.inject.Inject;
 
 import domain.foundation.PresenterSingleUseCase;
 import domain.foundation.lce.LcePresenterSubscriber;
+import domain.sections.Locale;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
 
 public class SearchUserDemoPresenter extends PresenterSingleUseCase<UserView, SearchUserDemoUseCase> {
 
-    @Inject public SearchUserDemoPresenter(Wireframe wireframe, SearchUserDemoUseCase searchUserDemoUseCase) {
-        super(wireframe, searchUserDemoUseCase);
+    @Inject public SearchUserDemoPresenter(Wireframe wireframe, Locale locale, SearchUserDemoUseCase searchUserDemoUseCase) {
+        super(wireframe, locale, searchUserDemoUseCase);
     }
 
     public void getUserByUserName(String username) {
         useCase.setName(username);
-        useCase.execute(new LcePresenterSubscriber(view));
+        if (username == null || username.isEmpty()) view.showError(locale.errorNonEmptyFields());
+        else useCase.execute(new LcePresenterSubscriber(view));
     }
 }

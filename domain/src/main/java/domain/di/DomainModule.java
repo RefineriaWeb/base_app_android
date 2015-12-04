@@ -34,7 +34,7 @@ public class DomainModule {
      * The operation will be executed in a new thread, this way the UI won't be block
      */
     @Singleton @Provides SubscribeOn provideSubscribeOn() {
-        return (() -> Schedulers.newThread());
+        return (() -> Schedulers.io());
     }
 
 }

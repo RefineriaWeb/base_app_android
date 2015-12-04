@@ -18,7 +18,7 @@ package domain.sections.user_demo.list;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
+import domain.foundation.UseCaseSingleRepository;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
@@ -26,7 +26,7 @@ import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class SaveUserDemoSelectedListUseCase extends UseCase<UserDemoRepository, Boolean> {
+public class SaveUserDemoSelectedListUseCase extends UseCaseSingleRepository<UserDemoRepository, Boolean> {
     private UserDemoEntity userDemoEntity;
 
     @Inject public SaveUserDemoSelectedListUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
@@ -37,7 +37,7 @@ public class SaveUserDemoSelectedListUseCase extends UseCase<UserDemoRepository,
         this.userDemoEntity = userDemoEntity;
     }
 
-    @Override protected Observable<Boolean> observable() {
+    @Override protected Observable<Boolean> buildObservable() {
         assert userDemoEntity != null;
         return repository.saveSelectedUserDemoList(userDemoEntity);
     }
