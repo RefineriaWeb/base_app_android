@@ -16,8 +16,6 @@
 
 package domain.sections.user_demo.list;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import domain.foundation.DefaultSubscriber;
@@ -38,8 +36,7 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
 
     @Override public void attachView(UsersView view) {
         super.attachView(view);
-        getUsersDemoUseCase.execute(new LcePresenterSubscriber<List<UserDemoEntity>, UsersView>(view) {
-        });
+        getUsersDemoUseCase.execute(new LcePresenterSubscriber(view));
     }
 
     public void goToDetail(UserDemoEntity user) {

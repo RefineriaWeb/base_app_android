@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.sections.user_demo.search_user;
+package presentation.sections.user_demo.search;
 
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +26,7 @@ import org.androidannotations.annotations.ViewById;
 import base.app.android.R;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
-import domain.sections.user_demo.search_user.SearchUserDemoPresenter;
+import domain.sections.user_demo.search.SearchUserDemoPresenter;
 import presentation.foundation.BaseFragment;
 import presentation.sections.user_demo.UserViewGroup;
 

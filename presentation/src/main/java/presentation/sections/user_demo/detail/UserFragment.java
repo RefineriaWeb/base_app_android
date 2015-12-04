@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.sections.user_demo.user;
+package presentation.sections.user_demo.detail;
 
 import android.view.View;
 

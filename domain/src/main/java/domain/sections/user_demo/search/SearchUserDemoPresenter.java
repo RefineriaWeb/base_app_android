@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.search_user;
+package domain.sections.user_demo.search;
 
 import javax.inject.Inject;
 

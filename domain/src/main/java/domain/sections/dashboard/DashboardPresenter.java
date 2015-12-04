@@ -25,16 +25,16 @@ import domain.foundation.Presenter;
 import domain.sections.Wireframe;
 
 public class DashboardPresenter extends Presenter<DashboardView> {
-    private final DashboardGetMenuItemsUseCase dashboardGetMenuItemsUseCase;
+    private final GetMenuItemsUseCase getMenuItemsUseCase;
 
-    @Inject public DashboardPresenter(Wireframe wireframe, DashboardGetMenuItemsUseCase dashboardGetMenuItemsUseCase) {
+    @Inject public DashboardPresenter(Wireframe wireframe, GetMenuItemsUseCase getMenuItemsUseCase) {
         super(wireframe);
-        this.dashboardGetMenuItemsUseCase = dashboardGetMenuItemsUseCase;
+        this.getMenuItemsUseCase = getMenuItemsUseCase;
     }
 
     @Override public void attachView(DashboardView view) {
         super.attachView(view);
-        dashboardGetMenuItemsUseCase.execute(new DefaultSubscriber<List<ItemMenu>>() {
+        getMenuItemsUseCase.execute(new DefaultSubscriber<List<ItemMenu>>() {
             @Override public void onNext(List<ItemMenu> itemsMenuDashboards) {
                 view.loadMenus(itemsMenuDashboards);
                 view.showUsers();
@@ -43,15 +43,15 @@ public class DashboardPresenter extends Presenter<DashboardView> {
     }
 
     public void setSelectedItemMenu(ItemMenu itemMenu) {
-        if (itemMenu.getId() == DashboardGetMenuItemsUseCase.ID_USERS)
+        if (itemMenu.getId() == GetMenuItemsUseCase.ID_USERS)
             view.showUsers();
-        else if (itemMenu.getId() == DashboardGetMenuItemsUseCase.ID_USER)
+        else if (itemMenu.getId() == GetMenuItemsUseCase.ID_USER)
             view.showUser();
         else
             view.showUserSearch();
     }
 
     @Override public void dispose() {
-        dashboardGetMenuItemsUseCase.dispose();
+        getMenuItemsUseCase.dispose();
     }
 }

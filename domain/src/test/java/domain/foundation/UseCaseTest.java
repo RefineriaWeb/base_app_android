@@ -22,20 +22,19 @@ import java.util.concurrent.TimeUnit;
 
 import domain.common.BaseTest;
 import rx.Observable;
-import rx.Subscriber;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class AgentTest extends BaseTest {
+public class UseCaseTest extends BaseTest {
     private final String SUCCESS = "success";
-    private AgentUnderTest agentUT;
+    private UseCaseUnderTest agentUT;
 
     @Override public void setUp() {
         super.setUp();
-        agentUT = new AgentUnderTest();
+        agentUT = new UseCaseUnderTest();
     }
 
     @Test public void When_Subscribe_Get_Response() {
@@ -63,14 +62,14 @@ public class AgentTest extends BaseTest {
         } catch (InterruptedException e) {e.printStackTrace();}
     }
 
-    private class AgentUnderTest extends Agent<RepositorySuccessMock> {
+    private class UseCaseUnderTest extends UseCase<RepositorySuccessMock, String> {
 
-        public AgentUnderTest() {
+        public UseCaseUnderTest() {
             super(new RepositorySuccessMock(), subscribeOnMock, observeOnMock, localeMock);
         }
 
-        public void execute(Subscriber<String> subscriber) {
-            execute(repository.testResponse(), subscriber);
+        @Override protected Observable<String> observable() {
+            return repository.testResponse();
         }
     }
 

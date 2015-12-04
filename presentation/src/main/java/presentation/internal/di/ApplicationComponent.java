@@ -22,9 +22,9 @@ import dagger.Component;
 import presentation.foundation.BaseCompatActivity;
 import presentation.sections.dashboard.DashBoardActivity;
 import presentation.sections.launch.LaunchActivity;
-import presentation.sections.user_demo.search_user.SearchUserFragment;
-import presentation.sections.user_demo.user.UserFragment;
-import presentation.sections.user_demo.users.UsersFragment;
+import presentation.sections.user_demo.search.SearchUserFragment;
+import presentation.sections.user_demo.detail.UserFragment;
+import presentation.sections.user_demo.list.UsersFragment;
 
 /**
  * Every fragment or activity which needs to be part of the dependency system provided by Dagger needs

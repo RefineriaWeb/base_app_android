@@ -144,6 +144,7 @@ task('freshStart') << {
 
     String domainTest = "domain/src/test/java/domain/"
     Helper.removeDir(domainTest+"sections/user_demo")
+    Helper.removeDir(domainTest+"sections/dashboard")
 
 
     String presentation = "presentation/src/main/java/presentation/"

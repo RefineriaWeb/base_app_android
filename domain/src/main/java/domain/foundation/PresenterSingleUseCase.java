@@ -24,9 +24,9 @@ import domain.sections.Wireframe;
  * @param <U> The use case used in this presenter.
  * @see  Presenter
  * @see  BaseView
- * @see  UseCaseSingleAgent
+ * @see  UseCase
  */
-public abstract class PresenterSingleUseCase<V extends BaseView, U extends UseCaseSingleAgent> extends Presenter<V> {
+public abstract class PresenterSingleUseCase<V extends BaseView, U extends UseCase> extends Presenter<V> {
     protected final U useCase;
 
     public PresenterSingleUseCase(Wireframe wireframe, U useCase) {

@@ -35,6 +35,7 @@ public class DashboardTest extends BaseTest {
 
     @Test public void Open_And_Close_Users() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        mediumWait();
         onView(withId(R.id.rv_menu_items)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         Spoon.screenshot(getCurrentActivity(), "Users");
@@ -43,6 +44,8 @@ public class DashboardTest extends BaseTest {
 
     @Test public void Open_And_Close_User() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        mediumWait();
+
         onView(withId(R.id.rv_menu_items)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
         Spoon.screenshot(getCurrentActivity(), "User");
@@ -51,6 +54,8 @@ public class DashboardTest extends BaseTest {
 
     @Test public void Open_And_Close_Search_User() {
         onView(withId(R.id.drawer_layout)).perform(actionOpenDrawer());
+        mediumWait();
+
         onView(withId(R.id.rv_menu_items)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
 
         Spoon.screenshot(getCurrentActivity(), "SearchUser");

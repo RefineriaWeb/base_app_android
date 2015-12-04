@@ -43,9 +43,9 @@ import domain.sections.dashboard.DashboardPresenter;
 import domain.sections.dashboard.DashboardView;
 import domain.sections.dashboard.ItemMenu;
 import presentation.foundation.SingleFragmentActivity;
-import presentation.sections.user_demo.search_user.SearchUserFragment_;
-import presentation.sections.user_demo.user.UserFragment_;
-import presentation.sections.user_demo.users.UsersFragment_;
+import presentation.sections.user_demo.search.SearchUserFragment_;
+import presentation.sections.user_demo.detail.UserFragment_;
+import presentation.sections.user_demo.list.UsersFragment_;
 import presentation.utilities.recyclerview_adapter.RecyclerViewAdapterBase;
 
 @EActivity(R.layout.dashboard_activity)

@@ -18,17 +18,21 @@ package domain.sections.user_demo.detail;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCaseSingleAgent;
-import domain.sections.user_demo.UserDemoAgent;
+import domain.foundation.UseCase;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
-import rx.Subscriber;
+import rx.Observable;
 
-public class GetSelectedDemoUserListUseCase extends UseCaseSingleAgent<UserDemoAgent, UserDemoEntity> {
-    @Inject public GetSelectedDemoUserListUseCase(UserDemoAgent agent) {
-        super(agent);
+public class GetSelectedDemoUserListUseCase extends UseCase<UserDemoRepository, UserDemoEntity> {
+
+    @Inject public GetSelectedDemoUserListUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        super(repository, subscribeOn, observeOn, locale);
     }
 
-    @Override public void execute(Subscriber<UserDemoEntity> subscriber) {
-        agent.getSelectedDemoUserList(subscriber);
+    @Override protected Observable<UserDemoEntity> observable() {
+        return repository.getSelectedUserDemoList();
     }
 }

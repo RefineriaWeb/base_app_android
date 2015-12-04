@@ -16,20 +16,16 @@
 
 package domain.foundation;
 
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+
 /**
- * Base class for any UseCase which required only one Agent.
- * The use case asks for defined operations to the Agent, which is responsible for execute them.
- * @param <A> The Agent used for this UseCase.
+ * Base class for any UseCase which has not need to get the data from the data layer
  */
+public abstract class UseCaseNoRepo<D> extends UseCase<Repository, D> {
 
-public abstract class UseCaseSingleAgent<A extends Agent, D> extends UseCase<D> {
-    protected final A agent;
-
-    public UseCaseSingleAgent(A agent) {
-        this.agent = agent;
-    }
-
-    @Override public void dispose() {
-        agent.dispose();
+    public UseCaseNoRepo(SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        super(null, subscribeOn, observeOn, locale);
     }
 }

@@ -16,12 +16,59 @@
 
 package domain.foundation;
 
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.subscriptions.Subscriptions;
 
 /**
  * Base class for any UseCase.
- * @param <D> The type of data associated with the Subscriber.
+ * The UseCase is in charge of retrieving from the repository the pertinent data and processing it for any presenter
+ * @param <R> The repository interface used by this agent
+ * @param <D> The The type of data associated with the Subscriber..
+ * @see  Repository
  */
-public abstract class UseCase<D> implements Disposable {
-    public abstract void execute(Subscriber<D> subscriber);
+public abstract class UseCase<R extends Repository, D> implements Disposable {
+    protected final R repository;
+    protected final Locale locale;
+    private final SubscribeOn subscribeOn;
+    private final ObserveOn observeOn;
+    private Subscription subscription = Subscriptions.empty();
+
+    public UseCase(R repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        this.repository = repository;
+        this.subscribeOn = subscribeOn;
+        this.observeOn = observeOn;
+        this.locale = locale;
+    }
+
+    public void execute(Subscriber<D> subscriber) {
+        assert subscriber != null;
+
+        unsubscribe();
+
+        subscription = observable()
+                .subscribeOn(subscribeOn.getScheduler())
+                .observeOn(observeOn.getScheduler())
+                .subscribe(subscriber);
+    }
+
+    protected abstract Observable<D> observable();
+
+    protected Observable<D> errorObservable(String message) {
+        return Observable.create(it -> it.onError(new RuntimeException(message)));
+    }
+
+    private void unsubscribe() {
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
+
+    @Override public void dispose() {
+        unsubscribe();
+    }
 }

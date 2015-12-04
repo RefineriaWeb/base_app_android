@@ -20,18 +20,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCaseSingleAgent;
-import domain.sections.user_demo.UserDemoAgent;
+import domain.foundation.UseCase;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
-import rx.Subscriber;
+import rx.Observable;
 
-public class GetUsersDemoUseCase extends UseCaseSingleAgent<UserDemoAgent, List<UserDemoEntity>> {
+public class GetUsersDemoUseCase extends UseCase<UserDemoRepository, List<UserDemoEntity>> {
 
-    @Inject public GetUsersDemoUseCase(UserDemoAgent agent) {
-        super(agent);
+    @Inject public GetUsersDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        super(repository, subscribeOn, observeOn, locale);
     }
 
-    @Override public void execute(Subscriber<List<UserDemoEntity>> subscriber) {
-        agent.getUsers(subscriber);
+    @Override protected Observable<List<UserDemoEntity>> observable() {
+        return repository.askForUsers();
     }
 }

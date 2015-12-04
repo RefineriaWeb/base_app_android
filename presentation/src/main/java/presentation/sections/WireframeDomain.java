@@ -23,9 +23,9 @@ import presentation.foundation.BaseToolbarActivity;
 import presentation.foundation.SingleFragmentActivity;
 import presentation.foundation.SingleFragmentActivity_;
 import presentation.sections.dashboard.DashBoardActivity_;
-import presentation.sections.user_demo.search_user.SearchUserFragment_;
-import presentation.sections.user_demo.user.UserFragment_;
-import presentation.sections.user_demo.users.UsersFragment_;
+import presentation.sections.user_demo.search.SearchUserFragment_;
+import presentation.sections.user_demo.detail.UserFragment_;
+import presentation.sections.user_demo.list.UsersFragment_;
 
 public class WireframeDomain implements Wireframe {
     private  final BaseApp baseApp;

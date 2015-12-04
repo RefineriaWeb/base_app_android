@@ -19,11 +19,14 @@ package presentation.common;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import presentation.sections.dashboard.DashboardTest;
 import presentation.sections.user_demo.UsersTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        DashboardTest.class,
         UsersTest.class
+
 })
 public class SuiteIntegration {
     

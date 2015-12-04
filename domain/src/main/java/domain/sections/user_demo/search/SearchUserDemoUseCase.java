@@ -14,28 +14,31 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.search_user;
+package domain.sections.user_demo.search;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCaseSingleAgent;
-import domain.sections.user_demo.UserDemoAgent;
+import domain.foundation.UseCase;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
-import rx.Subscriber;
+import rx.Observable;
 
-public class SearchUserDemoUseCase extends UseCaseSingleAgent<UserDemoAgent, UserDemoEntity> {
+public class SearchUserDemoUseCase extends UseCase<UserDemoRepository, UserDemoEntity> {
     private String name;
 
-    @Inject public SearchUserDemoUseCase(UserDemoAgent agent) {
-        super(agent);
+    @Inject public SearchUserDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+        super(repository, subscribeOn, observeOn, locale);
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override public void execute(Subscriber<UserDemoEntity> subscriber) {
-        assert name != null;
-        agent.getUser(name, subscriber);
+    @Override protected Observable<UserDemoEntity> observable() {
+        if (name == null) return errorObservable(locale.errorNonEmptyFields());
+        return repository.searchByUserName(name);
     }
 }

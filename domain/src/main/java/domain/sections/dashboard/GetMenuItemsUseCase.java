@@ -21,18 +21,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import domain.foundation.UseCase;
-import rx.Subscriber;
+import domain.foundation.UseCaseNoRepo;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
+import domain.sections.Locale;
+import rx.Observable;
 
-public class DashboardGetMenuItemsUseCase extends UseCase<List<ItemMenu>> {
+public class GetMenuItemsUseCase extends UseCaseNoRepo<List<ItemMenu>> {
     public static final int ID_USERS = 1, ID_USER = 2, ID_SEARCH_USER = 3;
     private final DashboardItemsMenu dashboardItemsMenu;
 
-    @Inject public DashboardGetMenuItemsUseCase(DashboardItemsMenu dashboardItemsMenu) {
+    @Inject public GetMenuItemsUseCase(SubscribeOn subscribeOn, ObserveOn observeOn,
+                               Locale locale, DashboardItemsMenu dashboardItemsMenu) {
+        super(subscribeOn, observeOn, locale);
         this.dashboardItemsMenu = dashboardItemsMenu;
     }
 
-    @Override public void execute(Subscriber<List<ItemMenu>> subscriber) {
+    @Override protected Observable<List<ItemMenu>> observable() {
         ItemMenu users = new ItemMenu(ID_USERS);
         dashboardItemsMenu.configureUsers(users);
 
@@ -42,8 +47,6 @@ public class DashboardGetMenuItemsUseCase extends UseCase<List<ItemMenu>> {
         ItemMenu searchUser = new ItemMenu(ID_SEARCH_USER);
         dashboardItemsMenu.configureSearchUser(searchUser);
 
-        subscriber.onNext(Arrays.asList(users, user, searchUser));
+        return Observable.just(Arrays.asList(users, user, searchUser));
     }
-
-    @Override public void dispose() {}
 }

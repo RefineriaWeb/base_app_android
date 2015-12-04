@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package presentation.sections.user_demo.users;
+package presentation.sections.user_demo.list;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
