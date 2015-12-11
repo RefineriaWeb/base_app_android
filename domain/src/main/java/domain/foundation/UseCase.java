@@ -26,19 +26,24 @@ import rx.subscriptions.Subscriptions;
 
 /**
  * Base class for any UseCase.
- * The UseCase is in charge of processing data  for any presenter.
- * @param <D> The type of data associated with the Subscriber.
+ * The UseCase retrieves its data from an specific repository and
+ * it is in charge of processing data for any presenter.
+ * @param <R> The repository interface used by this use case
+ * @see  Repository
  */
-public abstract class UseCase<D> implements Disposable {
+
+public abstract class UseCase<R extends Repository, D> implements Disposable {
+    protected final R repository;
     protected final Locale locale;
     private final SubscribeOn subscribeOn;
     private final ObserveOn observeOn;
     private Subscription subscription = Subscriptions.empty();
 
-    public UseCase(SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+    public UseCase(R repository, Locale locale, SubscribeOn subscribeOn, ObserveOn observeOn) {
+        this.repository = repository;
+        this.locale = locale;
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;
-        this.locale = locale;
     }
 
     public void execute(Subscriber<D> subscriber) {
@@ -50,6 +55,14 @@ public abstract class UseCase<D> implements Disposable {
                 .subscribeOn(subscribeOn.getScheduler())
                 .observeOn(observeOn.getScheduler())
                 .subscribe(subscriber);
+    }
+
+    /**
+     * Retrieve the built observable without executing it,
+     * provided to use use case inside another
+     */
+    public Observable<D> getObservable() {
+        return buildObservable();
     }
 
     protected abstract Observable<D> buildObservable();

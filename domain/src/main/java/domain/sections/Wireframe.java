@@ -24,4 +24,5 @@ public interface Wireframe {
     void searchUserScreen();
     void userScreen();
     void usersScreen();
+    void popCurrentScreen();
 }

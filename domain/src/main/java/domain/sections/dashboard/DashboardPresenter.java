@@ -25,17 +25,15 @@ import domain.foundation.Presenter;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
 
-public class DashboardPresenter extends Presenter<DashboardView> {
-    private final GetMenuItemsUseCase getMenuItemsUseCase;
+public class DashboardPresenter extends Presenter<DashboardView, GetMenuItemsUseCase> {
 
-    @Inject public DashboardPresenter(Wireframe wireframe, Locale locale, GetMenuItemsUseCase getMenuItemsUseCase) {
-        super(wireframe, locale);
-        this.getMenuItemsUseCase = getMenuItemsUseCase;
+    @Inject DashboardPresenter(GetMenuItemsUseCase useCase, Wireframe wireframe, Locale locale) {
+        super(useCase, wireframe, locale);
     }
 
     @Override public void attachView(DashboardView view) {
         super.attachView(view);
-        getMenuItemsUseCase.execute(new DefaultSubscriber<List<ItemMenu>>() {
+        useCase.execute(new DefaultSubscriber<List<ItemMenu>>() {
             @Override public void onNext(List<ItemMenu> itemsMenuDashboards) {
                 view.loadMenus(itemsMenuDashboards);
                 view.showUsers();
@@ -50,9 +48,5 @@ public class DashboardPresenter extends Presenter<DashboardView> {
             view.showUser();
         else
             view.showUserSearch();
-    }
-
-    @Override public void dispose() {
-        getMenuItemsUseCase.dispose();
     }
 }

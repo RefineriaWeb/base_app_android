@@ -14,31 +14,42 @@
  * limitations under the License.
  */
 
-package domain.sections.user_demo.list;
+package domain.sections.launch;
 
 import javax.inject.Inject;
 
+import domain.foundation.Repository;
 import domain.foundation.UseCase;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
-import domain.sections.user_demo.UserDemoRepository;
-import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class SaveUserDemoSelectedListUseCase extends UseCase<UserDemoRepository, Boolean> {
-    private UserDemoEntity userDemoEntity;
 
-    @Inject public SaveUserDemoSelectedListUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
+public class LaunchUseCase extends UseCase<LaunchUseCase.UserRepository, Boolean> {
+
+    @Inject LaunchUseCase(UserDataRepository repository, Locale locale, SubscribeOn subscribeOn, ObserveOn observeOn) {
         super(repository, locale, subscribeOn, observeOn);
     }
 
-    public void setUserDemoEntity(UserDemoEntity userDemoEntity) {
-        this.userDemoEntity = userDemoEntity;
+    /**
+     * Do some useful validation.  Is user logged?, etc
+     */
+    @Override protected Observable<Boolean> buildObservable() {
+        return repository.isUserLogged();
     }
 
-    @Override protected Observable<Boolean> buildObservable() {
-        assert userDemoEntity != null;
-        return repository.saveSelectedUserDemoList(userDemoEntity);
+    interface UserRepository extends Repository {
+        Observable<Boolean> isUserLogged();
     }
+
+    static class UserDataRepository implements UserRepository {
+
+        @Inject UserDataRepository() {}
+
+        @Override public Observable<Boolean> isUserLogged() {
+            return null;
+        }
+    }
+
 }

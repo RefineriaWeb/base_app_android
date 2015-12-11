@@ -46,7 +46,7 @@ public class UseCaseTest extends BaseTest {
         assertThat(response, equalToIgnoringCase(SUCCESS));
     }
 
-    @Test public void when_Unsubscribe_Do_Not_Get_Response() {
+    @Test public void When_Unsubscribe_Do_Not_Get_Response() {
         TestSubscriber<String> subscriberMock = new TestSubscriber<String>() {
             @Override public void onNext(String ignore) {
                 throw new RuntimeException();
@@ -62,13 +62,23 @@ public class UseCaseTest extends BaseTest {
         } catch (InterruptedException e) {e.printStackTrace();}
     }
 
-    private class UseCaseUnderTest extends UseCase<String> {
+    private class UseCaseUnderTest extends UseCase<UseCaseRepository, String> {
 
         public UseCaseUnderTest() {
-            super(subscribeOnMock, observeOnMock, localeMock);
+            super(new UseDataCaseRepository(), localeMock, subscribeOnMock, observeOnMock);
         }
 
         @Override protected Observable<String> buildObservable() {
+            return Observable.just(SUCCESS).delay(1, TimeUnit.SECONDS);
+        }
+    }
+
+    private interface UseCaseRepository extends Repository {
+        Observable<String> getString();
+    }
+
+    private class UseDataCaseRepository implements UseCaseRepository {
+        @Override public Observable<String> getString() {
             return Observable.just(SUCCESS).delay(1, TimeUnit.SECONDS);
         }
     }

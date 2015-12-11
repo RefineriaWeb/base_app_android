@@ -21,32 +21,46 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import domain.foundation.Repository;
 import domain.foundation.UseCase;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.Locale;
 import rx.Observable;
 
-public class GetMenuItemsUseCase extends UseCase<List<ItemMenu>> {
+public class GetMenuItemsUseCase extends UseCase<GetMenuItemsUseCase.DashboardRepository, List<ItemMenu>> {
     public static final int ID_USERS = 1, ID_USER = 2, ID_SEARCH_USER = 3;
-    private final DashboardItemsMenu dashboardItemsMenu;
 
-    @Inject public GetMenuItemsUseCase(SubscribeOn subscribeOn, ObserveOn observeOn,
-                               Locale locale, DashboardItemsMenu dashboardItemsMenu) {
-        super(subscribeOn, observeOn, locale);
-        this.dashboardItemsMenu = dashboardItemsMenu;
+    @Inject GetMenuItemsUseCase(DashboardDataRepository repository, Locale locale, SubscribeOn subscribeOn, ObserveOn observeOn) {
+        super(repository, locale, subscribeOn, observeOn);
     }
 
     @Override protected Observable<List<ItemMenu>> buildObservable() {
-        ItemMenu users = new ItemMenu(ID_USERS);
-        dashboardItemsMenu.configureUsers(users);
+        return repository.getItemsMenu();
+    }
 
-        ItemMenu user = new ItemMenu(ID_USER);
-        dashboardItemsMenu.configureUser(user);
+    interface DashboardRepository extends Repository {
+        Observable<List<ItemMenu>> getItemsMenu();
+    }
 
-        ItemMenu searchUser = new ItemMenu(ID_SEARCH_USER);
-        dashboardItemsMenu.configureSearchUser(searchUser);
+    static class DashboardDataRepository implements DashboardRepository {
+        private final DashboardItemsMenu dashboardItemsMenu;
 
-        return Observable.just(Arrays.asList(users, user, searchUser));
+        @Inject DashboardDataRepository(DashboardItemsMenu dashboardItemsMenu) {
+            this.dashboardItemsMenu = dashboardItemsMenu;
+        }
+
+        @Override public Observable<List<ItemMenu>> getItemsMenu() {
+            ItemMenu users = new ItemMenu(ID_USERS);
+            dashboardItemsMenu.configureUsers(users);
+
+            ItemMenu user = new ItemMenu(ID_USER);
+            dashboardItemsMenu.configureUser(user);
+
+            ItemMenu searchUser = new ItemMenu(ID_SEARCH_USER);
+            dashboardItemsMenu.configureSearchUser(searchUser);
+
+            return Observable.just(Arrays.asList(users, user, searchUser));
+        }
     }
 }

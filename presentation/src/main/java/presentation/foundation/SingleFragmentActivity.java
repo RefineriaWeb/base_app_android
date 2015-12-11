@@ -43,16 +43,16 @@ public class SingleFragmentActivity extends BaseToolbarActivity {
         }
 
         Serializable serializable = bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY);
-        replaceFragment((Class<BaseFragment>) serializable);
+        replaceFragment((Class<BasePresenterFragment>) serializable);
     }
 
-    protected <T extends BaseFragment> void replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
-        BaseFragment current = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
+    protected <T extends BasePresenterFragment> void replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
+        BasePresenterFragment current = (BasePresenterFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
         if (current != null && current.getClass() == clazz) return;
         replaceFragment(clazz);
     }
 
-    protected <T extends BaseFragment> void replaceFragment(Class<T> clazz) {
+    protected <T extends BasePresenterFragment> void replaceFragment(Class<T> clazz) {
         try {
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, clazz.newInstance()).commit();
         } catch (InstantiationException e) {

@@ -18,16 +18,16 @@ package domain.sections.user_demo.detail;
 
 import javax.inject.Inject;
 
-import domain.foundation.PresenterSingleUseCase;
+import domain.foundation.Presenter;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
 
-public class UserDemoPresenter extends PresenterSingleUseCase<UserView, GetSelectedDemoUserListUseCase> {
+public class UserDemoPresenter extends Presenter<UserView, GetSelectedDemoUserListUseCase> {
 
-    @Inject public UserDemoPresenter(Wireframe wireframe, Locale locale, GetSelectedDemoUserListUseCase useCase) {
-        super(wireframe, locale, useCase);
+    @Inject UserDemoPresenter(GetSelectedDemoUserListUseCase useCase, Wireframe wireframe, Locale locale) {
+        super(useCase, wireframe, locale);
     }
 
     @Override public void attachView(UserView view) {

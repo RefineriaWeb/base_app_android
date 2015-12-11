@@ -35,7 +35,7 @@ public class GetMenuItemsUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        getMenuItemsUseCase = new GetMenuItemsUseCase(subscribeOnMock, observeOnMock, localeMock, dashboardItemsMenuMock);
+        getMenuItemsUseCase = new GetMenuItemsUseCase(new GetMenuItemsUseCase.DashboardDataRepository(dashboardItemsMenuMock), localeMock, subscribeOnMock, observeOnMock);
     }
 
     @Test public void When_Execute_Get_Items_Menu() {

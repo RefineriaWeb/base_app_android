@@ -18,16 +18,16 @@ package domain.sections.user_demo.search;
 
 import javax.inject.Inject;
 
-import domain.foundation.PresenterSingleUseCase;
+import domain.foundation.Presenter;
 import domain.foundation.lce.LcePresenterSubscriber;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
 
-public class SearchUserDemoPresenter extends PresenterSingleUseCase<UserView, SearchUserDemoUseCase> {
+public class SearchUserDemoPresenter extends Presenter<UserView, SearchUserDemoUseCase> {
 
-    @Inject public SearchUserDemoPresenter(Wireframe wireframe, Locale locale, SearchUserDemoUseCase searchUserDemoUseCase) {
-        super(wireframe, locale, searchUserDemoUseCase);
+    @Inject public SearchUserDemoPresenter(SearchUserDemoUseCase useCase, Wireframe wireframe, Locale locale) {
+        super(useCase, wireframe, locale);
     }
 
     public void getUserByUserName(String username) {

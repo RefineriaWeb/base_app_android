@@ -36,7 +36,7 @@ public class GetSelectedDemoUserListUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        getSelectedDemoUserListUseCaseUT = new GetSelectedDemoUserListUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, localeMock);
+        getSelectedDemoUserListUseCaseUT = new GetSelectedDemoUserListUseCase(userDemoRepositoryMock, localeMock, subscribeOnMock, observeOnMock);
     }
 
     @Test public void When_Execute_Get_User() {

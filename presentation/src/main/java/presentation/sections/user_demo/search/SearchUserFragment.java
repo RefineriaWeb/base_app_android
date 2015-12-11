@@ -27,11 +27,11 @@ import base.app.android.R;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.search.SearchUserDemoPresenter;
-import presentation.foundation.BaseFragment;
+import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
 
 @EFragment(R.layout.user_search_fragment)
-public class SearchUserFragment extends BaseFragment<SearchUserDemoPresenter> implements UserView {
+public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView {
     @ViewById protected View pb_loading, bt_find_user;
     @ViewById protected UserViewGroup user_view_group;
 
@@ -53,7 +53,7 @@ public class SearchUserFragment extends BaseFragment<SearchUserDemoPresenter> im
     }
 
     @Override public void showError(String message) {
-        super.showToast(message);
+        super.showSnackBar(message);
     }
 
     @Override public void showData(UserDemoEntity user) {

@@ -35,7 +35,7 @@ public class LcePresenterSubscriberTest extends BaseTest {
         presenterSubscriberUT = new LcePresenterSubscriber(lceViewMock);
     }
 
-    @Test public void when_Observable_Emits_Any_Object_LceView_Reacts_Accordingly() {
+    @Test public void When_Observable_Emits_Any_Object_LceView_Reacts_Accordingly() {
         getObservableString().subscribe(presenterSubscriberUT);
 
         verify(lceViewMock, timeout(WAIT).times(1)).showProgress();
@@ -44,7 +44,7 @@ public class LcePresenterSubscriberTest extends BaseTest {
         verify(lceViewMock, timeout(WAIT).times(0)).showError(any(String.class));
     }
 
-    @Test public void when_Observable_Emits_Exception_LceView_Reacts_Accordingly() {
+    @Test public void When_Observable_Emits_Exception_LceView_Reacts_Accordingly() {
         getObservableError().subscribe(presenterSubscriberUT);
 
         verify(lceViewMock, timeout(WAIT).times(1)).showProgress();

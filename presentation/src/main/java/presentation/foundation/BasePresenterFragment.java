@@ -16,10 +16,10 @@
 
 package presentation.foundation;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
-
-import presentation.internal.di.ApplicationComponent;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -29,9 +29,10 @@ import javax.inject.Inject;
 
 import domain.foundation.BaseView;
 import domain.foundation.Presenter;
+import presentation.internal.di.ApplicationComponent;
 
 @EFragment
-public abstract class BaseFragment<P extends Presenter> extends Fragment implements BaseView {
+public abstract class BasePresenterFragment<P extends Presenter> extends Fragment implements BaseView {
     @Inject protected P presenter;
 
     @AfterInject protected void init() {}
@@ -44,8 +45,23 @@ public abstract class BaseFragment<P extends Presenter> extends Fragment impleme
         return ((BaseCompatActivity)getActivity()).getApplicationComponent();
     }
 
-    protected void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    protected void showSnackBar(String title) {
+        Snackbar.make(getView(), title, Snackbar.LENGTH_LONG)
+                .show();
+    }
+
+    protected void showSnackBar(String title, String action, View.OnClickListener listener) {
+        Snackbar.make(getView(), title, Snackbar.LENGTH_LONG)
+                .setAction(action, listener)
+                .show();
+    }
+
+    protected void replaceFragment(int id, BasePresenterFragment fragment) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fragmentManager.beginTransaction()
+                .replace(id, fragment, fragment.getClass().getSimpleName())
+                .commit();
     }
 
     @Override public void onDestroy() {

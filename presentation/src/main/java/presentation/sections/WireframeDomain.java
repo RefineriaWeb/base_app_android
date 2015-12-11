@@ -63,4 +63,8 @@ public class WireframeDomain implements Wireframe {
                 .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment_.class)
                 .start();
     }
+
+    @Override public void popCurrentScreen() {
+        baseApp.getLiveActivity().finish();
+    }
 }

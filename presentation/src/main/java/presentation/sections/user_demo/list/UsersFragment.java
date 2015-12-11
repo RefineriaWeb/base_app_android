@@ -30,13 +30,13 @@ import base.app.android.R;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.list.UsersDemoPresenter;
 import domain.sections.user_demo.list.UsersView;
-import presentation.foundation.BaseFragment;
+import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
 import presentation.sections.user_demo.UserViewGroup_;
 import presentation.utilities.recyclerview_adapter.RecyclerViewAdapterBase;
 
 @EFragment(R.layout.users_fragment)
-public class UsersFragment extends BaseFragment<UsersDemoPresenter> implements UsersView {
+public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> implements UsersView {
     @ViewById protected View pb_loading;
     @ViewById protected RecyclerView rv_users;
     private RecyclerViewAdapterBase<UserDemoEntity, UserViewGroup> adapter;
@@ -81,7 +81,7 @@ public class UsersFragment extends BaseFragment<UsersDemoPresenter> implements U
     }
 
     @Override public void showError(String message) {
-        showToast(message);
+        showSnackBar(message);
     }
 
 }

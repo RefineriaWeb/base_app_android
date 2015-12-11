@@ -22,9 +22,10 @@ import domain.foundation.Presenter;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
 
-public class LaunchPresenter extends Presenter<LaunchView> {
-    @Inject public LaunchPresenter(Wireframe wireframe, Locale locale) {
-        super(wireframe, locale);
+public class LaunchPresenter extends Presenter<LaunchView, LaunchUseCase> {
+
+    @Inject LaunchPresenter(LaunchUseCase useCase, Wireframe wireframe, Locale locale) {
+        super(useCase, wireframe, locale);
     }
 
     @Override public void attachView(LaunchView view) {
@@ -32,5 +33,7 @@ public class LaunchPresenter extends Presenter<LaunchView> {
         wireframe.dashboard();
     }
 
-    @Override public void dispose() {}
+    @Override public void dispose() {
+        useCase.dispose();
+    }
 }

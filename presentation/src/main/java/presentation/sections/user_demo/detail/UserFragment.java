@@ -26,11 +26,11 @@ import base.app.android.R;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.detail.UserDemoPresenter;
-import presentation.foundation.BaseFragment;
+import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
 
 @EFragment(R.layout.user_fragment)
-public class UserFragment extends BaseFragment<UserDemoPresenter> implements UserView {
+public class UserFragment extends BasePresenterFragment<UserDemoPresenter> implements UserView {
     @ViewById protected View pb_loading;
 
     @Override protected void init() {
@@ -47,7 +47,7 @@ public class UserFragment extends BaseFragment<UserDemoPresenter> implements Use
     }
 
     @Override public void showError(String message) {
-        super.showToast(message);
+        super.showSnackBar(message);
     }
 
     @ViewById protected UserViewGroup user_view_group;

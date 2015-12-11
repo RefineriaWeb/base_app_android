@@ -25,19 +25,17 @@ import domain.sections.Locale;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.entities.UserDemoEntity;
 
-public class UsersDemoPresenter extends Presenter<UsersView> {
-    private final GetUsersDemoUseCase getUsersDemoUseCase;
+public class UsersDemoPresenter extends Presenter<UsersView, GetUsersDemoUseCase> {
     private final SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase;
 
-    @Inject public UsersDemoPresenter(Wireframe wireframe, Locale locale, GetUsersDemoUseCase getUsersDemoUseCase, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
-        super(wireframe, locale);
-        this.getUsersDemoUseCase = getUsersDemoUseCase;
+    @Inject UsersDemoPresenter(GetUsersDemoUseCase useCase, Wireframe wireframe, Locale locale, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
+        super(useCase, wireframe, locale);
         this.saveUserDemoSelectedListUseCase = saveUserDemoSelectedListUseCase;
     }
 
     @Override public void attachView(UsersView view) {
         super.attachView(view);
-        getUsersDemoUseCase.execute(new LcePresenterSubscriber(view));
+        useCase.execute(new LcePresenterSubscriber(view));
     }
 
     public void goToDetail(UserDemoEntity user) {
@@ -55,6 +53,7 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
     }
 
     @Override public void dispose() {
-        getUsersDemoUseCase.dispose();
+        useCase.dispose();
+        saveUserDemoSelectedListUseCase.dispose();
     }
 }

@@ -25,5 +25,9 @@ public class WireframeDomain implements Wireframe {
     public WireframeDomain(BaseApp baseApp) {
         this.baseApp = baseApp;
     }
+
+    @Override public void popCurrentScreen() {
+        baseApp.getLiveActivity().finish();
+    }
 }
 
