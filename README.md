@@ -29,7 +29,10 @@ After that, build and clean project
 + To use [Gradle Retrolambda Plugin](https://github.com/evant/gradle-retrolambda) you will need to install [JDK 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html) and create JAVA8_HOME environment variable. The same for your previous JDK (e.g: JAVA7_HOME). So please make sure that JAVA8_HOME and JAVA7_HOME has been added to the path of the system
 ```
     $ nano ~/.bash_profile
-	export JAVA8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home
-	export JAVA7_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home
+	export JAVA8_HOME=/Library/Java/JavaVirtualMachines/jdk8_etc/Contents/Home
+	export JAVA7_HOME=/Library/Java/JavaVirtualMachines/jdk7_etc/Contents/Home
 	export PATH=$PATH:$JAVA8_HOME:$JAVA7_HOME
 ```
+
+Also, specify in Android Studio the JDK Location pointing to jdk8
+/Library/Java/JavaVirtualMachines/jdk8_etc/Contents/Home

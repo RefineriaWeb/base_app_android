@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package domain.di;
+package domain.internal.di;
 
 import javax.inject.Singleton;
 

@@ -21,7 +21,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import domain.di.DomainModule;
+import domain.internal.di.DomainModule;
 import domain.foundation.schedulers.ObserveOn;
 import domain.sections.Locale;
 import domain.sections.Wireframe;
