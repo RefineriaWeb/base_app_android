@@ -66,7 +66,7 @@ public abstract class RecyclerViewAdapterBase<T, V extends View & ViewWrapper.Bi
     public class SwipeRemoveAction {
         private final RecyclerView recyclerView;
         private OnItemRemoved onItemRemoved;
-        private String titleAction = "Item removed", descriptionAction = "Undo";
+        private String titleAction = "Undo", descriptionAction = "Item removed";
         private boolean redrawOnRemovedItem, undoAction;
 
         public SwipeRemoveAction(RecyclerView recyclerView) {
@@ -116,14 +116,14 @@ public abstract class RecyclerViewAdapterBase<T, V extends View & ViewWrapper.Bi
         }
 
         private void showSnackbarUndo(final T itemRemoved, final int position) {
-            Snackbar.make(recyclerView, titleAction, Snackbar.LENGTH_LONG)
+            Snackbar.make(recyclerView, descriptionAction, Snackbar.LENGTH_LONG)
                     .setCallback(new Snackbar.Callback() {
                         @Override public void onDismissed(Snackbar snackbar, int event) {
                             if (redrawOnRemovedItem) notifyDataSetChanged();
                             if (onItemRemoved != null && event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) onItemRemoved.onRemoved(itemRemoved);
                         }
                     })
-                    .setAction(descriptionAction, v -> {
+                    .setAction(titleAction, v -> {
                         v.setEnabled(false); //prevent multiple clicks
                         items.add(position, itemRemoved);
                         notifyItemInserted(position);
