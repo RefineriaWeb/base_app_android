@@ -4,20 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/pb_loading"
-        style="@android:style/Widget.ProgressBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_10dp" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         tools:listitem="@layout/user_view_group" />
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        style="@style/pb_loading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10dp"
+        tools:visibility="visible" />
 
 </RelativeLayout>
 

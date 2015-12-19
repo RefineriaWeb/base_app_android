@@ -26,5 +26,5 @@ public interface LceView<D> extends BaseView {
     void showProgress();
     void hideProgress();
     void showError(String message);
-    void showData(D data);
+    void showResult(D data);
 }

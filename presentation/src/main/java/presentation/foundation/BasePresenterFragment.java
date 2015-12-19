@@ -20,13 +20,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
+import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.res.ColorRes;
+import org.androidannotations.annotations.res.StringRes;
 
 import javax.inject.Inject;
 
+import base.app.android.R;
 import domain.foundation.BaseView;
 import domain.foundation.Presenter;
 import presentation.internal.di.ApplicationComponent;
@@ -36,15 +42,42 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
     @Inject protected P presenter;
 
     @AfterInject protected void init() {}
-    
+
     @AfterViews protected void initViews() {
         presenter.attachView(this);
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        presenter.resumeView();
     }
 
     protected ApplicationComponent getApplicationComponent() {
         return ((BaseCompatActivity)getActivity()).getApplicationComponent();
     }
 
+    @StringRes protected String app_name, loading;
+    @ColorRes protected int colorPrimaryDark;
+    private MaterialDialog materialDialog;
+    protected void showLoading() {
+        materialDialog =  new MaterialDialog.Builder(getActivity())
+                .titleColorRes(R.color.colorPrimaryDark)
+                .contentColor(colorPrimaryDark)
+                .widgetColorRes(R.color.colorPrimaryDark)
+                .title(app_name)
+                .content(loading)
+                .progress(true, 0)
+                .show();
+    }
+
+    protected void hideLoading() {
+        if (materialDialog != null) materialDialog.dismiss();
+    }
+
+    protected void showToast(String title) {
+        Toast.makeText(getActivity(), title, Toast.LENGTH_LONG)
+                .show();
+    }
     protected void showSnackBar(String title) {
         Snackbar.make(getView(), title, Snackbar.LENGTH_LONG)
                 .show();

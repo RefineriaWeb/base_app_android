@@ -1,6 +1,8 @@
 package presentation.utilities.recyclerview_adapter;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -8,43 +10,43 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class RecyclerViewAdapterBase<D, V extends View & ViewWrapper.Binder<D>> extends RecyclerView.Adapter<ViewWrapper<D, V>> {
-    protected List<D> items = new ArrayList<>();
-    protected Listener<D, V> lister;
+public abstract class RecyclerViewAdapterBase<T, V extends View & ViewWrapper.Binder<T>> extends RecyclerView.Adapter<ViewWrapper<T, V>> {
+    protected List<T> items = new ArrayList<>();
+    protected Listener<T, V> listener;
 
-    @Override public final ViewWrapper<D, V> onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public final ViewWrapper<T, V> onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewWrapper<>(onCreateItemView(parent, viewType));
     }
 
     protected abstract V onCreateItemView(ViewGroup parent, int viewType);
 
-    @Override public final void onBindViewHolder(ViewWrapper<D, V> viewHolder, int position) {
-        D data = items.get(position);
+    @Override public final void onBindViewHolder(ViewWrapper<T, V> viewHolder, int position) {
+        T data = items.get(position);
 
         V view = viewHolder.getView();
-        view.bind(data);
-        if (lister != null) view.setOnClickListener(v -> lister.onClickItem(data, view));
+        view.bind(data, position);
+        if (listener != null) view.setOnClickListener(v -> listener.onClickItem(data, view));
     }
 
     @Override public int getItemCount() {
         return items.size();
     }
 
-    public void addListener(Listener<D, V> lister) {
-        this.lister = lister;
+    public void addListener(Listener<T, V> lister) {
+        this.listener = lister;
     }
 
-    public void add(D item) {
+    public void add(T item) {
         items.add(item);
         notifyDataSetChanged();
     }
 
-    public void addAll(Collection<D> collection) {
+    public void addAll(Collection<T> collection) {
         items.addAll(collection);
         notifyDataSetChanged();
     }
 
-    public void setAll(Collection<D> collection) {
+    public void setAll(Collection<T> collection) {
         clear();
         addAll(collection);
     }
@@ -55,5 +57,82 @@ public abstract class RecyclerViewAdapterBase<D, V extends View & ViewWrapper.Bi
 
     public interface Listener<T, V> {
         void onClickItem(T t, V v);
+    }
+
+    public SwipeRemoveAction swipeToRemoveItemOn(final RecyclerView recyclerView) {
+        return new SwipeRemoveAction(recyclerView);
+    }
+
+    public class SwipeRemoveAction {
+        private final RecyclerView recyclerView;
+        private OnItemRemoved onItemRemoved;
+        private String titleAction = "Item removed", descriptionAction = "Undo";
+        private boolean redrawOnRemovedItem, undoAction;
+
+        public SwipeRemoveAction(RecyclerView recyclerView) {
+            this.recyclerView = recyclerView;
+
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                @Override public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    final int position = viewHolder.getAdapterPosition();
+                    T itemRemoved = items.get(position);
+                    items.remove(position);
+                    notifyItemRemoved(position);
+
+                    if (undoAction) showSnackbarUndo(itemRemoved, position);
+                    else if (onItemRemoved != null) onItemRemoved.onRemoved(itemRemoved);
+                }
+            });
+            itemTouchHelper.attachToRecyclerView(recyclerView);
+        }
+
+        public SwipeRemoveAction notify(OnItemRemoved<T> onItemRemoved) {
+            this.onItemRemoved = onItemRemoved;
+            return this;
+        }
+
+        public SwipeRemoveAction withUndoAction() {
+            this.undoAction = true;
+            return this;
+        }
+
+        public SwipeRemoveAction withTitleAction(String titleAction) {
+            this.titleAction = titleAction;
+            return this;
+        }
+
+        public SwipeRemoveAction withDescriptionAction(String descriptionAction) {
+            this.descriptionAction = descriptionAction;
+            return this;
+        }
+
+        public SwipeRemoveAction redrawAfterRemoved(boolean redrawOnRemovedItem) {
+            this.redrawOnRemovedItem = redrawOnRemovedItem;
+            return this;
+        }
+
+        private void showSnackbarUndo(final T itemRemoved, final int position) {
+            Snackbar.make(recyclerView, titleAction, Snackbar.LENGTH_LONG)
+                    .setCallback(new Snackbar.Callback() {
+                        @Override public void onDismissed(Snackbar snackbar, int event) {
+                            if (redrawOnRemovedItem) notifyDataSetChanged();
+                            if (onItemRemoved != null && event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) onItemRemoved.onRemoved(itemRemoved);
+                        }
+                    })
+                    .setAction(descriptionAction, v -> {
+                        v.setEnabled(false); //prevent multiple clicks
+                        items.add(position, itemRemoved);
+                        notifyItemInserted(position);
+                    }).show();
+        }
+    }
+
+
+    public interface OnItemRemoved<T> {
+        void onRemoved(T item);
     }
 }

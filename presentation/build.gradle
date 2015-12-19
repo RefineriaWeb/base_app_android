@@ -110,8 +110,11 @@ dependencies {
     compile presentationDependencies.supportAppCompat
     compile presentationDependencies.supportRecyclerview
     compile presentationDependencies.supportDesign
-    compile presentationDependencies.glide
-
+    compile presentationDependencies.picasso
+    compile presentationDependencies.materialishProgress
+    compile(presentationDependencies.materialDialog) {
+        transitive = true
+    }
 
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 

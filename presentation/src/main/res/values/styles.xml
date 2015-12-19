@@ -7,4 +7,12 @@
 
     </style>
 
+    <style name="pb_loading">
+        <item name="android:id">@id/pb_loading</item>
+        <item name="android:layout_width">@dimen/_50dp</item>
+        <item name="android:layout_height">@dimen/_50dp</item>
+        <item name="android:visibility">invisible</item>
+        <item name="matProg_barColor">@color/colorPrimaryDark</item>
+        <item name="matProg_progressIndeterminate">true</item>
+    </style>
 </resources>

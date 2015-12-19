@@ -35,7 +35,7 @@ public class LaunchUseCase extends UseCase<LaunchUseCase.UserRepository, Boolean
     /**
      * Do some useful validation.  Is user logged?, etc
      */
-    @Override protected Observable<Boolean> buildObservable() {
+    @Override public Observable<Boolean> builtObservable() {
         return repository.isUserLogged();
     }
 

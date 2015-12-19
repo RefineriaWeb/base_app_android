@@ -22,6 +22,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -71,7 +74,36 @@ public class Persistence {
         try {
             File file = new File(adapter.cacheDirectory(), key);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
-            return new Gson().fromJson(bufferedReader, clazz);
+
+            T data = new Gson().fromJson(bufferedReader, clazz);
+
+            bufferedReader.close();
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /** Retrieve the object previously saved.
+     * @param key the key whereby the object could be retrieved.
+     * @param clazz the type of the class contained by the collection, not the collection itself
+     * */
+    public <T> List<T> retrieveCollection(String key, Class<T> clazz) {
+        try {
+            File file = new File(adapter.cacheDirectory(), key);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+
+            Class<? extends Object[]> clazzArray = ((T[])Array.newInstance(clazz, 1)).getClass();
+            Object[] array = new Gson().fromJson(bufferedReader, clazzArray);
+            bufferedReader.close();
+
+            List<T> data = new ArrayList<>();
+            for (Object object : array) {
+                data.add((T) object);
+            }
+
+            return data;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -40,7 +40,7 @@ public class LcePresenterSubscriberTest extends BaseTest {
 
         verify(lceViewMock, timeout(WAIT).times(1)).showProgress();
         verify(lceViewMock, timeout(WAIT).times(1)).hideProgress();
-        verify(lceViewMock, timeout(WAIT).times(1)).showData(any(String.class));
+        verify(lceViewMock, timeout(WAIT).times(1)).showResult(any(String.class));
         verify(lceViewMock, timeout(WAIT).times(0)).showError(any(String.class));
     }
 
@@ -49,7 +49,7 @@ public class LcePresenterSubscriberTest extends BaseTest {
 
         verify(lceViewMock, timeout(WAIT).times(1)).showProgress();
         verify(lceViewMock, timeout(WAIT).times(1)).hideProgress();
-        verify(lceViewMock, timeout(WAIT).times(0)).showData(any(String.class));
+        verify(lceViewMock, timeout(WAIT).times(0)).showResult(any(String.class));
         verify(lceViewMock, timeout(WAIT).times(1)).showError(any(String.class));
     }
 

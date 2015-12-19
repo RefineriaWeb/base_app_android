@@ -51,7 +51,7 @@ public class UserFragment extends BasePresenterFragment<UserDemoPresenter> imple
     }
 
     @ViewById protected UserViewGroup user_view_group;
-    @Override public void showData(UserDemoEntity user) {
+    @Override public void showResult(UserDemoEntity user) {
         user_view_group.bind(user);
     }
 

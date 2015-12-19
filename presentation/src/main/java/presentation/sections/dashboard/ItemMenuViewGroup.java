@@ -41,7 +41,7 @@ import presentation.utilities.recyclerview_adapter.ViewWrapper;
         super(context, attrs);
     }
 
-    @Override public void bind(ItemMenu itemMenu) {
+    @Override public void bind(ItemMenu itemMenu, int position) {
         iv_icon.setImageResource((Integer)itemMenu.getImageResource());
         tv_title.setText(itemMenu.getTitle());
     }

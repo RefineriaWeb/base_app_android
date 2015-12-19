@@ -68,7 +68,7 @@ public class UseCaseTest extends BaseTest {
             super(new UseDataCaseRepository(), localeMock, subscribeOnMock, observeOnMock);
         }
 
-        @Override protected Observable<String> buildObservable() {
+        @Override public Observable<String> builtObservable() {
             return Observable.just(SUCCESS).delay(1, TimeUnit.SECONDS);
         }
     }

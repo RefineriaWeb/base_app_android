@@ -32,7 +32,7 @@ public class GetSelectedDemoUserListUseCase extends UseCase<UserDemoRepository, 
         super(repository, locale, subscribeOn, observeOn);
     }
 
-    @Override protected Observable<UserDemoEntity> buildObservable() {
+    @Override public Observable<UserDemoEntity> builtObservable() {
         return repository.getSelectedUserDemoList();
     }
 }

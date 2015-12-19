@@ -25,7 +25,9 @@ import rx.Subscriber;
 public abstract class DefaultSubscriber<D> extends Subscriber<D> {
     @Override public void onCompleted() {}
 
-    @Override public void onError(Throwable e) {}
+    @Override public void onError(Throwable e) {
+        onCompleted();
+    }
 
     @Override public void onNext(D data) {}
 }

@@ -37,7 +37,7 @@ public class SearchUserDemoUseCase extends UseCase<UserDemoRepository, UserDemoE
         this.name = name;
     }
 
-    @Override protected Observable<UserDemoEntity> buildObservable() {
+    @Override public Observable<UserDemoEntity> builtObservable() {
         assert name != null;
         return repository.searchByUserName(name);
     }

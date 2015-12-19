@@ -34,7 +34,7 @@ public class GetUsersDemoUseCase extends UseCase<UserDemoRepository, List<UserDe
         super(repository, locale, subscribeOn, observeOn);
     }
 
-    @Override protected Observable<List<UserDemoEntity>> buildObservable() {
+    @Override public Observable<List<UserDemoEntity>> builtObservable() {
         return repository.askForUsers();
     }
 }

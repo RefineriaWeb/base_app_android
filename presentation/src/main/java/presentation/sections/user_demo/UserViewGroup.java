@@ -22,7 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -43,8 +43,15 @@ import presentation.utilities.recyclerview_adapter.ViewWrapper;
         super(context, attrs);
     }
 
-    @Override public void bind(UserDemoEntity user) {
-        Glide.with(getContext()).load(user.getAvatarUrl()).into(iv_avatar);
+    public void bind(UserDemoEntity user) {
+        bind(user, 0);
+    }
+
+    @Override public void bind(UserDemoEntity user, int position) {
+        Picasso.with(getContext()).load(user.getAvatarUrl())
+                .centerCrop()
+                .fit()
+                .into(iv_avatar);
         tv_name.setText(user.getId() + ":" + user.getLogin());
     }
 }

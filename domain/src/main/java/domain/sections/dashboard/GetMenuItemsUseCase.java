@@ -35,7 +35,7 @@ public class GetMenuItemsUseCase extends UseCase<GetMenuItemsUseCase.DashboardRe
         super(repository, locale, subscribeOn, observeOn);
     }
 
-    @Override protected Observable<List<ItemMenu>> buildObservable() {
+    @Override public Observable<List<ItemMenu>> builtObservable() {
         return repository.getItemsMenu();
     }
 

@@ -21,44 +21,64 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 
 
-public class PersistenceTest {
+public class PersistenceTest  {
     private Persistence persistenceUT;
-    private final static String KEY = "store";
-    private final static String VALUE = "dummy";
     @Rule public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Before public void setUp() {
         persistenceUT = new Persistence(() -> temporaryFolder.getRoot());
     }
 
-    @Test public void when_A_Valid_Pair_Is_Supplied_Then_Get_True() {
-        boolean result = persistenceUT.save(KEY, VALUE);
+    private final static String KEY = "store";
+    private final static String VALUE = "dummy";
+    private final static List<Mock> VALUE_COLLECTION = Arrays.asList(new Mock(VALUE), new Mock(VALUE));
+
+    @Test public void When_A_Valid_Pair_Is_Supplied_Then_Get_True() {
+        boolean result = persistenceUT.save(KEY, new Mock(VALUE));
         assertThat(result, is(true));
     }
 
-    @Test public void when_An_Invalid_Pair_Is_Supplied_Then_Get_False() {
+    @Test public void When_An_Invalid_Pair_Is_Supplied_Then_Get_False() {
         boolean result = persistenceUT.save(null, null);
         assertThat(result, is(not(true)));
     }
 
-    @Test public void when_A_Valid_Pair_Is_Supplied_And_Retrieve_Then_Get_It() {
-        persistenceUT.save(KEY, VALUE);
+    @Test public void When_A_Valid_Pair_Is_Supplied_And_Retrieve_Then_Get_It() {
+        persistenceUT.save(KEY, new Mock(VALUE));
 
-        String result = persistenceUT.retrieve(KEY, String.class);
-        assertThat(result, is(VALUE));
+        Mock result = persistenceUT.retrieve(KEY, Mock.class);
+        assertThat(result.message, is(VALUE));
     }
 
-    @Test public void when_A_Valid_Pair_Is_Supplied_And_Delete_Then_Do_Not_Retrieve_It() {
-        persistenceUT.save(KEY, VALUE);
+    @Test public void When_A_Valid_Pair_Is_Supplied_And_Delete_Then_Do_Not_Retrieve_It() {
+        persistenceUT.save(KEY, new Mock(VALUE));
         persistenceUT.delete(KEY);
 
-        String result = persistenceUT.retrieve(KEY, String.class);
+        Mock result = persistenceUT.retrieve(KEY, Mock.class);
         assertThat(result, is(nullValue()));
+    }
+
+    @Test public void When_A_Valid_Collection_Is_Supplied_And_Retrieve_Then_Get_It() {
+        persistenceUT.save(KEY, VALUE_COLLECTION);
+
+        List<Mock> result = persistenceUT.retrieveCollection(KEY, Mock.class);
+        assertThat(result.get(0).message, is(VALUE));
+    }
+
+    public static class Mock {
+        final String message;
+
+        public Mock(String message) {
+            this.message = message;
+        }
     }
 }

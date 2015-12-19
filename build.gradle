@@ -15,6 +15,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url "https://jitpack.io" }
         mavenCentral()
         jcenter()
     }
@@ -48,10 +49,14 @@ ext {
     lombokVersion = "1.16.6"
     retrolambdaVersion = "3.2.3"
     androidAptVersion = "1.4"
-    glideVersion = "3.6.1"
     spoonVersion = "1.0.2"
     spoonScreenshotsVersion = "1.1.9"
     javaAptVersion = "0.4"
+
+    //UI
+    picassoVersion = "2.5.2"
+    materialishProgressVersion = '1.5'
+    materialDialogVersion = '0.8.5.2@aar'
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -104,8 +109,11 @@ ext {
             supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}",
             supportRecyclerview:"com.android.support:recyclerview-v7:${supportRecyclerviewVersion}",
             supportDesign:      "com.android.support:design:${supportDesignVersion}",
-            glide:              "com.github.bumptech.glide:glide:${glideVersion}",
+            picasso:              "com.squareup.picasso:picasso:${picassoVersion}",
+            materialishProgress: "com.pnikosis:materialish-progress:${materialishProgressVersion}",
+            materialDialog:     "com.github.afollestad.material-dialogs:core:${materialDialogVersion}"
     ]
+
 
     presentationTestDependencies = [
             supportTestRunner:  "com.android.support.test:runner:${supportTestRunnerVersion}",

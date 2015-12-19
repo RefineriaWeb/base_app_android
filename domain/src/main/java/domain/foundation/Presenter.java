@@ -40,9 +40,17 @@ public abstract class Presenter<V extends BaseView, U extends UseCase> implement
         this.locale = locale;
     }
 
+    /**
+     * Called when view is required to initialize. On the Android lifecycle ecosystem, it would be onCreated.
+     */
     public void attachView(V view) {
         this.view = view;
     }
+
+    /**
+     * Called when view is required to resume. On the Android lifecycle ecosystem, it would be onResume.
+     */
+    public void resumeView() {}
 
     @Override public void dispose() {
         useCase.dispose();

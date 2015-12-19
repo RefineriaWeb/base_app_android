@@ -38,11 +38,11 @@ public class LcePresenterSubscriber<D, V extends LceView<D>> extends Subscriber<
 
     @Override public void onError(Throwable e) {
         lceView.showError(e.getMessage());
-        lceView.hideProgress();
+        onCompleted();
     }
 
     @Override public void onNext(D data) {
-        lceView.showData(data);
+        lceView.showResult(data);
     }
 
     @Override public void onCompleted() {

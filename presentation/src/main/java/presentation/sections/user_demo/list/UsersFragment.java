@@ -63,6 +63,10 @@ public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> imp
         };
 
         adapter.addListener((user, userViewGroup) -> presenter.goToDetail(user));
+        adapter.swipeToRemoveItemOn(rv_users)
+                .withUndoAction()
+                .notify(item -> showToast(item.getLogin()));
+
         rv_users.setAdapter(adapter);
     }
 
@@ -76,7 +80,7 @@ public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> imp
         rv_users.setVisibility(View.VISIBLE);
     }
 
-    @Override public void showData(List<UserDemoEntity> users) {
+    @Override public void showResult(List<UserDemoEntity> users) {
         adapter.setAll(users);
     }
 

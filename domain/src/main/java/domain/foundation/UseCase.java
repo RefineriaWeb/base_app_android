@@ -51,21 +51,21 @@ public abstract class UseCase<R extends Repository, D> implements Disposable {
 
         unsubscribe();
 
-        subscription = buildObservable()
+        subscription = builtObservable()
                 .subscribeOn(subscribeOn.getScheduler())
                 .observeOn(observeOn.getScheduler())
                 .subscribe(subscriber);
     }
 
-    /**
-     * Retrieve the built observable without executing it,
-     * provided to use use case inside another
-     */
+
     public Observable<D> getObservable() {
-        return buildObservable();
+        return builtObservable();
     }
 
-    protected abstract Observable<D> buildObservable();
+    /**
+     * Observable built for every use case
+     */
+    public abstract Observable<D> builtObservable();
 
     private void unsubscribe() {
         if (!subscription.isUnsubscribed()) {

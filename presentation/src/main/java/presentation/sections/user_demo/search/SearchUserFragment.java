@@ -24,15 +24,14 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import base.app.android.R;
-import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.search.SearchUserDemoPresenter;
 import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
 
 @EFragment(R.layout.user_search_fragment)
 public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView {
-    @ViewById protected View pb_loading, bt_find_user;
     @ViewById protected UserViewGroup user_view_group;
 
     @Override protected void init() {
@@ -41,22 +40,19 @@ public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPres
     }
 
     @Override public void showProgress() {
-        pb_loading.setVisibility(View.VISIBLE);
-        bt_find_user.setVisibility(View.GONE);
-        user_view_group.setVisibility(View.GONE);
+        showLoading();
     }
 
     @Override public void hideProgress() {
-        pb_loading.setVisibility(View.GONE);
-        bt_find_user.setVisibility(View.VISIBLE);
-        user_view_group.setVisibility(View.VISIBLE);
+        hideLoading();
     }
 
     @Override public void showError(String message) {
         super.showSnackBar(message);
     }
 
-    @Override public void showData(UserDemoEntity user) {
+    @Override public void showResult(UserDemoEntity user) {
+        user_view_group.setVisibility(View.VISIBLE);
         user_view_group.bind(user);
     }
 

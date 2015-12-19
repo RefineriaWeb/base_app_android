@@ -37,7 +37,7 @@ public class SaveUserDemoSelectedListUseCase extends UseCase<UserDemoRepository,
         this.userDemoEntity = userDemoEntity;
     }
 
-    @Override protected Observable<Boolean> buildObservable() {
+    @Override public Observable<Boolean> builtObservable() {
         assert userDemoEntity != null;
         return repository.saveSelectedUserDemoList(userDemoEntity);
     }
