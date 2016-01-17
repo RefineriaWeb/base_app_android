@@ -16,6 +16,7 @@
 
 package presentation.sections.user_demo.search;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
@@ -32,11 +33,21 @@ import presentation.sections.user_demo.UserViewGroup;
 
 @EFragment(R.layout.user_search_fragment)
 public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView {
+    public static final String HELLO_FROM_BUNDLE_WIREFRAME_KEY = "hello_from_bundle_key";
+
     @ViewById protected UserViewGroup user_view_group;
 
     @Override protected void init() {
         super.init();
         getApplicationComponent().inject(this);
+    }
+
+    @Override protected void initViews() {
+        super.initViews();
+
+        Bundle bundle = getArguments();
+        String helloFromBundle = bundle != null ? bundle.getString(HELLO_FROM_BUNDLE_WIREFRAME_KEY, "") : "";
+        if (!helloFromBundle.isEmpty())showSnackBar(helloFromBundle);
     }
 
     @Override public void showProgress() {

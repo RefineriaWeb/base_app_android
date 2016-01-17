@@ -16,15 +16,18 @@
 
 package presentation.sections;
 
+import android.os.Bundle;
+
 import base.app.android.R;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
 import presentation.foundation.SingleFragmentActivity;
 import presentation.foundation.SingleFragmentActivity_;
 import presentation.sections.dashboard.DashBoardActivity_;
-import presentation.sections.user_demo.search.SearchUserFragment_;
 import presentation.sections.user_demo.detail.UserFragment_;
 import presentation.sections.user_demo.list.UsersFragment_;
+import presentation.sections.user_demo.search.SearchUserFragment;
+import presentation.sections.user_demo.search.SearchUserFragment_;
 
 public class WireframeDomain implements Wireframe {
     private  final BaseApp baseApp;
@@ -56,10 +59,14 @@ public class WireframeDomain implements Wireframe {
     }
 
     @Override public void searchUserScreen() {
+        Bundle bundleFragment = new Bundle();
+        bundleFragment.putString(SearchUserFragment.HELLO_FROM_BUNDLE_WIREFRAME_KEY, "Hi from wireframe bundle");
+
         String title = baseApp.getString(R.string.find_user);
         SingleFragmentActivity_.intent(baseApp.getLiveActivity())
                 .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
                 .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment_.class)
+                .extra(SingleFragmentActivity.Behaviour.BUNDLE_FOR_FRAGMENT, bundleFragment)
                 .start();
     }
 
