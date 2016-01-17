@@ -19,7 +19,7 @@ package presentation.internal.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import presentation.foundation.BaseCompatActivity;
+import presentation.foundation.SingleFragmentActivity;
 import presentation.sections.launch.LaunchActivity;
 
 /**
@@ -28,6 +28,6 @@ import presentation.sections.launch.LaunchActivity;
  */
 @Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
-    void inject(BaseCompatActivity baseCompatActivity);
+    void inject(SingleFragmentActivity singleFragmentActivity);
     void inject(LaunchActivity launchActivity);
 }
