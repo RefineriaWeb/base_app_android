@@ -30,10 +30,10 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.observers.TestSubscriber;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RestApiTest {
@@ -64,7 +64,7 @@ public class RestApiTest {
 
         subscriber.awaitTerminalEvent();
         Response<UserDemoEntity> userDemo = subscriber.getOnNextEvents().get(0);
-        assertThat(userDemo.body(), is(nullValue()));
+        assertNull(userDemo.body());
     }
 
     @Test public void _3_When_Get_Users_Then_Get_Users() {

@@ -20,16 +20,21 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import data.cache.RxProviders;
 import data.net.RestApi;
+import data.storage.RepositoryAdapter;
+import io.rx_cache.internal.RxCache;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 /**
- * Dagger module for the data layer. {@link #provideRestApi} define the interface used by retrofit in order
+ * Dagger module for data layer. {@link #provideRestApi} define the interface used by retrofit in order
  * to generate every endpoint required
  */
-@Module public class DataModule {
+@Module
+public class DataModule {
+
     @Singleton @Provides RestApi provideRestApi() {
         return new Retrofit.Builder()
                 .baseUrl(RestApi.URL_BASE)
@@ -37,4 +42,11 @@ import retrofit.RxJavaCallAdapterFactory;
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(RestApi.class);
     }
+
+    @Singleton @Provides RxProviders provideRxProviders(RepositoryAdapter repositoryAdapter) {
+        return new RxCache.Builder()
+                .persistence(repositoryAdapter.cacheDirectory())
+                .using(RxProviders.class);
+    }
 }
+

@@ -51,7 +51,6 @@ dependencies {
 
     testCompile domainTestDependencies.junit
     testCompile domainTestDependencies.mockito
-    testCompile domainTestDependencies.hamcrest
 }
 
 retrolambda {

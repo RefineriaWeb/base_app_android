@@ -41,6 +41,7 @@ dependencies {
     def dataDependencies = rootProject.ext.dataDependencies
     compile dataDependencies.retrofitreactive
     compile dataDependencies.retrofitGson
+    compile dataDependencies.rxCache
 
     apt dataDependencies.daggerCompiler
     compile dataDependencies.dagger
@@ -54,7 +55,6 @@ dependencies {
     def dataTestDependencies = rootProject.ext.dataTestDependencies
     testCompile dataTestDependencies.junit
     testCompile dataTestDependencies.mockito
-    testCompile dataTestDependencies.hamcrest
 }
 
 retrolambda {

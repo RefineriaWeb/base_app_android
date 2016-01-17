@@ -21,18 +21,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import data.cache.RxProviders;
 import data.net.RestApi;
 import data.sections.DataRepository;
 import data.sections.Locale;
-import data.storage.Persistence;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
 public class UserDemoDataRepository extends DataRepository implements UserDemoRepository {
 
-    @Inject public UserDemoDataRepository(RestApi restApi, Persistence persistence, Locale locale) {
-        super(restApi, persistence, locale);
+    @Inject public UserDemoDataRepository(RestApi restApi, RxProviders rxProviders, Locale locale) {
+        super(restApi, rxProviders, locale);
     }
 
     @Override public Observable<UserDemoEntity> searchByUserName(final String  username) {
@@ -50,28 +50,12 @@ public class UserDemoDataRepository extends DataRepository implements UserDemoRe
         });
     }
 
-
-    private UserDemoEntity userCached;
     @Override public Observable<UserDemoEntity> getSelectedUserDemoList() {
-        if (userCached != null) return buildObservable(userCached);
-
-        UserDemoEntity user = persistence.retrieve(UserDemoEntity.class.getName(), UserDemoEntity.class);
-        if (user != null) {
-            userCached = user;
-            return buildObservable(user);
-        }
-
-        return buildObservableError(locale.genericError());
+        return rxProviders.getSelectedUserDemoList(Observable.just(null));
     }
 
-    @Override public Observable<Boolean> saveSelectedUserDemoList(UserDemoEntity user) {
-        boolean success = persistence.save(UserDemoEntity.class.getName(), user);
-
-        if (success) {
-            userCached = user;
-            return buildObservable(success);
-        }
-
-        return buildObservableError(locale.genericError());
+    @Override public Observable<Boolean> saveSelectedUserDemoList(UserDemoEntity userSelected) {
+        return rxProviders.getSelectedUserDemoList(Observable.just(userSelected))
+                .map(user-> true);
     }
 }

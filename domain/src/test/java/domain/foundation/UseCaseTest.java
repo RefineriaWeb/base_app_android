@@ -24,8 +24,7 @@ import domain.common.BaseTest;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
-import static org.hamcrest.Matchers.equalToIgnoringCase;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class UseCaseTest extends BaseTest {
@@ -43,7 +42,7 @@ public class UseCaseTest extends BaseTest {
         subscriberMock.awaitTerminalEvent();
 
         String response = subscriberMock.getOnNextEvents().get(0);
-        assertThat(response, equalToIgnoringCase(SUCCESS));
+        assertThat(response, is(SUCCESS));
     }
 
     @Test public void When_Unsubscribe_Do_Not_Get_Response() {

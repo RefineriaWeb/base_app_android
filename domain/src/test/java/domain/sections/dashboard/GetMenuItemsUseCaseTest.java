@@ -25,8 +25,8 @@ import domain.common.BaseTest;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.observers.TestSubscriber;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class GetMenuItemsUseCaseTest extends BaseTest {
     private GetMenuItemsUseCase getMenuItemsUseCase;

@@ -21,8 +21,8 @@ import com.google.gson.JsonParseException;
 
 import java.io.IOException;
 
+import data.cache.RxProviders;
 import data.net.RestApi;
-import data.storage.Persistence;
 import domain.foundation.Repository;
 import lombok.Data;
 import retrofit.Response;
@@ -31,12 +31,12 @@ import rx.Observable;
 
 public abstract class DataRepository implements Repository {
     protected final RestApi restApi;
-    protected final Persistence persistence;
+    protected final RxProviders rxProviders;
     protected final Locale locale;
 
-    public DataRepository(RestApi restApi, Persistence persistence, Locale locale) {
+    public DataRepository(RestApi restApi, RxProviders rxProviders, Locale locale) {
         this.restApi = restApi;
-        this.persistence = persistence;
+        this.rxProviders = rxProviders;
         this.locale = locale;
     }
 

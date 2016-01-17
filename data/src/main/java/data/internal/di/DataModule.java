@@ -18,11 +18,14 @@ package data.internal.di;
 
 import javax.inject.Singleton;
 
-import domain.sections.user_demo.UserDemoRepository;
 import dagger.Module;
 import dagger.Provides;
+import data.cache.RxProviders;
 import data.net.RestApi;
 import data.sections.user_demo.UserDemoDataRepository;
+import data.storage.RepositoryAdapter;
+import domain.sections.user_demo.UserDemoRepository;
+import io.rx_cache.internal.RxCache;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -45,10 +48,14 @@ public class DataModule {
                 .build().create(RestApi.class);
     }
 
+    @Singleton @Provides RxProviders provideRxProviders(RepositoryAdapter repositoryAdapter) {
+        return new RxCache.Builder()
+                .persistence(repositoryAdapter.cacheDirectory())
+                .using(RxProviders.class);
+    }
 
     @Provides @Singleton public UserDemoRepository provideUserDemoDataRepository(UserDemoDataRepository userDemoDataRepository) {
         return userDemoDataRepository;
     }
-
 }
 
