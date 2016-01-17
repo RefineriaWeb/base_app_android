@@ -36,5 +36,7 @@ public interface RestApi {
 
     @Headers({HEADER_API_VERSION})
     @GET("/users/{username}") Observable<Response<UserDemoEntity>> getUser(@Path("username") String username);
+
+    @Headers({HEADER_API_VERSION})
     @GET("/users") Observable<Response<List<UserDemoEntity>>> getUsers();
 }

@@ -22,10 +22,10 @@ import javax.inject.Inject;
 
 import domain.sections.launch.LaunchPresenter;
 import domain.sections.launch.LaunchView;
-import presentation.foundation.BaseCompatActivity;
+import presentation.foundation.SingleFragmentActivity;
 
 @EActivity
-public class LaunchActivity extends BaseCompatActivity implements LaunchView {
+public class LaunchActivity extends SingleFragmentActivity implements LaunchView {
     @Inject protected LaunchPresenter launchPresenter;
 
     @Override protected void onStart() {

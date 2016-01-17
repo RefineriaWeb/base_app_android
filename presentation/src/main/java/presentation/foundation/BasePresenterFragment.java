@@ -53,7 +53,7 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
     }
 
     protected ApplicationComponent getApplicationComponent() {
-        return ((BaseCompatActivity)getActivity()).getApplicationComponent();
+        return ((SingleFragmentActivity)getActivity()).getApplicationComponent();
     }
 
     @StringRes protected String app_name, loading;

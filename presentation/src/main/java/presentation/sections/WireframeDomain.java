@@ -19,7 +19,6 @@ package presentation.sections;
 import base.app.android.R;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
-import presentation.foundation.BaseToolbarActivity;
 import presentation.foundation.SingleFragmentActivity;
 import presentation.foundation.SingleFragmentActivity_;
 import presentation.sections.dashboard.DashBoardActivity_;
@@ -42,8 +41,8 @@ public class WireframeDomain implements Wireframe {
     @Override public void usersScreen() {
         String title = baseApp.getString(R.string.users);
         SingleFragmentActivity_.intent(baseApp.getLiveActivity())
-                .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
-                .extra(BaseToolbarActivity.Behaviour.SHOW_BACK_KEY, false)
+                .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
+                .extra(SingleFragmentActivity.Behaviour.SHOW_BACK_KEY, false)
                 .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UsersFragment_.class)
                 .start();
     }
@@ -51,7 +50,7 @@ public class WireframeDomain implements Wireframe {
     @Override public void userScreen() {
         String title = baseApp.getString(R.string.user);
         SingleFragmentActivity_.intent(baseApp.getLiveActivity())
-                .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
+                .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
                 .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UserFragment_.class)
                 .start();
     }
@@ -59,7 +58,7 @@ public class WireframeDomain implements Wireframe {
     @Override public void searchUserScreen() {
         String title = baseApp.getString(R.string.find_user);
         SingleFragmentActivity_.intent(baseApp.getLiveActivity())
-                .extra(BaseToolbarActivity.Behaviour.TITLE_KEY, title)
+                .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
                 .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment_.class)
                 .start();
     }

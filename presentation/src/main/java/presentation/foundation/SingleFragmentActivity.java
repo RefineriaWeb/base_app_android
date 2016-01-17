@@ -16,23 +16,48 @@
 
 package presentation.foundation;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.StringRes;
 
 import java.io.Serializable;
 
 import base.app.android.R;
+import presentation.internal.di.ApplicationComponent;
 
 /**
  * Created by victor on 23/11/15.
  */
 @EActivity(R.layout.host_single_fragment_activity)
-public class SingleFragmentActivity extends BaseToolbarActivity {
+public class SingleFragmentActivity extends AppCompatActivity {
+    @ViewById protected Toolbar toolbar;
 
-    @Override protected void initViews() {
-        super.initViews();
+    public BaseApp getBaseApp() {
+        return ((BaseApp)getApplication());
+    }
+
+    public ApplicationComponent getApplicationComponent() {
+        return getBaseApp().getApplicationComponent();
+    }
+
+    @AfterInject protected void init() {
+        getApplicationComponent().inject(this);
+    }
+
+    @AfterViews protected void initViews() {
+        setUpToolbarOrDies();
+        configureToolbar();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
@@ -43,18 +68,33 @@ public class SingleFragmentActivity extends BaseToolbarActivity {
         }
 
         Serializable serializable = bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY);
-        replaceFragment((Class<BasePresenterFragment>) serializable);
+        Class<BasePresenterFragment> clazz = (Class<BasePresenterFragment>) serializable;
+
+        BasePresenterFragment basePresenterFragment = replaceFragment(clazz);
+        Bundle bundleFragment = bundle.getBundle(Behaviour.BUNDLE_FOR_FRAGMENT);
+        basePresenterFragment.setArguments(bundleFragment);
     }
 
-    protected <T extends BasePresenterFragment> void replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
-        BasePresenterFragment current = (BasePresenterFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
-        if (current != null && current.getClass() == clazz) return;
-        replaceFragment(clazz);
+    private void setUpToolbarOrDies() {
+        if (toolbar == null) {
+            String feedback = "To use BaseToolbarActivity as base class providing a Toolbar with id 'toolbar' is mandatory";
+            throw new IllegalStateException(feedback);
+        }
+
+        setSupportActionBar(toolbar);
     }
 
-    protected <T extends BasePresenterFragment> void replaceFragment(Class<T> clazz) {
+    protected <T extends BasePresenterFragment> BasePresenterFragment replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
+        BasePresenterFragment current = getCurrentPresenterFragment();
+        if (current != null && current.getClass() == clazz) return current;
+        return replaceFragment(clazz);
+    }
+
+    protected <T extends BasePresenterFragment> BasePresenterFragment replaceFragment(Class<T> clazz) {
         try {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, clazz.newInstance()).commit();
+            BasePresenterFragment fragment = clazz.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragment, fragment).commit();
+            return fragment;
         } catch (InstantiationException e) {
             throw new IllegalStateException(e.getMessage());
         } catch (IllegalAccessException e) {
@@ -62,11 +102,48 @@ public class SingleFragmentActivity extends BaseToolbarActivity {
         }
     }
 
-    @Override public void setTitle(CharSequence title) {
-        getSupportActionBar().setTitle(title);
-    }
-
     public interface Behaviour {
         String FRAGMENT_CLASS_KEY = "fragment_class_key";
+        String BUNDLE_FOR_FRAGMENT = "bundle_for_fragment";
+        boolean SHOW_BACK_AS_DEFAULT = true;
+        String SHOW_BACK_KEY = "show_back_key";
+        String TITLE_KEY = "title_key";
+    }
+
+    public BasePresenterFragment getCurrentPresenterFragment() {
+        return (BasePresenterFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
+    }
+
+    @StringRes protected String app_name;
+    private void configureToolbar() {
+        ActionBar actionBar = getSupportActionBar();
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null) {
+            boolean showBackKey = bundle.getBoolean(Behaviour.SHOW_BACK_KEY, Behaviour.SHOW_BACK_AS_DEFAULT);
+            actionBar.setDisplayHomeAsUpEnabled(showBackKey);
+            String title = bundle.getString(Behaviour.TITLE_KEY, app_name);
+            getSupportActionBar().setTitle(title);
+        } else {
+            actionBar.setDisplayHomeAsUpEnabled(Behaviour.SHOW_BACK_AS_DEFAULT);
+            getSupportActionBar().setTitle(app_name);
+        }
+
+        setStatusBarColor();
+    }
+
+    private void setStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        }
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override public void setTitle(CharSequence title) {
+        getSupportActionBar().setTitle(title);
     }
 }
