@@ -180,6 +180,8 @@ task('freshStart') << {
 
     Helper.removeDir(".git")
     Helper.removeDir(startFresh)
+
+    println("Remember clean and build project")
 }
 
 class Helper {
@@ -188,8 +190,10 @@ class Helper {
     }
 
     static void moveFileDeleting(String source, String destination, String nameNewFile) {
-        File file = new File(source);
-        File dir = new File(destination);
-        file.renameTo(new File(dir, nameNewFile));
+        File fileSrc = new File(source)
+        File dir = new File(destination)
+        File fileDst = new File(dir, nameNewFile)
+        fileDst.delete()
+        if (!fileSrc.renameTo(fileDst)) println("Failed to replace " + fileDst.getAbsolutePath())
     }
 }
