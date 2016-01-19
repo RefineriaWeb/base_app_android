@@ -1,3 +1,8 @@
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-base__app__android-green.svg?style=true)](https://android-arsenal.com/details/1/3040)
+
+Base App Android
+================
+
 Base skeleton structure to start every new project, based on the design patters suggested by Robert C. Martin *(aka Uncle Bob)* on his clean architecture.
 
 *base_app_android* is the project which we use at [Refineria Web](http://www.refineriaweb.com/servicios/desarrollo-apps-moviles/) to start any new Android project. It presents a structure of 3 layers, domain, data and presentation; this approach has been chosen with the purpose of creating an application that conducts unit testing and also allow the portability between platforms, mainly iOS.
