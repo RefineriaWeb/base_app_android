@@ -35,12 +35,12 @@ public class GetMenuItemsUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        getMenuItemsUseCase = new GetMenuItemsUseCase(new GetMenuItemsUseCase.DashboardDataRepository(dashboardItemsMenuMock), localeMock, subscribeOnMock, observeOnMock);
+        getMenuItemsUseCase = new GetMenuItemsUseCase(dashboardItemsMenuMock, UIMock, subscribeOnMock, observeOnMock);
     }
 
     @Test public void When_Execute_Get_Items_Menu() {
         TestSubscriber<List<ItemMenu>> subscriberMock = new TestSubscriber<>();
-        getMenuItemsUseCase.execute(subscriberMock);
+        getMenuItemsUseCase.observable().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         assertThat(subscriberMock.getOnCompletedEvents().size(), is(1));

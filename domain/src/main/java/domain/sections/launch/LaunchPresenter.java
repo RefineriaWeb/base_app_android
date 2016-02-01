@@ -19,21 +19,17 @@ package domain.sections.launch;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.Wireframe;
 
-public class LaunchPresenter extends Presenter<LaunchView, LaunchUseCase> {
+public class LaunchPresenter extends Presenter<LaunchView> {
 
-    @Inject LaunchPresenter(LaunchUseCase useCase, Wireframe wireframe, Locale locale) {
-        super(useCase, wireframe, locale);
+    @Inject LaunchPresenter(Wireframe wireframe, UI ui) {
+        super(wireframe, ui);
     }
 
     @Override public void attachView(LaunchView view) {
         super.attachView(view);
         wireframe.dashboard();
-    }
-
-    @Override public void dispose() {
-        useCase.dispose();
     }
 }

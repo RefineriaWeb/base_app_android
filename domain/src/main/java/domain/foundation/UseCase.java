@@ -18,62 +18,46 @@ package domain.foundation;
 
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
-import domain.sections.Locale;
+import domain.sections.UI;
 import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
 
 /**
  * Base class for any UseCase.
  * The UseCase retrieves its data from an specific repository and
  * it is in charge of processing data for any presenter.
- * @param <R> The repository interface used by this use case
  * @see  Repository
  */
 
-public abstract class UseCase<R extends Repository, D> implements Disposable {
-    protected final R repository;
-    protected final Locale locale;
+public abstract class UseCase<D> {
+    protected final UI ui;
     private final SubscribeOn subscribeOn;
     private final ObserveOn observeOn;
-    private Subscription subscription = Subscriptions.empty();
 
-    public UseCase(R repository, Locale locale, SubscribeOn subscribeOn, ObserveOn observeOn) {
-        this.repository = repository;
-        this.locale = locale;
+    public UseCase(UI ui, SubscribeOn subscribeOn, ObserveOn observeOn) {
+        this.ui = ui;
         this.subscribeOn = subscribeOn;
         this.observeOn = observeOn;
     }
 
-    public void execute(Subscriber<D> subscriber) {
-        assert subscriber != null;
-
-        unsubscribe();
-
-        subscription = builtObservable()
-                .subscribeOn(subscribeOn.getScheduler())
-                .observeOn(observeOn.getScheduler())
-                .subscribe(subscriber);
+    public Observable<D> safetyObservable() {
+        return observable().onErrorResumeNext(throwable -> Observable.empty());
     }
 
+    public Observable<D> safetyReportErrorObservable() {
+        return observable()
+                .doOnError(throwable -> ui.showError(throwable.getMessage()))
+                .onErrorResumeNext(throwable -> Observable.empty());
+    }
 
-    public Observable<D> getObservable() {
-        return builtObservable();
+    public Observable<D> observable() {
+        return builtObservable()
+                .unsubscribeOn(subscribeOn.getScheduler())
+                .subscribeOn(subscribeOn.getScheduler())
+                .observeOn(observeOn.getScheduler());
     }
 
     /**
      * Observable built for every use case
      */
-    public abstract Observable<D> builtObservable();
-
-    private void unsubscribe() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
-        }
-    }
-
-    @Override public void dispose() {
-        unsubscribe();
-    }
+    protected abstract Observable<D> builtObservable();
 }

@@ -17,6 +17,8 @@
 package data.cache;
 
 import domain.sections.user_demo.entities.UserDemoEntity;
+import io.rx_cache.InvalidateCache;
+import io.rx_cache.Invalidator;
 import io.rx_cache.Loader;
 import rx.Observable;
 
@@ -24,5 +26,6 @@ import rx.Observable;
  * Providers for RxCache
  */
 public interface RxProviders {
-    Observable<UserDemoEntity> getSelectedUserDemoList(@Loader Observable<UserDemoEntity> oUserSelected);
+    Observable<UserDemoEntity> getSelectedUserDemoList(@Loader Observable<UserDemoEntity> oUserSelected,
+                                                       @InvalidateCache Invalidator invalidator);
 }

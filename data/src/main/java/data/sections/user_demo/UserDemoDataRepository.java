@@ -24,15 +24,15 @@ import javax.inject.Inject;
 import data.cache.RxProviders;
 import data.net.RestApi;
 import data.sections.DataRepository;
-import data.sections.Locale;
+import data.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
 public class UserDemoDataRepository extends DataRepository implements UserDemoRepository {
 
-    @Inject public UserDemoDataRepository(RestApi restApi, RxProviders rxProviders, Locale locale) {
-        super(restApi, rxProviders, locale);
+    @Inject public UserDemoDataRepository(RestApi restApi, RxProviders rxProviders, UI ui) {
+        super(restApi, rxProviders, ui);
     }
 
     @Override public Observable<UserDemoEntity> searchByUserName(final String  username) {
@@ -51,11 +51,11 @@ public class UserDemoDataRepository extends DataRepository implements UserDemoRe
     }
 
     @Override public Observable<UserDemoEntity> getSelectedUserDemoList() {
-        return rxProviders.getSelectedUserDemoList(Observable.just(null));
+        return rxProviders.getSelectedUserDemoList(Observable.just(null), () -> false);
     }
 
     @Override public Observable<Boolean> saveSelectedUserDemoList(UserDemoEntity userSelected) {
-        return rxProviders.getSelectedUserDemoList(Observable.just(userSelected))
+        return rxProviders.getSelectedUserDemoList(Observable.just(userSelected), () -> true)
                 .map(user-> true);
     }
 }

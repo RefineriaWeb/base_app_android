@@ -19,20 +19,21 @@ package domain.sections.user_demo.detail;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
-import domain.foundation.lce.LcePresenterSubscriber;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
 
-public class UserDemoPresenter extends Presenter<UserView, GetSelectedDemoUserListUseCase> {
+public class UserDemoPresenter extends Presenter<UserView> {
+    private final GetSelectedDemoUserListUseCase useCase;
 
-    @Inject UserDemoPresenter(GetSelectedDemoUserListUseCase useCase, Wireframe wireframe, Locale locale) {
-        super(useCase, wireframe, locale);
+    @Inject UserDemoPresenter(GetSelectedDemoUserListUseCase useCase, Wireframe wireframe, UI ui) {
+        super(wireframe, ui);
+        this.useCase = useCase;
     }
 
     @Override public void attachView(UserView view) {
         super.attachView(view);
-        useCase.execute(new LcePresenterSubscriber(view));
+        subscriptions(view.showUser(useCase.safetyReportErrorObservable()));
     }
 
     public void goToSearchScreen() {

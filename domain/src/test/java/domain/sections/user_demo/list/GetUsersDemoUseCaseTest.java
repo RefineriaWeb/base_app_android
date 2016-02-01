@@ -39,14 +39,14 @@ public class GetUsersDemoUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        getUsersDemoUseCaseUT = new GetUsersDemoUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, localeMock);
+        getUsersDemoUseCaseUT = new GetUsersDemoUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, UIMock);
     }
 
     @Test public void  When_Execute_Get_Users() {
         when(userDemoRepositoryMock.askForUsers()).thenReturn(Observable.just(Arrays.asList()));
 
         TestSubscriber<List<UserDemoEntity>> subscriberMock = new TestSubscriber<>();
-        getUsersDemoUseCaseUT.execute(subscriberMock);
+        getUsersDemoUseCaseUT.observable().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         assertThat(subscriberMock.getOnCompletedEvents().size(), is(1));

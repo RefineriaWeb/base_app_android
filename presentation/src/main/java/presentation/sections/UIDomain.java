@@ -17,17 +17,27 @@
 package presentation.sections;
 
 import base.app.android.R;
-import domain.sections.Locale;
+import domain.sections.UI;
 import presentation.foundation.BaseApp;
 
-public class LocaleDomain implements Locale {
+public class UIDomain implements UI {
     private final BaseApp baseApp;
 
-    public LocaleDomain(BaseApp baseApp) {
+    public UIDomain(BaseApp baseApp) {
         this.baseApp = baseApp;
     }
 
     @Override public String errorNonEmptyFields() {
         return baseApp.getString(R.string.fill_missing_fields);
+    }
+
+    @Override public void showError(String error) {
+        baseApp.getLiveActivity()
+                .getCurrentPresenterFragment().showToast(error);
+    }
+
+    public void showAnchoredScreenError(String error) {
+        baseApp.getLiveActivity()
+                .getCurrentPresenterFragment().showSnackBar(error);
     }
 }

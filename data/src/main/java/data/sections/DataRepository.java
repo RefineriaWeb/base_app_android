@@ -32,12 +32,12 @@ import rx.Observable;
 public abstract class DataRepository implements Repository {
     protected final RestApi restApi;
     protected final RxProviders rxProviders;
-    protected final Locale locale;
+    protected final UI UI;
 
-    public DataRepository(RestApi restApi, RxProviders rxProviders, Locale locale) {
+    public DataRepository(RestApi restApi, RxProviders rxProviders, UI ui) {
         this.restApi = restApi;
         this.rxProviders = rxProviders;
-        this.locale = locale;
+        this.UI = ui;
     }
 
     protected void handleError(Response response) {
@@ -57,9 +57,5 @@ public abstract class DataRepository implements Repository {
 
     protected Observable buildObservableError(String message) {
         return Observable.create(subscriber -> subscriber.onError(new RuntimeException(message)));
-    }
-
-    protected <T> Observable<T> buildObservable(T t) {
-        return Observable.just(t);
     }
 }

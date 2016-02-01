@@ -18,67 +18,102 @@ package domain.foundation;
 
 import org.junit.Test;
 
-import java.util.concurrent.TimeUnit;
-
 import domain.common.BaseTest;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UseCaseTest extends BaseTest {
-    private final String SUCCESS = "success";
-    private UseCaseUnderTest useCaseUT;
+    private final String SUCCESS = "success", FAILURE = "failure";
+    private UseCaseSuccessUnderTest useCaseSuccessUnderTest;
+    private UseCaseFailureUnderTest useCaseFailureUnderTest;
 
     @Override public void setUp() {
         super.setUp();
-        useCaseUT = new UseCaseUnderTest();
+        useCaseSuccessUnderTest = new UseCaseSuccessUnderTest();
+        useCaseFailureUnderTest = new UseCaseFailureUnderTest();
     }
 
-    @Test public void When_Subscribe_Get_Response() {
+    @Test public void When_Subscribe_Observable_Success_Get_Response() {
         TestSubscriber<String> subscriberMock = new TestSubscriber<>();
-        useCaseUT.execute(subscriberMock);
+        useCaseSuccessUnderTest.observable().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         String response = subscriberMock.getOnNextEvents().get(0);
         assertThat(response, is(SUCCESS));
+        assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
     }
 
-    @Test public void When_Unsubscribe_Do_Not_Get_Response() {
-        TestSubscriber<String> subscriberMock = new TestSubscriber<String>() {
-            @Override public void onNext(String ignore) {
-                throw new RuntimeException();
-            }
-        };
+    @Test public void When_Subscribe_Observable_Failure_Get_Exception() {
+        TestSubscriber<String> subscriberMock = new TestSubscriber<>();
+        useCaseFailureUnderTest.observable().subscribe(subscriberMock);
+        subscriberMock.awaitTerminalEvent();
 
-        useCaseUT.execute(subscriberMock);
-        try {
-            Thread.sleep(100);
-            useCaseUT.dispose();
-            Thread.sleep(1000);
-            assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
-        } catch (InterruptedException e) {e.printStackTrace();}
+        String response = subscriberMock.getOnErrorEvents().get(0).getMessage();
+        assertThat(response, is(FAILURE));
+        assertThat(subscriberMock.getOnNextEvents().size(), is(0));
     }
 
-    private class UseCaseUnderTest extends UseCase<UseCaseRepository, String> {
+    @Test public void When_Subscribe_Safety_Observable_Success_Get_Response() {
+        TestSubscriber<String> subscriberMock = new TestSubscriber<>();
+        useCaseSuccessUnderTest.observable().subscribe(subscriberMock);
+        subscriberMock.awaitTerminalEvent();
 
-        public UseCaseUnderTest() {
-            super(new UseDataCaseRepository(), localeMock, subscribeOnMock, observeOnMock);
+        String response = subscriberMock.getOnNextEvents().get(0);
+        assertThat(response, is(SUCCESS));
+        assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
+    }
+
+    @Test public void When_Subscribe_Safety_Observable_Failure_Nothing_Is_Emitted() {
+        when(UIMock.errorNonEmptyFields()).thenReturn(FAILURE);
+
+        TestSubscriber<String> subscriberMock = new TestSubscriber<>();
+        useCaseFailureUnderTest.safetyObservable().subscribe(subscriberMock);
+        subscriberMock.awaitTerminalEvent();
+
+        assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
+        assertThat(subscriberMock.getOnNextEvents().size(), is(0));
+
+        verify(UIMock, times(0)).showError(FAILURE);
+    }
+
+    @Test public void When_Subscribe_Safety_Report_Error_Observable_Failure_Nothing_Is_Emitted_And_UI_Show_Error_Is_Called() {
+        when(UIMock.errorNonEmptyFields()).thenReturn(FAILURE);
+
+        TestSubscriber<String> subscriberMock = new TestSubscriber<>();
+        useCaseFailureUnderTest.safetyReportErrorObservable().subscribe(subscriberMock);
+        subscriberMock.awaitTerminalEvent();
+
+        assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
+        assertThat(subscriberMock.getOnNextEvents().size(), is(0));
+
+        verify(UIMock, times(1)).showError(FAILURE);
+    }
+
+    private class UseCaseSuccessUnderTest extends UseCase<String> {
+        public UseCaseSuccessUnderTest() {
+            super(UIMock, subscribeOnMock, observeOnMock);
         }
 
         @Override public Observable<String> builtObservable() {
-            return Observable.just(SUCCESS).delay(1, TimeUnit.SECONDS);
+            return Observable.just(SUCCESS);
         }
     }
 
-    private interface UseCaseRepository extends Repository {
-        Observable<String> getString();
-    }
+    private class UseCaseFailureUnderTest extends UseCase<String> {
+        public UseCaseFailureUnderTest() {
+            super(UIMock, subscribeOnMock, observeOnMock);
+        }
 
-    private class UseDataCaseRepository implements UseCaseRepository {
-        @Override public Observable<String> getString() {
-            return Observable.just(SUCCESS).delay(1, TimeUnit.SECONDS);
+        @Override public Observable<String> builtObservable() {
+            return Observable.just(SUCCESS).map(message -> {
+                throw new RuntimeException(FAILURE);
+            });
         }
     }
 }

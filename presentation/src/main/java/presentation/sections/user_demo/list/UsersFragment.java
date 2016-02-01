@@ -33,13 +33,15 @@ import domain.sections.user_demo.list.UsersView;
 import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
 import presentation.sections.user_demo.UserViewGroup_;
-import presentation.utilities.recyclerview_adapter.RecyclerViewAdapterBase;
+import presentation.utilities.recyclerview_adapter.RecyclerViewAdapter;
+import rx.Observable;
+import rx.Subscription;
 
 @EFragment(R.layout.users_fragment)
 public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> implements UsersView {
     @ViewById protected View pb_loading;
     @ViewById protected RecyclerView rv_users;
-    private RecyclerViewAdapterBase<UserDemoEntity, UserViewGroup> adapter;
+    private RecyclerViewAdapter<UserDemoEntity, UserViewGroup> adapter;
 
     @Override protected void init() {
         super.init();
@@ -47,16 +49,15 @@ public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> imp
     }
 
     @Override protected void initViews() {
-        super.initViews();
-        presenter.attachView(this);
         setUpRecyclerView();
+        super.initViews();
     }
 
     private void setUpRecyclerView() {
         rv_users.setHasFixedSize(true);
         rv_users.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        adapter = new RecyclerViewAdapterBase<UserDemoEntity, UserViewGroup>() {
+        adapter = new RecyclerViewAdapter<UserDemoEntity, UserViewGroup>() {
             @Override protected UserViewGroup onCreateItemView(ViewGroup parent, int viewType) {
                 return UserViewGroup_.build(getActivity());
             }
@@ -70,22 +71,23 @@ public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> imp
         rv_users.setAdapter(adapter);
     }
 
-    @Override public void showProgress() {
+    @Override public Subscription showUsers(Observable<List<UserDemoEntity>> oUsers) {
+        showProgress();
+
+        return oUsers.subscribe(users -> {
+            rv_users.setVisibility(View.VISIBLE);
+            adapter.addAll(users);
+            hideProgress();
+        });
+    }
+
+    public void showProgress() {
         pb_loading.setVisibility(View.VISIBLE);
         rv_users.setVisibility(View.INVISIBLE);
     }
 
-    @Override public void hideProgress() {
+    public void hideProgress() {
         pb_loading.setVisibility(View.INVISIBLE);
         rv_users.setVisibility(View.VISIBLE);
     }
-
-    @Override public void showResult(List<UserDemoEntity> users) {
-        adapter.setAll(users);
-    }
-
-    @Override public void showError(String message) {
-        showSnackBar(message);
-    }
-
 }

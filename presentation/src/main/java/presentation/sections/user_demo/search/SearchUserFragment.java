@@ -30,6 +30,8 @@ import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.search.SearchUserDemoPresenter;
 import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
+import rx.Observable;
+import rx.Subscription;
 
 @EFragment(R.layout.user_search_fragment)
 public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView {
@@ -43,28 +45,30 @@ public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPres
     }
 
     @Override protected void initViews() {
-        super.initViews();
-
         Bundle bundle = getArguments();
         String helloFromBundle = bundle != null ? bundle.getString(HELLO_FROM_BUNDLE_WIREFRAME_KEY, "") : "";
         if (!helloFromBundle.isEmpty())showSnackBar(helloFromBundle);
+
+        super.initViews();
     }
 
-    @Override public void showProgress() {
+    @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {
         showLoading();
+
+        return oUser.subscribe(user -> {
+            user_view_group.bind(user);
+            hideLoading();
+        });
     }
 
-    @Override public void hideProgress() {
-        hideLoading();
+    @Override protected void showLoading() {
+        super.showLoading();
+        user_view_group.setVisibility(View.GONE);
     }
 
-    @Override public void showError(String message) {
-        super.showSnackBar(message);
-    }
-
-    @Override public void showResult(UserDemoEntity user) {
+    @Override protected void hideLoading() {
+        super.hideLoading();
         user_view_group.setVisibility(View.VISIBLE);
-        user_view_group.bind(user);
     }
 
     @ViewById protected EditText et_name;

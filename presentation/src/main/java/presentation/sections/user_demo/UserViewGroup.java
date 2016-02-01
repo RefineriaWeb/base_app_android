@@ -31,7 +31,7 @@ import base.app.android.R;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import presentation.utilities.recyclerview_adapter.ViewWrapper;
 
-@EViewGroup(R.layout.user_view_group) public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity>{
+@EViewGroup(R.layout.user_view_group) public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity> {
     @ViewById protected ImageView iv_avatar;
     @ViewById protected TextView tv_name;
 

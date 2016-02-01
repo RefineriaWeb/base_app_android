@@ -21,10 +21,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import data.internal.di.DataModule;
-import data.sections.Locale;
+import data.sections.UI;
 import data.storage.RepositoryAdapter;
 import presentation.foundation.BaseApp;
-import presentation.sections.LocaleData;
+import presentation.sections.UIData;
 
 
 /**
@@ -43,10 +43,11 @@ public class DataPresentationModule {
 
     /**
      * Provides the locale for the data layer
-     * @see Locale
+     * @see UI
      */
-    @Singleton @Provides Locale provideLocale(BaseApp baseApp) {
-        return new LocaleData(baseApp);
+    @Singleton @Provides
+    UI provideLocale(BaseApp baseApp) {
+        return new UIData(baseApp);
     }
 
 }

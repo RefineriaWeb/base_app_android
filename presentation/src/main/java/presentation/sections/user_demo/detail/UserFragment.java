@@ -23,11 +23,13 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import base.app.android.R;
-import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.detail.UserDemoPresenter;
+import domain.sections.user_demo.entities.UserDemoEntity;
 import presentation.foundation.BasePresenterFragment;
 import presentation.sections.user_demo.UserViewGroup;
+import rx.Observable;
+import rx.Subscription;
 
 @EFragment(R.layout.user_fragment)
 public class UserFragment extends BasePresenterFragment<UserDemoPresenter> implements UserView {
@@ -38,21 +40,22 @@ public class UserFragment extends BasePresenterFragment<UserDemoPresenter> imple
         getApplicationComponent().inject(this);
     }
 
-    @Override public void showProgress() {
+    @ViewById protected UserViewGroup user_view_group;
+    @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {
+        showProgress();
+
+        return oUser.subscribe(user -> {
+            user_view_group.bind(user);
+            hideProgress();
+        });
+    }
+
+    public void showProgress() {
         pb_loading.setVisibility(View.VISIBLE);
     }
 
-    @Override public void hideProgress() {
+    public void hideProgress() {
         pb_loading.setVisibility(View.GONE);
-    }
-
-    @Override public void showError(String message) {
-        super.showSnackBar(message);
-    }
-
-    @ViewById protected UserViewGroup user_view_group;
-    @Override public void showResult(UserDemoEntity user) {
-        user_view_group.bind(user);
     }
 
     @Click protected void bt_go_to_search_user() {

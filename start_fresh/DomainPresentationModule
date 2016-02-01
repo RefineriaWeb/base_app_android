@@ -21,12 +21,12 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import domain.internal.di.DomainModule;
 import domain.foundation.schedulers.ObserveOn;
-import domain.sections.Locale;
+import domain.internal.di.DomainModule;
+import domain.sections.UI;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
-import presentation.sections.LocaleDomain;
+import presentation.sections.UIDomain;
 import presentation.sections.WireframeDomain;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -46,10 +46,11 @@ public class DomainPresentationModule {
 
     /**
      * Provides the locale for the domain layer
-     * @see Locale
+     * @see UI
      */
-    @Singleton @Provides Locale provideLocale(BaseApp baseApp) {
-        return new LocaleDomain(baseApp);
+    @Singleton @Provides
+    UI provideLocale(BaseApp baseApp) {
+        return new UIDomain(baseApp);
     }
 
     /**

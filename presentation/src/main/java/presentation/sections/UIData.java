@@ -1,13 +1,13 @@
 package presentation.sections;
 
 import base.app.android.R;
-import data.sections.Locale;
+import data.sections.UI;
 import presentation.foundation.BaseApp;
 
-public class LocaleData implements Locale {
+public class UIData implements UI {
     private final BaseApp baseApp;
 
-    public LocaleData(BaseApp baseApp) {
+    public UIData(BaseApp baseApp) {
         this.baseApp = baseApp;
     }
 

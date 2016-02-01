@@ -43,10 +43,12 @@ import domain.sections.dashboard.DashboardPresenter;
 import domain.sections.dashboard.DashboardView;
 import domain.sections.dashboard.ItemMenu;
 import presentation.foundation.SingleFragmentActivity;
-import presentation.sections.user_demo.search.SearchUserFragment_;
 import presentation.sections.user_demo.detail.UserFragment_;
 import presentation.sections.user_demo.list.UsersFragment_;
-import presentation.utilities.recyclerview_adapter.RecyclerViewAdapterBase;
+import presentation.sections.user_demo.search.SearchUserFragment_;
+import presentation.utilities.recyclerview_adapter.RecyclerViewAdapter;
+import rx.Observable;
+import rx.Subscription;
 
 @EActivity(R.layout.dashboard_activity)
 public class DashBoardActivity extends SingleFragmentActivity implements DashboardView {
@@ -99,8 +101,8 @@ public class DashBoardActivity extends SingleFragmentActivity implements Dashboa
         rv_menu_items.setAdapter(adapter);
     }
 
-    @Override public void loadMenus(List<ItemMenu> itemMenuDashboards) {
-        adapter.setAll(itemMenuDashboards);
+    @Override public Subscription loadItemsMenu(Observable<List<ItemMenu>> oItems) {
+        return oItems.subscribe(items -> adapter.addAll(items));
     }
 
     @StringRes protected String users;
@@ -137,7 +139,7 @@ public class DashBoardActivity extends SingleFragmentActivity implements Dashboa
         return super.onOptionsItemSelected(item);
     }
 
-    @EBean static protected class ItemMenuDashboardAdapter extends RecyclerViewAdapterBase<ItemMenu, ItemMenuViewGroup> {
+    @EBean static protected class ItemMenuDashboardAdapter extends RecyclerViewAdapter<ItemMenu, ItemMenuViewGroup> {
         @RootContext protected Context context;
 
         @Override protected ItemMenuViewGroup onCreateItemView(ViewGroup parent, int viewType) {

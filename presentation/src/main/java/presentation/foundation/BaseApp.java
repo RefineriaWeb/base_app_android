@@ -16,7 +16,6 @@
 
 package presentation.foundation;
 
-import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.Nullable;
 
@@ -46,7 +45,7 @@ public class BaseApp extends Application {
         return applicationComponent;
     }
 
-    @Nullable public Activity getLiveActivity(){
-        return AppCare.YesSir.getLiveActivityOrNull();
+    @Nullable public SingleFragmentActivity getLiveActivity(){
+        return (SingleFragmentActivity) AppCare.YesSir.getLiveActivityOrNull();
     }
 }

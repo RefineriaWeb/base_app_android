@@ -23,15 +23,17 @@ import javax.inject.Inject;
 import domain.foundation.UseCase;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class GetUsersDemoUseCase extends UseCase<UserDemoRepository, List<UserDemoEntity>> {
+public class GetUsersDemoUseCase extends UseCase<List<UserDemoEntity>> {
+    private final UserDemoRepository repository;
 
-    @Inject public GetUsersDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
-        super(repository, locale, subscribeOn, observeOn);
+    @Inject public GetUsersDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, UI ui) {
+        super(ui, subscribeOn, observeOn);
+        this.repository = repository;
     }
 
     @Override public Observable<List<UserDemoEntity>> builtObservable() {

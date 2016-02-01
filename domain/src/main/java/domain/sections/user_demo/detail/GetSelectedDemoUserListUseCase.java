@@ -21,15 +21,17 @@ import javax.inject.Inject;
 import domain.foundation.UseCase;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class GetSelectedDemoUserListUseCase extends UseCase<UserDemoRepository, UserDemoEntity> {
+public class GetSelectedDemoUserListUseCase extends UseCase<UserDemoEntity> {
+    private final UserDemoRepository repository;
 
-    @Inject GetSelectedDemoUserListUseCase(UserDemoRepository repository, Locale locale, SubscribeOn subscribeOn, ObserveOn observeOn) {
-        super(repository, locale, subscribeOn, observeOn);
+    @Inject GetSelectedDemoUserListUseCase(UserDemoRepository repository, UI ui, SubscribeOn subscribeOn, ObserveOn observeOn) {
+        super(ui, subscribeOn, observeOn);
+        this.repository = repository;
     }
 
     @Override public Observable<UserDemoEntity> builtObservable() {

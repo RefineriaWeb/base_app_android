@@ -19,20 +19,25 @@ package domain.sections.user_demo.search;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
-import domain.foundation.lce.LcePresenterSubscriber;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
 
-public class SearchUserDemoPresenter extends Presenter<UserView, SearchUserDemoUseCase> {
+public class SearchUserDemoPresenter extends Presenter<UserView> {
+    private final SearchUserDemoUseCase useCase;
 
-    @Inject public SearchUserDemoPresenter(SearchUserDemoUseCase useCase, Wireframe wireframe, Locale locale) {
-        super(useCase, wireframe, locale);
+    @Inject public SearchUserDemoPresenter(SearchUserDemoUseCase useCase, Wireframe wireframe, UI ui) {
+        super(wireframe, ui);
+        this.useCase = useCase;
+    }
+
+    @Override public void attachView(UserView view) {
+        super.attachView(view);
     }
 
     public void getUserByUserName(String username) {
         useCase.setName(username);
-        if (username == null || username.isEmpty()) view.showError(locale.errorNonEmptyFields());
-        else useCase.execute(new LcePresenterSubscriber(view));
+        if (username == null || username.isEmpty()) ui.showAnchoredScreenError(ui.errorNonEmptyFields());
+        else subscriptions(view.showUser(useCase.safetyReportErrorObservable()));
     }
 }

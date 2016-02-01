@@ -22,7 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import data.net.RestApi;
-import data.sections.Locale;
+import data.sections.UI;
 import data.sections.user_demo.UserDemoDataRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import retrofit.Response;
@@ -37,12 +37,12 @@ import static org.mockito.Mockito.when;
 
 public class UserDemoDataRepositoryTest {
     @Mock private RestApi restApiMock;
-    @Mock private Locale localeMock;
+    @Mock private UI UIMock;
     private UserDemoDataRepository userDemoDataRepositoryUT;
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
-        userDemoDataRepositoryUT = new UserDemoDataRepository(restApiMock, null, localeMock);
+        userDemoDataRepositoryUT = new UserDemoDataRepository(restApiMock, null, UIMock);
     }
 
     @Test public void When_Search_With_Valid_User_Name_Then_Get_Demo_User() {

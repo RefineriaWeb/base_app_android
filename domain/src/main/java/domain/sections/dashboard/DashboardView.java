@@ -19,9 +19,11 @@ package domain.sections.dashboard;
 import java.util.List;
 
 import domain.foundation.BaseView;
+import rx.Observable;
+import rx.Subscription;
 
 public interface DashboardView extends BaseView {
-    void loadMenus(List<ItemMenu> itemsMenu);
+    Subscription loadItemsMenu(Observable<List<ItemMenu>> itemsMenu);
     void showUsers();
     void showUser();
     void showUserSearch();

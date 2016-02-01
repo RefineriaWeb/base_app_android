@@ -16,28 +16,27 @@
 
 package domain.foundation;
 
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.Wireframe;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Base class for any Presenter.
  * The presenter is responsible for linking the uses cases in order to create a logical unit
  * which will be represented as a screen in the application.
  * @param <V> The view interface attached to this presenter.
- * @param <U> The use case used for this presenter.
  * @see  BaseView
- * @see  UseCase
  */
-public abstract class Presenter<V extends BaseView, U extends UseCase> implements Disposable {
-    protected final U useCase;
+public abstract class Presenter<V extends BaseView> {
     protected V view;
     protected final Wireframe wireframe;
-    protected final Locale locale;
+    protected final UI ui;
+    private CompositeSubscription subscriptions = new CompositeSubscription();
 
-    public Presenter(U useCase, Wireframe wireframe, Locale locale) {
-        this.useCase = useCase;
+    public Presenter(Wireframe wireframe, UI ui) {
         this.wireframe = wireframe;
-        this.locale = locale;
+        this.ui = ui;
     }
 
     /**
@@ -52,7 +51,24 @@ public abstract class Presenter<V extends BaseView, U extends UseCase> implement
      */
     public void resumeView() {}
 
-    @Override public void dispose() {
-        useCase.dispose();
+    protected void subscriptions(Subscription subscription) {
+        unsubscribe();
+        this.subscriptions = new CompositeSubscription();
+        this.subscriptions.add(subscription);
+    }
+
+    protected void subscriptions(CompositeSubscription subscriptions) {
+        unsubscribe();
+        this.subscriptions = subscriptions;
+    }
+
+    private void unsubscribe() {
+        if (!subscriptions.isUnsubscribed()) {
+            subscriptions.unsubscribe();
+        }
+    }
+
+    public void dispose() {
+        unsubscribe();
     }
 }

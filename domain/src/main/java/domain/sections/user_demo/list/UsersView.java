@@ -18,8 +18,11 @@ package domain.sections.user_demo.list;
 
 import java.util.List;
 
-import domain.foundation.lce.LceView;
+import domain.foundation.BaseView;
 import domain.sections.user_demo.entities.UserDemoEntity;
+import rx.Observable;
+import rx.Subscription;
 
-public interface UsersView extends LceView<List<UserDemoEntity>> {
+public interface UsersView extends BaseView {
+    Subscription showUsers(Observable<List<UserDemoEntity>> users);
 }

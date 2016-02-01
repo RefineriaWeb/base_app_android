@@ -31,7 +31,7 @@ public class DomainModule {
 
     /**
      * Provides the Scheduler to be used by any subscriber on subscribing.
-     * The operation will be executed in a new thread, this way the UI won't be block
+     * The operation will be executed in a new thread, this way the ui won't be block
      */
     @Singleton @Provides SubscribeOn provideSubscribeOn() {
         return (() -> Schedulers.io());

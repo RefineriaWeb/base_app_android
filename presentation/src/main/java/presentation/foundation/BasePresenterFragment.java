@@ -19,7 +19,6 @@ package presentation.foundation;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -74,18 +73,13 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
         if (materialDialog != null) materialDialog.dismiss();
     }
 
-    protected void showToast(String title) {
+    public void showToast(String title) {
         Toast.makeText(getActivity(), title, Toast.LENGTH_LONG)
                 .show();
     }
-    protected void showSnackBar(String title) {
-        Snackbar.make(getView(), title, Snackbar.LENGTH_LONG)
-                .show();
-    }
 
-    protected void showSnackBar(String title, String action, View.OnClickListener listener) {
+    public void showSnackBar(String title) {
         Snackbar.make(getView(), title, Snackbar.LENGTH_LONG)
-                .setAction(action, listener)
                 .show();
     }
 

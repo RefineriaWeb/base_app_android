@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package domain.sections;
+package data.sections;
 
-public interface Locale {
-    String errorNonEmptyFields();
+public interface UI {
+    String genericError();
 }

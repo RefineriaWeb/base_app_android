@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package domain.foundation.lce;
+package domain.sections;
 
-import domain.foundation.BaseView;
-
-/**
- * Interface for any presenter eligible for implement an Loading-Content-Error (LCE) functionality
- * @param <D> Describes the type parameter of the data
- */
-public interface LceView<D> extends BaseView {
-    void showProgress();
-    void hideProgress();
-    void showError(String message);
-    void showResult(D data);
+public interface UI {
+    String errorNonEmptyFields();
+    void showError(String error);
+    void showAnchoredScreenError(String error);
 }

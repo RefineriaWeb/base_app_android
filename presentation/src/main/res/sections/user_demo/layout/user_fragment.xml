@@ -9,7 +9,7 @@
         android:layout_margin="@dimen/_10dp"
         android:orientation="vertical">
 
-        <ProgressBar
+        <com.pnikosis.materialishprogress.ProgressWheel
             android:id="@+id/pb_loading"
             style="@android:style/Widget.ProgressBar.Small"
             android:layout_width="wrap_content"

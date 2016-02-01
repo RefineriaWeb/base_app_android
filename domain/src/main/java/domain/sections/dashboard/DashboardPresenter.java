@@ -16,29 +16,26 @@
 
 package domain.sections.dashboard;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import domain.foundation.DefaultSubscriber;
 import domain.foundation.Presenter;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.Wireframe;
 
-public class DashboardPresenter extends Presenter<DashboardView, GetMenuItemsUseCase> {
+public class DashboardPresenter extends Presenter<DashboardView> {
+    private final GetMenuItemsUseCase useCase;
 
-    @Inject DashboardPresenter(GetMenuItemsUseCase useCase, Wireframe wireframe, Locale locale) {
-        super(useCase, wireframe, locale);
+    @Inject DashboardPresenter(GetMenuItemsUseCase useCase, Wireframe wireframe, UI ui) {
+        super(wireframe, ui);
+        this.useCase = useCase;
     }
 
     @Override public void attachView(DashboardView view) {
         super.attachView(view);
-        useCase.execute(new DefaultSubscriber<List<ItemMenu>>() {
-            @Override public void onNext(List<ItemMenu> itemsMenuDashboards) {
-                view.loadMenus(itemsMenuDashboards);
-                view.showUsers();
-            }
-        });
+        subscriptions(view.loadItemsMenu(useCase.safetyReportErrorObservable().map(itemMenus -> {
+            view.showUsers();
+            return itemMenus;
+        })));
     }
 
     public void setSelectedItemMenu(ItemMenu itemMenu) {

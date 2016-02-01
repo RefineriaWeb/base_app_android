@@ -22,14 +22,14 @@ import org.mockito.MockitoAnnotations;
 
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
-import domain.sections.Locale;
+import domain.sections.UI;
 import rx.schedulers.Schedulers;
 
 import static org.mockito.Mockito.when;
 
 public abstract class BaseTest {
     protected final static int WAIT = 50;
-    @Mock protected Locale localeMock;
+    @Mock protected UI UIMock;
     @Mock protected ObserveOn observeOnMock;
     @Mock protected SubscribeOn subscribeOnMock;
 

@@ -18,42 +18,31 @@ package domain.sections.user_demo.list;
 
 import javax.inject.Inject;
 
-import domain.foundation.DefaultSubscriber;
 import domain.foundation.Presenter;
-import domain.foundation.lce.LcePresenterSubscriber;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.entities.UserDemoEntity;
 
-public class UsersDemoPresenter extends Presenter<UsersView, GetUsersDemoUseCase> {
+public class UsersDemoPresenter extends Presenter<UsersView> {
+    private final GetUsersDemoUseCase getUsersDemoUseCase;
     private final SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase;
 
-    @Inject UsersDemoPresenter(GetUsersDemoUseCase useCase, Wireframe wireframe, Locale locale, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
-        super(useCase, wireframe, locale);
+    @Inject UsersDemoPresenter(GetUsersDemoUseCase getUsersDemoUseCase, Wireframe wireframe, UI UI, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
+        super(wireframe, UI);
+        this.getUsersDemoUseCase = getUsersDemoUseCase;
         this.saveUserDemoSelectedListUseCase = saveUserDemoSelectedListUseCase;
     }
 
     @Override public void attachView(UsersView view) {
         super.attachView(view);
-        useCase.execute(new LcePresenterSubscriber(view));
+        subscriptions(view.showUsers(getUsersDemoUseCase.safetyReportErrorObservable()));
     }
 
     public void goToDetail(UserDemoEntity user) {
         saveUserDemoSelectedListUseCase.setUserDemoEntity(user);
-        saveUserDemoSelectedListUseCase.execute(new DefaultSubscriber<Boolean>() {
-            @Override public void onError(Throwable e) {
-                view.showError(e.getMessage());
-            }
-
-            @Override public void onNext(Boolean saved) {
-                assert saved;
-                wireframe.userScreen();
-            }
-        });
-    }
-
-    @Override public void dispose() {
-        useCase.dispose();
-        saveUserDemoSelectedListUseCase.dispose();
+        subscriptions(saveUserDemoSelectedListUseCase.safetyReportErrorObservable().subscribe(saved -> {
+            assert saved;
+            wireframe.userScreen();
+        }));
     }
 }

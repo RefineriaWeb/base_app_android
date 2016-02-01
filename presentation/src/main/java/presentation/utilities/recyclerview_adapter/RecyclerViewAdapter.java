@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-public abstract class RecyclerViewAdapterBase<T, V extends View & ViewWrapper.Binder<T>> extends RecyclerView.Adapter<ViewWrapper<T, V>> {
+public abstract class RecyclerViewAdapter<T, V extends View & ViewWrapper.Binder<T>> extends RecyclerView.Adapter<ViewWrapper<T, V>> {
     protected List<T> items = new ArrayList<>();
     protected Listener<T, V> listener;
 
@@ -41,14 +40,14 @@ public abstract class RecyclerViewAdapterBase<T, V extends View & ViewWrapper.Bi
         notifyDataSetChanged();
     }
 
-    public void addAll(Collection<T> collection) {
-        items.addAll(collection);
+    public void addAll(List<T> data) {
+        items.addAll(data);
         notifyDataSetChanged();
     }
 
-    public void setAll(Collection<T> collection) {
+    public void setAll(List<T> data) {
         clear();
-        addAll(collection);
+        addAll(data);
     }
 
     public void clear() {

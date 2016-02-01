@@ -21,16 +21,18 @@ import javax.inject.Inject;
 import domain.foundation.UseCase;
 import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
-import domain.sections.Locale;
+import domain.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import rx.Observable;
 
-public class SaveUserDemoSelectedListUseCase extends UseCase<UserDemoRepository, Boolean> {
+public class SaveUserDemoSelectedListUseCase extends UseCase<Boolean> {
+    private final UserDemoRepository repository;
     private UserDemoEntity userDemoEntity;
 
-    @Inject public SaveUserDemoSelectedListUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, Locale locale) {
-        super(repository, locale, subscribeOn, observeOn);
+    @Inject public SaveUserDemoSelectedListUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, UI ui) {
+        super(ui, subscribeOn, observeOn);
+        this.repository = repository;
     }
 
     public void setUserDemoEntity(UserDemoEntity userDemoEntity) {
