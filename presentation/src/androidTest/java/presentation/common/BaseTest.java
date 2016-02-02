@@ -21,6 +21,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.squareup.spoon.Spoon;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -58,5 +60,11 @@ public abstract class BaseTest {
     protected Activity getCurrentActivity() {
         BaseApp app = (BaseApp) InstrumentationRegistry.getTargetContext().getApplicationContext();
         return app.getLiveActivity();
+    }
+
+    protected void takeScreenShot(String name) {
+        try {
+            Spoon.screenshot(getCurrentActivity(), name);
+        } catch (Exception ignore){}
     }
 }

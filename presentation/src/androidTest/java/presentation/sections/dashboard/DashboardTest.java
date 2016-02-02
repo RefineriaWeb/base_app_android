@@ -18,8 +18,6 @@ package presentation.sections.dashboard;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
 
-import com.squareup.spoon.Spoon;
-
 import org.junit.Test;
 
 import base.app.android.R;
@@ -38,7 +36,7 @@ public class DashboardTest extends BaseTest {
         mediumWait();
         onView(withId(R.id.rv_menu_items)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        Spoon.screenshot(getCurrentActivity(), "Users");
+        takeScreenShot("Users");
         onView(withId(R.id.drawer_layout)).perform(actionCloseDrawer());
     }
 
@@ -48,7 +46,7 @@ public class DashboardTest extends BaseTest {
 
         onView(withId(R.id.rv_menu_items)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
-        Spoon.screenshot(getCurrentActivity(), "User");
+        takeScreenShot("User");
         onView(withId(R.id.drawer_layout)).perform(actionCloseDrawer());
     }
 
@@ -58,7 +56,7 @@ public class DashboardTest extends BaseTest {
 
         onView(withId(R.id.rv_menu_items)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
 
-        Spoon.screenshot(getCurrentActivity(), "SearchUser");
+        takeScreenShot("SearchUser");
         onView(withId(R.id.drawer_layout)).perform(actionCloseDrawer());
     }
 
