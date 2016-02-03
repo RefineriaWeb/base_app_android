@@ -18,12 +18,14 @@ package presentation.foundation;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -41,6 +43,7 @@ import presentation.internal.di.ApplicationComponent;
  */
 @EActivity(R.layout.host_single_fragment_activity)
 public class SingleFragmentActivity extends AppCompatActivity {
+    @ViewById protected AppBarLayout appBarLayout;
     @ViewById protected Toolbar toolbar;
 
     public BaseApp getBaseApp() {
@@ -108,6 +111,8 @@ public class SingleFragmentActivity extends AppCompatActivity {
         boolean SHOW_BACK_AS_DEFAULT = true;
         String SHOW_BACK_KEY = "show_back_key";
         String TITLE_KEY = "title_key";
+        boolean SHOW_TOOLBAR_AS_DEFAULT = true;
+        String SHOW_TOOLBAR = "show_toolbar";
     }
 
     public BasePresenterFragment getCurrentPresenterFragment() {
@@ -118,9 +123,11 @@ public class SingleFragmentActivity extends AppCompatActivity {
     private void configureToolbar() {
         ActionBar actionBar = getSupportActionBar();
         Bundle bundle = getIntent().getExtras();
+        boolean showToolbar = Behaviour.SHOW_TOOLBAR_AS_DEFAULT;
 
         if (bundle != null) {
             boolean showBackKey = bundle.getBoolean(Behaviour.SHOW_BACK_KEY, Behaviour.SHOW_BACK_AS_DEFAULT);
+            showToolbar = bundle.getBoolean(Behaviour.SHOW_TOOLBAR, showToolbar);
             actionBar.setDisplayHomeAsUpEnabled(showBackKey);
             String title = bundle.getString(Behaviour.TITLE_KEY, app_name);
             getSupportActionBar().setTitle(title);
@@ -130,6 +137,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
         }
 
         setStatusBarColor();
+        appBarLayout.setVisibility(showToolbar ? View.VISIBLE : View.GONE);
     }
 
     private void setStatusBarColor() {
