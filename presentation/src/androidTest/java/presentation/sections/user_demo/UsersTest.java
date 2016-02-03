@@ -18,8 +18,6 @@ package presentation.sections.user_demo;
 
 import android.support.test.espresso.contrib.RecyclerViewActions;
 
-import com.squareup.spoon.Spoon;
-
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -44,16 +42,16 @@ public class UsersTest extends BaseTest {
     @Test public void _1_Get_Users() {
         mediumWait();
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.scrollToPosition(INDEX_LIST));
-        Spoon.screenshot(getCurrentActivity(), "users");
+        takeScreenShot("Users");
     }
 
     @Test public void _2_Get_User() {
         mediumWait();
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.scrollToPosition(INDEX_LIST));
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.actionOnItemAtPosition(INDEX_LIST, click()));
-        onView(withId(R.id.tv_name)).check(matches(withText(ID_USER+":"+USERNAME)));
+        onView(withId(R.id.tv_name)).check(matches(withText(ID_USER + ":" + USERNAME)));
 
-        Spoon.screenshot(getCurrentActivity(), USERNAME);
+        takeScreenShot(USERNAME);
     }
 
     @Test public void _3_Search_User() {
@@ -67,8 +65,8 @@ public class UsersTest extends BaseTest {
         onView(withId(R.id.bt_find_user)).perform(click());
         mediumWait();
 
-        onView(withId(R.id.tv_name)).check(matches(withText(ID_USER_REFINERIA+":"+USERNAME_REFINERIA)));
-        Spoon.screenshot(getCurrentActivity(), USERNAME_REFINERIA);
+        onView(withId(R.id.tv_name)).check(matches(withText(ID_USER_REFINERIA + ":" + USERNAME_REFINERIA)));
+        takeScreenShot(USERNAME_REFINERIA);
     }
 
 }
