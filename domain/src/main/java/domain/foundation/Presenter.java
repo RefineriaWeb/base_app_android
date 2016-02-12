@@ -32,11 +32,12 @@ public abstract class Presenter<V extends BaseView> {
     protected V view;
     protected final Wireframe wireframe;
     protected final UI ui;
-    private CompositeSubscription subscriptions = new CompositeSubscription();
+    private final CompositeSubscription subscriptions;
 
     public Presenter(Wireframe wireframe, UI ui) {
         this.wireframe = wireframe;
         this.ui = ui;
+        this.subscriptions = new CompositeSubscription();
     }
 
     /**
@@ -52,14 +53,7 @@ public abstract class Presenter<V extends BaseView> {
     public void resumeView() {}
 
     protected void subscriptions(Subscription subscription) {
-        unsubscribe();
-        this.subscriptions = new CompositeSubscription();
         this.subscriptions.add(subscription);
-    }
-
-    protected void subscriptions(CompositeSubscription subscriptions) {
-        unsubscribe();
-        this.subscriptions = subscriptions;
     }
 
     private void unsubscribe() {

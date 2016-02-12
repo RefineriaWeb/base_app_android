@@ -41,6 +41,18 @@ public class PresenterTest extends BaseTest {
         assertThat(subscriberMock.getOnNextEvents().size(), is(1));
     }
 
+    @Test public void When_No_Unsubscribe_Subscription_With_Several_Subscriptions_Get_Response() {
+        TestSubscriber<Object> subscriberMock1 = new TestSubscriber();
+        presenterUT.subscriptions(getExpensiveObservable().subscribe(subscriberMock1));
+
+        TestSubscriber<Object> subscriberMock2 = new TestSubscriber();
+        presenterUT.subscriptions(getExpensiveObservable().subscribe(subscriberMock2));
+
+        waitForIt();
+        assertThat(subscriberMock1.getOnNextEvents().size(), is(1));
+        assertThat(subscriberMock2.getOnNextEvents().size(), is(1));
+    }
+
     @Test public void When_Unsubscribe_Composite_Subscription_Do_Not_Get_Response() {
         CompositeSubscription compositeSubscription = new CompositeSubscription();
 
