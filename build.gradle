@@ -46,7 +46,7 @@ ext {
     supportRecyclerviewVersion = '23.1.0'
     supportDesignVersion = '23.1.0'
 
-    retrofitVersion = "2.0.0-beta2"
+    retrofitVersion = "2.0.0-beta1"
     lombokVersion = "1.16.6"
     retrolambdaVersion = "3.2.4"
     androidAptVersion = "1.8"
