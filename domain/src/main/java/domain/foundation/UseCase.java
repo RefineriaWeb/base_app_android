@@ -20,6 +20,7 @@ import domain.foundation.schedulers.ObserveOn;
 import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import rx.Observable;
+import rx.exceptions.CompositeException;
 
 /**
  * Base class for any UseCase.
@@ -45,8 +46,25 @@ public abstract class UseCase<D> {
 
     public Observable<D> safetyReportErrorObservable() {
         return observable()
-                .doOnError(throwable -> ui.showError(throwable.getMessage()))
+                .doOnError(throwable -> ui.showError(getInfoFromException(throwable)))
                 .onErrorResumeNext(throwable -> Observable.empty());
+    }
+
+    private String getInfoFromException(Throwable throwable) {
+        String message = throwable.getMessage();
+
+        if (throwable instanceof CompositeException) {
+            message += System.getProperty("line.separator");
+            CompositeException compositeException = (CompositeException) throwable;
+
+            for (Throwable exception : compositeException.getExceptions()) {
+                String exceptionName = exception.getClass().getSimpleName();
+                String exceptionMessage = exception.getMessage() != null ? exception.getMessage() : "";
+                message += exceptionName + " -> " + exceptionMessage + System.getProperty("line.separator");
+            }
+        }
+
+        return message;
     }
 
     public Observable<D> observable() {
