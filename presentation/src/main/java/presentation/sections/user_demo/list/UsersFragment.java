@@ -74,11 +74,12 @@ public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> imp
     @Override public Subscription showUsers(Observable<List<UserDemoEntity>> oUsers) {
         showProgress();
 
-        return oUsers.subscribe(users -> {
-            rv_users.setVisibility(View.VISIBLE);
-            adapter.addAll(users);
-            hideProgress();
-        });
+        return oUsers
+                .doOnCompleted(() -> {
+                    rv_users.setVisibility(View.VISIBLE);
+                    hideProgress();
+                })
+                .subscribe(users ->  adapter.addAll(users));
     }
 
     public void showProgress() {

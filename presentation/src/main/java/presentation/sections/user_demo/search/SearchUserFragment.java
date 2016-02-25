@@ -56,10 +56,8 @@ public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPres
     @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {
         showLoading();
 
-        return oUser.subscribe(user -> {
-            user_view_group.bind(user);
-            hideLoading();
-        });
+        return oUser.doOnCompleted(() -> hideLoading())
+                .subscribe(user -> user_view_group.bind(user));
     }
 
     @Override protected void showLoading() {

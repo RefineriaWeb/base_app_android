@@ -44,10 +44,8 @@ public class UserFragment extends BasePresenterFragment<UserDemoPresenter> imple
     @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {
         showProgress();
 
-        return oUser.subscribe(user -> {
-            user_view_group.bind(user);
-            hideProgress();
-        });
+        return oUser.doOnCompleted(() -> hideProgress())
+                .subscribe(user -> user_view_group.bind(user));
     }
 
     public void showProgress() {
