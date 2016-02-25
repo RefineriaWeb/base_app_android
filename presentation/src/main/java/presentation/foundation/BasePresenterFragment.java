@@ -60,7 +60,7 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
                 .show();
     }
 
-    protected void replaceFragment(int id, BasePresenterFragment fragment) {
+    protected void replaceFragment(int id, Fragment fragment) {
         FragmentManager fragmentManager = getChildFragmentManager();
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fragmentManager.beginTransaction()
