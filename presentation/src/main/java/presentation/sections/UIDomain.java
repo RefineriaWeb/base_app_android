@@ -31,12 +31,12 @@ public class UIDomain implements UI {
         return baseApp.getString(R.string.fill_missing_fields);
     }
 
-    @Override public void showError(String error) {
+    @Override public void showFeedback(String error) {
         baseApp.getLiveActivity()
                 .getCurrentPresenterFragment().showToast(error);
     }
 
-    public void showAnchoredScreenError(String error) {
+    public void showAnchoredScreenFeedback(String error) {
         baseApp.getLiveActivity()
                 .getCurrentPresenterFragment().showSnackBar(error);
     }

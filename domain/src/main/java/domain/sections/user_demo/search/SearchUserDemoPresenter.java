@@ -37,7 +37,7 @@ public class SearchUserDemoPresenter extends Presenter<UserView> {
 
     public void getUserByUserName(String username) {
         useCase.setName(username);
-        if (username == null || username.isEmpty()) ui.showAnchoredScreenError(ui.errorNonEmptyFields());
+        if (username == null || username.isEmpty()) ui.showAnchoredScreenFeedback(ui.errorNonEmptyFields());
         else subscriptions(view.showUser(useCase.safetyReportErrorObservable()));
     }
 }

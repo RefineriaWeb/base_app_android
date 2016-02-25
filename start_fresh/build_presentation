@@ -1,0 +1,128 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'spoon'
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath rootProject.ext.buildScriptDependencies.androidApt
+        classpath rootProject.ext.buildScriptDependencies.retrolambda
+        classpath rootProject.ext.buildScriptDependencies.spoon
+    }
+}
+
+spoon {
+    debug = true
+    if (project.hasProperty('classNameTestTuRun')) {
+        className = project.classNameTestTuRun
+    }
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    signingConfigs {
+        release {
+            storeFile file("keystore")
+            storePassword "storePassword"
+            keyAlias "keyAlias"
+            keyPassword "keyPassword"
+        }
+    }
+
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/sections/common',
+                            'src/main/res/sections',
+                            'src/main/res'
+                    ]
+        }
+    }
+
+    //Retrolambda
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //Lint crash with retrolambda, prevent abort on error
+    lintOptions {
+        abortOnError false
+    }
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        resourcePackageName "base.app.android"
+    }
+}
+
+configurations.all {
+    resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':data')
+    compile project(':domain')
+
+    def presentationDependencies = rootProject.ext.presentationDependencies
+
+    apt presentationDependencies.daggerCompiler
+    compile presentationDependencies.dagger
+    provided presentationDependencies.javaxAnnotation
+
+    compile presentationDependencies.rxJava
+    compile presentationDependencies.rxAndroid
+
+    compile presentationDependencies.androidannotations
+    apt presentationDependencies.androidannotationsCompiler
+
+    compile presentationDependencies.supportAppCompat
+    compile presentationDependencies.supportRecyclerview
+    compile presentationDependencies.supportDesign
+    compile presentationDependencies.picasso
+    compile presentationDependencies.materialishProgress
+    compile(presentationDependencies.materialDialog) {
+        transitive = true
+    }
+
+    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+
+    androidTestCompile presentationTestDependencies.spoonScreenshots
+    androidTestCompile presentationTestDependencies.supportTestRunner
+    androidTestCompile presentationTestDependencies.supportTestRules
+    androidTestCompile (presentationTestDependencies.espresso) {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'support-v13'
+        exclude module: 'recyclerview-v7'
+    }
+}

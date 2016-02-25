@@ -27,10 +27,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.ColorRes;
 import org.androidannotations.annotations.res.StringRes;
 
 import java.io.Serializable;
@@ -45,6 +48,7 @@ import presentation.internal.di.ApplicationComponent;
 public class SingleFragmentActivity extends AppCompatActivity {
     @ViewById protected AppBarLayout appBarLayout;
     @ViewById protected Toolbar toolbar;
+    @StringRes protected String app_name;
 
     public BaseApp getBaseApp() {
         return ((BaseApp)getApplication());
@@ -59,8 +63,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
     }
 
     @AfterViews protected void initViews() {
-        setUpToolbarOrDies();
-        configureToolbar();
+        if (toolbar != null) configureToolbar();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
@@ -84,7 +87,6 @@ public class SingleFragmentActivity extends AppCompatActivity {
             throw new IllegalStateException(feedback);
         }
 
-        setSupportActionBar(toolbar);
     }
 
     protected <T extends BasePresenterFragment> BasePresenterFragment replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
@@ -119,8 +121,9 @@ public class SingleFragmentActivity extends AppCompatActivity {
         return (BasePresenterFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
     }
 
-    @StringRes protected String app_name;
     private void configureToolbar() {
+        setSupportActionBar(toolbar);
+
         ActionBar actionBar = getSupportActionBar();
         Bundle bundle = getIntent().getExtras();
         boolean showToolbar = Behaviour.SHOW_TOOLBAR_AS_DEFAULT;
@@ -153,5 +156,24 @@ public class SingleFragmentActivity extends AppCompatActivity {
 
     @Override public void setTitle(CharSequence title) {
         getSupportActionBar().setTitle(title);
+    }
+
+    @StringRes protected String loading;
+    @ColorRes protected int colorPrimaryDark;
+    private MaterialDialog materialDialog;
+    protected void showLoading() {
+        materialDialog =  new MaterialDialog.Builder(this)
+                .titleColorRes(R.color.colorPrimaryDark)
+                .cancelable(false)
+                .contentColor(colorPrimaryDark)
+                .widgetColorRes(R.color.colorPrimaryDark)
+                .title(app_name)
+                .content(loading)
+                .progress(true, 0)
+                .show();
+    }
+
+    protected void hideLoading() {
+        if (materialDialog != null) materialDialog.dismiss();
     }
 }

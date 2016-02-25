@@ -21,17 +21,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.res.ColorRes;
-import org.androidannotations.annotations.res.StringRes;
 
 import javax.inject.Inject;
 
-import base.app.android.R;
 import domain.foundation.BaseView;
 import domain.foundation.Presenter;
 import presentation.internal.di.ApplicationComponent;
@@ -55,24 +50,6 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
         return ((SingleFragmentActivity)getActivity()).getApplicationComponent();
     }
 
-    @StringRes protected String app_name, loading;
-    @ColorRes protected int colorPrimaryDark;
-    private MaterialDialog materialDialog;
-    protected void showLoading() {
-        materialDialog =  new MaterialDialog.Builder(getActivity())
-                .titleColorRes(R.color.colorPrimaryDark)
-                .contentColor(colorPrimaryDark)
-                .widgetColorRes(R.color.colorPrimaryDark)
-                .title(app_name)
-                .content(loading)
-                .progress(true, 0)
-                .show();
-    }
-
-    protected void hideLoading() {
-        if (materialDialog != null) materialDialog.dismiss();
-    }
-
     public void showToast(String title) {
         Toast.makeText(getActivity(), title, Toast.LENGTH_LONG)
                 .show();
@@ -89,6 +66,17 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
         fragmentManager.beginTransaction()
                 .replace(id, fragment, fragment.getClass().getSimpleName())
                 .commit();
+    }
+
+
+    protected void showLoading() {
+        if (getActivity() instanceof SingleFragmentActivity)
+            ((SingleFragmentActivity)getActivity()).showLoading();
+    }
+
+    protected void hideLoading() {
+        if (getActivity() instanceof SingleFragmentActivity)
+            ((SingleFragmentActivity)getActivity()).hideLoading();
     }
 
     @Override public void onDestroy() {

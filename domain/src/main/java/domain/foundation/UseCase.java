@@ -46,7 +46,7 @@ public abstract class UseCase<D> {
 
     public Observable<D> safetyReportErrorObservable() {
         return observable()
-                .doOnError(throwable -> ui.showError(getInfoFromException(throwable)))
+                .doOnError(throwable -> ui.showFeedback(getInfoFromException(throwable)))
                 .onErrorResumeNext(throwable -> Observable.empty());
     }
 

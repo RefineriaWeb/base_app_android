@@ -79,7 +79,7 @@ public class UseCaseTest extends BaseTest {
         assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
         assertThat(subscriberMock.getOnNextEvents().size(), is(0));
 
-        verify(UIMock, times(0)).showError(FAILURE);
+        verify(UIMock, times(0)).showFeedback(FAILURE);
     }
 
     @Test public void When_Subscribe_Safety_Report_Error_Observable_Failure_Nothing_Is_Emitted_And_UI_Show_Error_Is_Called() {
@@ -92,7 +92,7 @@ public class UseCaseTest extends BaseTest {
         assertThat(subscriberMock.getOnErrorEvents().size(), is(0));
         assertThat(subscriberMock.getOnNextEvents().size(), is(0));
 
-        verify(UIMock, times(1)).showError(FAILURE);
+        verify(UIMock, times(1)).showFeedback(FAILURE);
     }
 
     private class UseCaseSuccessUnderTest extends UseCase<String> {

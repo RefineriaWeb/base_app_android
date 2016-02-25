@@ -26,9 +26,9 @@ import data.sections.user_demo.UserDemoDataRepository;
 import data.storage.RepositoryAdapter;
 import domain.sections.user_demo.UserDemoRepository;
 import io.rx_cache.internal.RxCache;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Dagger module for data layer. {@link #provideRestApi} define the interface used by retrofit in order

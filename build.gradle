@@ -27,7 +27,7 @@ task clean(type: Delete) {
 
 ext {
     compileSdkVersion = 23
-    buildToolsVersion = "23.0.1"
+    buildToolsVersion = "23.0.2"
     applicationId = "base.app.android"
     minSdkVersion = 16
     targetSdkVersion = 23
@@ -42,11 +42,9 @@ ext {
     javaxAnnotationVersion = "10.0-b28"
     androidannotationsVersion = '3.3.2'
 
-    supportAppCompatVersion = '23.1.0'
-    supportRecyclerviewVersion = '23.1.0'
-    supportDesignVersion = '23.1.0'
+    supportVersion = '23.1.0'
 
-    retrofitVersion = "2.0.0-beta1"
+    retrofitVersion = "2.0.0-beta4"
     lombokVersion = "1.16.6"
     retrolambdaVersion = "3.2.4"
     androidAptVersion = "1.8"
@@ -86,8 +84,9 @@ ext {
             dagger:             "com.google.dagger:dagger:${daggerVersion}",
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            retrofitreactive:   "com.squareup.retrofit:adapter-rxjava:${retrofitVersion}",
-            retrofitGson:       "com.squareup.retrofit:converter-gson:${retrofitVersion}",
+            retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitAdapterRxJava:   "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
+            retrofitConverterGson:       "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             lombok:             "org.projectlombok:lombok:${lombokVersion}",
             rxCache:             "com.github.VictorAlbertos:RxCache:${rxCacheVersion}"
     ]
@@ -105,9 +104,9 @@ ext {
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             androidannotations: "org.androidannotations:androidannotations-api:${androidannotationsVersion}",
             androidannotationsCompiler: "org.androidannotations:androidannotations:${androidannotationsVersion}",
-            supportAppCompat:   "com.android.support:appcompat-v7:${supportAppCompatVersion}",
-            supportRecyclerview:"com.android.support:recyclerview-v7:${supportRecyclerviewVersion}",
-            supportDesign:      "com.android.support:design:${supportDesignVersion}",
+            supportAppCompat:   "com.android.support:appcompat-v7:${supportVersion}",
+            supportRecyclerview:"com.android.support:recyclerview-v7:${supportVersion}",
+            supportDesign:      "com.android.support:design:${supportVersion}",
             picasso:              "com.squareup.picasso:picasso:${picassoVersion}",
             materialishProgress: "com.pnikosis:materialish-progress:${materialishProgressVersion}",
             materialDialog:     "com.github.afollestad.material-dialogs:core:${materialDialogVersion}"
@@ -168,8 +167,8 @@ task('freshStart') << {
 
     Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
     Helper.moveFileDeleting(startFresh+"strings", "presentation/src/main/res/values/", "strings.xml")
-    Helper.moveFileDeleting(startFresh+"styles", "presentation/src/main/res/values/", "styles.xml")
-
+    Helper.moveFileDeleting(startFresh+"build_presentation", "presentation/src/", "build.gradle")
+    Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
 
     String presentationTest = "presentation/src/androidTest/java/presentation/"
     Helper.removeDir(presentationTest+"sections/user_demo")

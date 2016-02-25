@@ -18,6 +18,6 @@ package domain.sections;
 
 public interface UI {
     String errorNonEmptyFields();
-    void showError(String error);
-    void showAnchoredScreenError(String error);
+    void showFeedback(String error);
+    void showAnchoredScreenFeedback(String error);
 }
