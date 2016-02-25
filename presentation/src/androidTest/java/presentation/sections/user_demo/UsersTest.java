@@ -48,6 +48,8 @@ public class UsersTest extends BaseTest {
     @Test public void _2_Get_User() {
         mediumWait();
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.scrollToPosition(INDEX_LIST));
+
+        mediumWait();
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.actionOnItemAtPosition(INDEX_LIST, click()));
         onView(withId(R.id.tv_name)).check(matches(withText(ID_USER + ":" + USERNAME)));
 
@@ -57,6 +59,8 @@ public class UsersTest extends BaseTest {
     @Test public void _3_Search_User() {
         mediumWait();
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.scrollToPosition(INDEX_LIST));
+
+        mediumWait();
         onView(withId(R.id.rv_users)).perform(RecyclerViewActions.actionOnItemAtPosition(INDEX_LIST, click()));
 
         onView(withId(R.id.bt_go_to_search_user)).perform(click());
