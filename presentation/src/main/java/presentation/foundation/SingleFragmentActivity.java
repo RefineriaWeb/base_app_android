@@ -161,7 +161,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
     @StringRes protected String loading;
     @ColorRes protected int colorPrimaryDark;
     private MaterialDialog materialDialog;
-    protected void showLoading() {
+    public void showLoading() {
         materialDialog =  new MaterialDialog.Builder(this)
                 .titleColorRes(R.color.colorPrimaryDark)
                 .cancelable(false)
@@ -173,7 +173,7 @@ public class SingleFragmentActivity extends AppCompatActivity {
                 .show();
     }
 
-    protected void hideLoading() {
+    public void hideLoading() {
         if (materialDialog != null) materialDialog.dismiss();
     }
 }

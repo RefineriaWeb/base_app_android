@@ -20,4 +20,7 @@ public interface UI {
     String errorNonEmptyFields();
     void showFeedback(String error);
     void showAnchoredScreenFeedback(String error);
+
+    void showLoading();
+    void hideLoading();
 }

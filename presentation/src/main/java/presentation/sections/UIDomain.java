@@ -40,4 +40,13 @@ public class UIDomain implements UI {
         baseApp.getLiveActivity()
                 .getCurrentPresenterFragment().showSnackBar(error);
     }
+
+    @Override public void showLoading() {
+        baseApp.getLiveActivity().showLoading();
+    }
+
+    @Override public void hideLoading() {
+        baseApp.getLiveActivity().hideLoading();
+    }
+
 }
