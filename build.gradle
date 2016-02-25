@@ -167,8 +167,8 @@ task('freshStart') << {
 
     Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
     Helper.moveFileDeleting(startFresh+"strings", "presentation/src/main/res/values/", "strings.xml")
-    Helper.moveFileDeleting(startFresh+"build_presentation", "presentation/src/", "build.gradle")
-    Helper.moveFileDeleting(startFresh+"AndroidManifest", "presentation/src/main/", "AndroidManifest.xml")
+    Helper.moveFileDeleting(startFresh+"styles", "presentation/src/main/res/values/", "styles.xml")
+    Helper.moveFileDeleting(startFresh+"build_presentation", "presentation/", "build.gradle")
 
     String presentationTest = "presentation/src/androidTest/java/presentation/"
     Helper.removeDir(presentationTest+"sections/user_demo")

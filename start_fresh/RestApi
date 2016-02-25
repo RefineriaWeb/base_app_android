@@ -16,15 +16,6 @@
 
 package data.net;
 
-import java.util.List;
-
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Path;
-import rx.Observable;
-
-
 /**
  * Definition for Retrofit of every endpoint required by the Api.
  */
