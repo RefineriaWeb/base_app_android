@@ -29,12 +29,13 @@ import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.search.SearchUserDemoPresenter;
 import presentation.foundation.BasePresenterFragment;
+import presentation.foundation.SingleFragmentActivity;
 import presentation.sections.user_demo.UserViewGroup;
 import rx.Observable;
 import rx.Subscription;
 
 @EFragment(R.layout.user_search_fragment)
-public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView {
+public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView, SingleFragmentActivity.BackButtonListener {
     public static final String HELLO_FROM_BUNDLE_WIREFRAME_KEY = "hello_from_bundle_key";
 
     @ViewById protected UserViewGroup user_view_group;
@@ -74,5 +75,11 @@ public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPres
     @ViewById protected EditText et_name;
     @Click protected void bt_find_user() {
         presenter.getUserByUserName(et_name.getText().toString());
+    }
+
+    @Override public boolean onBackPressed() {
+        showToast("Closed on back press from fragment");
+        getActivity().finish();
+        return false;
     }
 }

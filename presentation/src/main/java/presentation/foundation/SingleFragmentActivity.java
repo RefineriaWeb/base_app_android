@@ -81,14 +81,6 @@ public class SingleFragmentActivity extends AppCompatActivity {
         basePresenterFragment.setArguments(bundleFragment);
     }
 
-    private void setUpToolbarOrDies() {
-        if (toolbar == null) {
-            String feedback = "To use BaseToolbarActivity as base class providing a Toolbar with id 'toolbar' is mandatory";
-            throw new IllegalStateException(feedback);
-        }
-
-    }
-
     protected <T extends BasePresenterFragment> BasePresenterFragment replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
         BasePresenterFragment current = getCurrentPresenterFragment();
         if (current != null && current.getClass() == clazz) return current;
@@ -175,5 +167,27 @@ public class SingleFragmentActivity extends AppCompatActivity {
 
     public void hideLoading() {
         if (materialDialog != null) materialDialog.dismiss();
+    }
+
+    @Override public void onBackPressed() {
+        BasePresenterFragment fragment = getCurrentPresenterFragment();
+        BackButtonListener listener = fragment != null && fragment instanceof BackButtonListener ? (BackButtonListener) fragment : null;
+
+        if (listener == null) {
+            super.onBackPressed();
+            return;
+        }
+
+        if (listener.onBackPressed()) super.onBackPressed();
+    }
+
+    /***
+     * BasePresenterFragment can implement this interface to be notified when user performs a back action.
+     */
+    public interface BackButtonListener {
+        /***
+         * @return true if activity must handle back action, as removing itself from the stack
+         */
+        boolean onBackPressed();
     }
 }
