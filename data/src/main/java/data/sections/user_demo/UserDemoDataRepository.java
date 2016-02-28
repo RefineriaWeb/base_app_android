@@ -27,6 +27,7 @@ import data.sections.DataRepository;
 import data.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
+import io.rx_cache.EvictProvider;
 import rx.Observable;
 
 public class UserDemoDataRepository extends DataRepository implements UserDemoRepository {
@@ -51,11 +52,11 @@ public class UserDemoDataRepository extends DataRepository implements UserDemoRe
     }
 
     @Override public Observable<UserDemoEntity> getSelectedUserDemoList() {
-        return rxProviders.getSelectedUserDemoList(Observable.just(null), () -> false);
+        return rxProviders.getSelectedUserDemoList(Observable.just(null), new EvictProvider(false));
     }
 
     @Override public Observable<Boolean> saveSelectedUserDemoList(UserDemoEntity userSelected) {
-        return rxProviders.getSelectedUserDemoList(Observable.just(userSelected), () -> true)
+        return rxProviders.getSelectedUserDemoList(Observable.just(userSelected), new EvictProvider(true))
                 .map(user-> true);
     }
 }

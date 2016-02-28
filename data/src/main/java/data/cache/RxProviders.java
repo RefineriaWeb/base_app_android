@@ -17,15 +17,12 @@
 package data.cache;
 
 import domain.sections.user_demo.entities.UserDemoEntity;
-import io.rx_cache.InvalidateCache;
-import io.rx_cache.Invalidator;
-import io.rx_cache.Loader;
+import io.rx_cache.EvictProvider;
 import rx.Observable;
 
 /**
  * Providers for RxCache
  */
 public interface RxProviders {
-    Observable<UserDemoEntity> getSelectedUserDemoList(@Loader Observable<UserDemoEntity> oUserSelected,
-                                                       @InvalidateCache Invalidator invalidator);
+    Observable<UserDemoEntity> getSelectedUserDemoList(Observable<UserDemoEntity> oUserSelected, EvictProvider evictProvider);
 }
