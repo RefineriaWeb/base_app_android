@@ -50,6 +50,12 @@ public abstract class UseCase<D> {
                 .onErrorResumeNext(throwable -> Observable.empty());
     }
 
+    public Observable<D> safetyReportErrorAnchoredObservable() {
+        return observable()
+                .doOnError(throwable -> ui.showAnchoredScreenFeedback(getInfoFromException(throwable)))
+                .onErrorResumeNext(throwable -> Observable.empty());
+    }
+
     private String getInfoFromException(Throwable throwable) {
         String message = throwable.getMessage();
 
