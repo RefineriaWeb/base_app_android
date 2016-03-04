@@ -27,53 +27,55 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.StringRes;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
 import base.app.android.R;
+import butterknife.Bind;
+import butterknife.BindString;
+import butterknife.ButterKnife;
 import domain.sections.dashboard.DashboardPresenter;
 import domain.sections.dashboard.DashboardView;
 import domain.sections.dashboard.ItemMenu;
-import presentation.foundation.SingleFragmentActivity;
-import presentation.sections.user_demo.detail.UserFragment_;
-import presentation.sections.user_demo.list.UsersFragment_;
-import presentation.sections.user_demo.search.SearchUserFragment_;
+import presentation.foundation.BaseFragmentActivity;
+import presentation.sections.user_demo.detail.UserFragment;
+import presentation.sections.user_demo.list.UsersFragment;
+import presentation.sections.user_demo.search.SearchUserFragment;
 import presentation.utilities.recyclerview_adapter.RecyclerViewAdapter;
 import rx.Observable;
 import rx.Subscription;
 
-@EActivity(R.layout.dashboard_activity)
-public class DashBoardActivity extends SingleFragmentActivity implements DashboardView {
+public class DashBoardActivity extends BaseFragmentActivity implements DashboardView {
     @Inject protected DashboardPresenter presenter;
-    @Bean protected ItemMenuDashboardAdapter adapter;
-
-    @ViewById protected RecyclerView rv_menu_items;
-    @ViewById protected DrawerLayout drawer_layout;
-
+    @Bind(R.id.rv_menu_items) protected RecyclerView rv_menu_items;
+    @Bind(R.id.drawer_layout) protected DrawerLayout drawer_layout;
+    private ItemMenuDashboardAdapter adapter;
     private ActionBarDrawerToggle drawerToggle;
 
-    @Override protected void init() {
-        super.init();
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dashboard_activity);
         getApplicationComponent().inject(this);
+        ButterKnife.bind(this);
+        initViews();
     }
 
-    @Override protected void initViews() {
-        super.initViews();
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        drawer_layout.removeDrawerListener(drawerToggle);
+    }
+
+    private void initViews() {
+        adapter = new ItemMenuDashboardAdapter(this);
         setUpDrawerToggle();
         setUpRecyclerView();
-
         presenter.attachView(this);
     }
 
     private void setUpDrawerToggle() {
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -87,7 +89,7 @@ public class DashBoardActivity extends SingleFragmentActivity implements Dashboa
             }
         };
 
-        drawer_layout.setDrawerListener(drawerToggle);
+        drawer_layout.addDrawerListener(drawerToggle);
     }
 
     private void setUpRecyclerView() {
@@ -105,21 +107,21 @@ public class DashBoardActivity extends SingleFragmentActivity implements Dashboa
         return oItems.subscribe(items -> adapter.addAll(items));
     }
 
-    @StringRes protected String users;
+    @BindString(R.string.users) protected String users;
     @Override public void showUsers() {
-        replaceFragmentIfItIsNotCurrentDisplayed(UsersFragment_.class);
+        replaceFragmentIfItIsNotCurrentDisplayed(UsersFragment.class);
         setTitle(users);
     }
 
-    @StringRes protected String user;
+    @BindString(R.string.user) protected String user;
     @Override public void showUser() {
-        replaceFragmentIfItIsNotCurrentDisplayed(UserFragment_.class);
+        replaceFragmentIfItIsNotCurrentDisplayed(UserFragment.class);
         setTitle(user);
     }
 
-    @StringRes protected String find_user;
+    @BindString(R.string.find_user) protected String find_user;
     @Override public void showUserSearch() {
-        replaceFragmentIfItIsNotCurrentDisplayed(SearchUserFragment_.class);
+        replaceFragmentIfItIsNotCurrentDisplayed(SearchUserFragment.class);
         setTitle(find_user);
     }
 
@@ -139,11 +141,15 @@ public class DashBoardActivity extends SingleFragmentActivity implements Dashboa
         return super.onOptionsItemSelected(item);
     }
 
-    @EBean static protected class ItemMenuDashboardAdapter extends RecyclerViewAdapter<ItemMenu, ItemMenuViewGroup> {
-        @RootContext protected Context context;
+    static private class ItemMenuDashboardAdapter extends RecyclerViewAdapter<ItemMenu, ItemMenuViewGroup> {
+        private Context context;
+
+        public ItemMenuDashboardAdapter(Context context) {
+            this.context = context;
+        }
 
         @Override protected ItemMenuViewGroup onCreateItemView(ViewGroup parent, int viewType) {
-            return ItemMenuViewGroup_.build(context);
+            return new ItemMenuViewGroup(context);
         }
     }
 }

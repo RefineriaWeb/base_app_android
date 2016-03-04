@@ -16,20 +16,19 @@
 
 package presentation.sections.launch;
 
-import org.androidannotations.annotations.EActivity;
+import android.os.Bundle;
 
 import javax.inject.Inject;
 
 import domain.sections.launch.LaunchPresenter;
 import domain.sections.launch.LaunchView;
-import presentation.foundation.SingleFragmentActivity;
+import presentation.foundation.BaseFragmentActivity;
 
-@EActivity
-public class LaunchActivity extends SingleFragmentActivity implements LaunchView {
+public class LaunchActivity extends BaseFragmentActivity implements LaunchView {
     @Inject protected LaunchPresenter launchPresenter;
 
-    @Override protected void onStart() {
-        super.onStart();
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         getApplicationComponent().inject(this);
         launchPresenter.attachView(this);
     }

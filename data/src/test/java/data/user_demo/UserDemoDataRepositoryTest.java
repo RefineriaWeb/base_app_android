@@ -25,7 +25,7 @@ import data.net.RestApi;
 import data.sections.UI;
 import data.sections.user_demo.UserDemoDataRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
-import retrofit.Response;
+import retrofit2.Response;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 

@@ -28,6 +28,5 @@ import presentation.sections.launch.LaunchActivity;
  */
 @Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
-    void inject(SingleFragmentActivity singleFragmentActivity);
     void inject(LaunchActivity launchActivity);
 }

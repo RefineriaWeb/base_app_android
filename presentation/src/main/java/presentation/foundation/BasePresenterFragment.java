@@ -16,29 +16,33 @@
 
 package presentation.foundation;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import domain.foundation.BaseView;
 import domain.foundation.Presenter;
 import presentation.internal.di.ApplicationComponent;
 
-@EFragment
 public abstract class BasePresenterFragment<P extends Presenter> extends Fragment implements BaseView {
     @Inject protected P presenter;
 
-    @AfterInject protected void init() {}
-
-    @AfterViews protected void initViews() {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         presenter.attachView(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.dispose();
+        ButterKnife.unbind(this);
     }
 
     @Override public void onResume() {
@@ -47,7 +51,7 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
     }
 
     protected ApplicationComponent getApplicationComponent() {
-        return ((SingleFragmentActivity)getActivity()).getApplicationComponent();
+        return ((BaseFragmentActivity)getActivity()).getApplicationComponent();
     }
 
     public void showToast(String title) {
@@ -68,19 +72,13 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
                 .commit();
     }
 
-
     protected void showLoading() {
-        if (getActivity() instanceof SingleFragmentActivity)
-            ((SingleFragmentActivity)getActivity()).showLoading();
+        if (getActivity() instanceof BaseFragmentActivity)
+            ((BaseFragmentActivity)getActivity()).showLoading();
     }
 
     protected void hideLoading() {
-        if (getActivity() instanceof SingleFragmentActivity)
-            ((SingleFragmentActivity)getActivity()).hideLoading();
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        presenter.dispose();
+        if (getActivity() instanceof BaseFragmentActivity)
+            ((BaseFragmentActivity)getActivity()).hideLoading();
     }
 }

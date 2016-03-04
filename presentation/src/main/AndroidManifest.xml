@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="presentation.sections.launch.LaunchActivity_"
+            android:name="presentation.sections.launch.LaunchActivity"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait">
@@ -23,11 +23,11 @@
         </activity>
 
         <activity
-            android:name="presentation.foundation.SingleFragmentActivity_"
+            android:name="presentation.foundation.SingleFragmentActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="presentation.sections.dashboard.DashBoardActivity_"
+            android:name="presentation.sections.dashboard.DashBoardActivity"
             android:screenOrientation="portrait" />
 
     </application>

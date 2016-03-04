@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal" />
 
-        <presentation.sections.user_demo.UserViewGroup_
+        <presentation.sections.user_demo.UserViewGroup
             android:id="@+id/user_view_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -45,7 +45,7 @@ public class BaseApp extends Application {
         return applicationComponent;
     }
 
-    @Nullable public SingleFragmentActivity getLiveActivity(){
-        return (SingleFragmentActivity) AppCare.YesSir.getLiveActivityOrNull();
+    @Nullable public BaseFragmentActivity getLiveActivity(){
+        return (BaseFragmentActivity) AppCare.YesSir.getLiveActivityOrNull();
     }
 }

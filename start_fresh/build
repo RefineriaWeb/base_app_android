@@ -38,11 +38,10 @@ ext {
     daggerVersion = '2.0.2'
     rxJavaVersion = '1.1.0'
     rxAndroidVersion = '1.0.1'
-    rxCacheVersion = "0.4.8"
+    rxCacheVersion = "1.0.1"
     javaxAnnotationVersion = "10.0-b28"
-    androidannotationsVersion = '3.3.2'
 
-    supportVersion = '23.1.0'
+    supportVersion = '23.2.0'
 
     retrofitVersion = "2.0.0-beta4"
     lombokVersion = "1.16.6"
@@ -55,7 +54,8 @@ ext {
     //UI
     picassoVersion = "2.5.2"
     materialishProgressVersion = '1.7'
-    materialDialogVersion = '0.8.5.3@aar'
+    materialDialogVersion = '0.8.5.6@aar'
+    butterKnifeVersion = '7.0.1'
 
     //Unit testing
     jUnitVersion = "4.12"
@@ -86,9 +86,9 @@ ext {
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
             retrofit:           "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitAdapterRxJava:   "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}",
-            retrofitConverterGson:       "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitConverterGson:   "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             lombok:             "org.projectlombok:lombok:${lombokVersion}",
-            rxCache:             "com.github.VictorAlbertos:RxCache:${rxCacheVersion}"
+            rxCache:            "com.github.VictorAlbertos:RxCache:${rxCacheVersion}"
     ]
 
     dataTestDependencies = [
@@ -102,14 +102,13 @@ ext {
             rxJava:             "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid:          "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation:    "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            androidannotations: "org.androidannotations:androidannotations-api:${androidannotationsVersion}",
-            androidannotationsCompiler: "org.androidannotations:androidannotations:${androidannotationsVersion}",
             supportAppCompat:   "com.android.support:appcompat-v7:${supportVersion}",
             supportRecyclerview:"com.android.support:recyclerview-v7:${supportVersion}",
             supportDesign:      "com.android.support:design:${supportVersion}",
-            picasso:              "com.squareup.picasso:picasso:${picassoVersion}",
+            picasso:            "com.squareup.picasso:picasso:${picassoVersion}",
             materialishProgress: "com.pnikosis:materialish-progress:${materialishProgressVersion}",
-            materialDialog:     "com.github.afollestad.material-dialogs:core:${materialDialogVersion}"
+            materialDialog:     "com.github.afollestad.material-dialogs:core:${materialDialogVersion}",
+            butterKnife:        "com.jakewharton:butterknife:${butterKnifeVersion}"
     ]
 
     presentationTestDependencies = [

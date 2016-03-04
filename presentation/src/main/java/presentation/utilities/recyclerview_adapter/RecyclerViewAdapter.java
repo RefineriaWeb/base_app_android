@@ -50,6 +50,10 @@ public abstract class RecyclerViewAdapter<T, V extends View & ViewWrapper.Binder
         addAll(data);
     }
 
+    public List<T> getAll() {
+        return items;
+    }
+
     public void clear() {
         items.clear();
     }

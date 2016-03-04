@@ -16,13 +16,16 @@
 
 package presentation.sections.user_demo.detail;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
-
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ViewById;
+import android.view.ViewGroup;
 
 import base.app.android.R;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.detail.UserDemoPresenter;
 import domain.sections.user_demo.entities.UserDemoEntity;
@@ -31,16 +34,18 @@ import presentation.sections.user_demo.UserViewGroup;
 import rx.Observable;
 import rx.Subscription;
 
-@EFragment(R.layout.user_fragment)
 public class UserFragment extends BasePresenterFragment<UserDemoPresenter> implements UserView {
-    @ViewById protected View pb_loading;
+    @Bind(R.id.pb_loading) protected View pb_loading;
+    @Bind(R.id.user_view_group) protected UserViewGroup user_view_group;
 
-    @Override protected void init() {
-        super.init();
+    @Nullable
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.user_fragment, container, false);
         getApplicationComponent().inject(this);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
-    @ViewById protected UserViewGroup user_view_group;
     @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {
         showProgress();
 
@@ -56,7 +61,8 @@ public class UserFragment extends BasePresenterFragment<UserDemoPresenter> imple
         pb_loading.setVisibility(View.GONE);
     }
 
-    @Click protected void bt_go_to_search_user() {
+    @OnClick(R.id.bt_go_to_search_user)
+    protected void bt_go_to_search_user() {
         presenter.goToSearchScreen();
     }
 }

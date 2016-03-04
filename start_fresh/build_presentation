@@ -102,9 +102,6 @@ dependencies {
     compile presentationDependencies.rxJava
     compile presentationDependencies.rxAndroid
 
-    compile presentationDependencies.androidannotations
-    apt presentationDependencies.androidannotationsCompiler
-
     compile presentationDependencies.supportAppCompat
     compile presentationDependencies.supportRecyclerview
     compile presentationDependencies.supportDesign
@@ -113,6 +110,7 @@ dependencies {
     compile(presentationDependencies.materialDialog) {
         transitive = true
     }
+    compile presentationDependencies.butterKnife
 
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 

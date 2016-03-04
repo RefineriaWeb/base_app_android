@@ -18,29 +18,37 @@ package presentation.sections.user_demo;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.ViewById;
-
 import base.app.android.R;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import presentation.utilities.recyclerview_adapter.ViewWrapper;
 
-@EViewGroup(R.layout.user_view_group) public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity> {
-    @ViewById protected ImageView iv_avatar;
-    @ViewById protected TextView tv_name;
+public class UserViewGroup extends FrameLayout implements ViewWrapper.Binder<UserDemoEntity> {
+    @Bind(R.id.iv_avatar) protected ImageView iv_avatar;
+    @Bind(R.id.tv_name) protected TextView tv_name;
 
     public UserViewGroup(Context context) {
         super(context);
+        init();
     }
 
     public UserViewGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    private void init() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.user_view_group, this, true);
+        ButterKnife.bind(this, view);
     }
 
     public void bind(UserDemoEntity user) {

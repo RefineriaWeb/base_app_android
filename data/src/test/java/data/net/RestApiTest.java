@@ -24,10 +24,10 @@ import org.junit.runners.MethodSorters;
 import java.util.List;
 
 import domain.sections.user_demo.entities.UserDemoEntity;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.observers.TestSubscriber;
 
 import static org.hamcrest.core.Is.is;

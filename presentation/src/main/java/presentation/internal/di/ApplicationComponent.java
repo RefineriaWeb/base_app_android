@@ -19,7 +19,6 @@ package presentation.internal.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import presentation.foundation.SingleFragmentActivity;
 import presentation.sections.dashboard.DashBoardActivity;
 import presentation.sections.launch.LaunchActivity;
 import presentation.sections.user_demo.detail.UserFragment;
@@ -32,7 +31,6 @@ import presentation.sections.user_demo.search.SearchUserFragment;
  */
 @Singleton @Component(modules = {DomainPresentationModule.class, DataPresentationModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
-    void inject(SingleFragmentActivity singleFragmentActivity);
     void inject(LaunchActivity launchActivity);
 
     void inject(DashBoardActivity dashBoardActivity);

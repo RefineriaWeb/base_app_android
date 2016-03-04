@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/find_user" />
 
-        <presentation.sections.user_demo.UserViewGroup_
+        <presentation.sections.user_demo.UserViewGroup
             android:id="@+id/user_view_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

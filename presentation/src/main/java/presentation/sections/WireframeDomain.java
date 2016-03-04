@@ -16,18 +16,18 @@
 
 package presentation.sections;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import base.app.android.R;
 import domain.sections.Wireframe;
 import presentation.foundation.BaseApp;
+import presentation.foundation.BaseFragmentActivity;
 import presentation.foundation.SingleFragmentActivity;
-import presentation.foundation.SingleFragmentActivity_;
-import presentation.sections.dashboard.DashBoardActivity_;
-import presentation.sections.user_demo.detail.UserFragment_;
-import presentation.sections.user_demo.list.UsersFragment_;
+import presentation.sections.dashboard.DashBoardActivity;
+import presentation.sections.user_demo.detail.UserFragment;
+import presentation.sections.user_demo.list.UsersFragment;
 import presentation.sections.user_demo.search.SearchUserFragment;
-import presentation.sections.user_demo.search.SearchUserFragment_;
 
 public class WireframeDomain implements Wireframe {
     private  final BaseApp baseApp;
@@ -37,37 +37,38 @@ public class WireframeDomain implements Wireframe {
     }
 
     @Override public void dashboard() {
-        DashBoardActivity_.intent(baseApp.getLiveActivity())
-                .start();
+        baseApp.getLiveActivity().startActivity(new Intent(baseApp, DashBoardActivity.class));
     }
 
     @Override public void usersScreen() {
-        String title = baseApp.getString(R.string.users);
-        SingleFragmentActivity_.intent(baseApp.getLiveActivity())
-                .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
-                .extra(SingleFragmentActivity.Behaviour.SHOW_BACK_KEY, false)
-                .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UsersFragment_.class)
-                .start();
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragmentActivity.Behaviour.TITLE_KEY, baseApp.getString(R.string.users));
+        bundle.putBoolean(BaseFragmentActivity.Behaviour.SHOW_BACK_KEY, false);
+        bundle.putSerializable(BaseFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UsersFragment.class);
+        Intent intent = new Intent(baseApp, SingleFragmentActivity.class);
+        intent.putExtras(bundle);
+        baseApp.getLiveActivity().startActivity(intent);
     }
 
     @Override public void userScreen() {
-        String title = baseApp.getString(R.string.user);
-        SingleFragmentActivity_.intent(baseApp.getLiveActivity())
-                .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
-                .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UserFragment_.class)
-                .start();
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragmentActivity.Behaviour.TITLE_KEY, baseApp.getString(R.string.user));
+        bundle.putSerializable(BaseFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, UserFragment.class);
+        Intent intent = new Intent(baseApp, SingleFragmentActivity.class);
+        intent.putExtras(bundle);
+        baseApp.getLiveActivity().startActivity(intent);
     }
 
     @Override public void searchUserScreen() {
         Bundle bundleFragment = new Bundle();
         bundleFragment.putString(SearchUserFragment.HELLO_FROM_BUNDLE_WIREFRAME_KEY, "Hi from wireframe bundle");
-
-        String title = baseApp.getString(R.string.find_user);
-        SingleFragmentActivity_.intent(baseApp.getLiveActivity())
-                .extra(SingleFragmentActivity.Behaviour.TITLE_KEY, title)
-                .extra(SingleFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment_.class)
-                .extra(SingleFragmentActivity.Behaviour.BUNDLE_FOR_FRAGMENT, bundleFragment)
-                .start();
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragmentActivity.Behaviour.TITLE_KEY, baseApp.getString(R.string.find_user));
+        bundle.putSerializable(BaseFragmentActivity.Behaviour.FRAGMENT_CLASS_KEY, SearchUserFragment.class);
+        bundle.putBundle(BaseFragmentActivity.Behaviour.BUNDLE_FOR_FRAGMENT, bundleFragment);
+        Intent intent = new Intent(baseApp, SingleFragmentActivity.class);
+        intent.putExtras(bundle);
+        baseApp.getLiveActivity().startActivity(intent);
     }
 
     @Override public void popCurrentScreen() {
