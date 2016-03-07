@@ -38,7 +38,7 @@ ext {
     daggerVersion = '2.0.2'
     rxJavaVersion = '1.1.0'
     rxAndroidVersion = '1.0.1'
-    rxCacheVersion = "1.0.1"
+    rxCacheVersion = "1.1.0"
     javaxAnnotationVersion = "10.0-b28"
 
     supportVersion = '23.2.0'
