@@ -36,5 +36,5 @@ public abstract class UseCase<D> {
     /**
      * Observable built for every use case
      */
-    protected abstract Observable<D> observable();
+    public abstract Observable<D> react();
 }

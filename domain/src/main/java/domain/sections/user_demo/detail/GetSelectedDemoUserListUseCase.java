@@ -32,7 +32,7 @@ public class GetSelectedDemoUserListUseCase extends UseCase<UserDemoEntity> {
         this.repository = repository;
     }
 
-    @Override public Observable<UserDemoEntity> observable() {
+    @Override public Observable<UserDemoEntity> react() {
         return repository.getSelectedUserDemoList();
     }
 }

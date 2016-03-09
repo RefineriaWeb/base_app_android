@@ -19,6 +19,8 @@ package presentation.sections;
 import base.app.android.R;
 import domain.sections.UI;
 import presentation.foundation.BaseApp;
+import rx.Observable;
+import rx.Subscription;
 
 public class UIDomain implements UI {
     private final BaseApp baseApp;
@@ -27,18 +29,22 @@ public class UIDomain implements UI {
         this.baseApp = baseApp;
     }
 
-    @Override public String errorNonEmptyFields() {
-        return baseApp.getString(R.string.fill_missing_fields);
+    @Override public Observable<String> errorNonEmptyFields() {
+        return Observable.just(baseApp.getString(R.string.fill_missing_fields));
     }
 
-    @Override public void showFeedback(String error) {
-        baseApp.getLiveActivity()
-                .getCurrentPresenterFragment().showToast(error);
+    @Override public Subscription showFeedback(Observable<String> oFeedback) {
+        return oFeedback.subscribe(feedback -> {
+            baseApp.getLiveActivity()
+                    .getCurrentPresenterFragment().showToast(feedback);
+        });
     }
 
-    public void showAnchoredScreenFeedback(String error) {
-        baseApp.getLiveActivity()
-                .getCurrentPresenterFragment().showSnackBar(error);
+    @Override public Subscription showAnchoredScreenFeedback(Observable<String> oFeedback) {
+        return oFeedback.subscribe(feedback -> {
+            baseApp.getLiveActivity()
+                    .getCurrentPresenterFragment().showSnackBar(feedback);
+        });
     }
 
     @Override public void showLoading() {

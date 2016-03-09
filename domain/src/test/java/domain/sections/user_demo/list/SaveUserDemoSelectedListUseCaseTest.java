@@ -36,16 +36,16 @@ public class SaveUserDemoSelectedListUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        saveUserDemoSelectedListUseCaseUT = new SaveUserDemoSelectedListUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, UIMock);
+        saveUserDemoSelectedListUseCaseUT = new SaveUserDemoSelectedListUseCase(UIMock, userDemoRepositoryMock);
     }
 
     @Test public void When_Save_User_Then_Get_Boolean_Observable() {
         when(userDemoRepositoryMock.saveSelectedUserDemoList(userDemoEntityMock)).thenReturn(Observable.just(true));
 
-        saveUserDemoSelectedListUseCaseUT.setUserDemoEntity(userDemoEntityMock);
+        saveUserDemoSelectedListUseCaseUT.with(userDemoEntityMock);
 
         TestSubscriber<Boolean> subscriberMock = new TestSubscriber<>();
-        saveUserDemoSelectedListUseCaseUT.observable().subscribe(subscriberMock);
+        saveUserDemoSelectedListUseCaseUT.react().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         assertThat(subscriberMock.getOnCompletedEvents().size(), is(1));
@@ -54,7 +54,7 @@ public class SaveUserDemoSelectedListUseCaseTest extends BaseTest {
     @Test(expected=AssertionError.class)
     public void When_Save_Null_Then_Throws_Assertion_Error() {
         TestSubscriber<Boolean> subscriberMock = new TestSubscriber<>();
-        saveUserDemoSelectedListUseCaseUT.observable().subscribe(subscriberMock);
+        saveUserDemoSelectedListUseCaseUT.react().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
     }
 }

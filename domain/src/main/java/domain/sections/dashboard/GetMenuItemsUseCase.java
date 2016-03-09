@@ -34,7 +34,7 @@ public class GetMenuItemsUseCase extends UseCase<List<ItemMenu>> {
         this.dashboardItemsMenu = dashboardItemsMenu;
     }
 
-    @Override public Observable<List<ItemMenu>> observable() {
+    @Override public Observable<List<ItemMenu>> react() {
         ItemMenu users = new ItemMenu(ID_USERS);
         dashboardItemsMenu.configureUsers(users);
 

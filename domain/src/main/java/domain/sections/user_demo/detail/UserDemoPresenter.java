@@ -37,8 +37,7 @@ public class UserDemoPresenter extends Presenter<UserView> {
     @Override public void attachView(UserView view) {
         super.attachView(view);
 
-        safetyReportError(useCase.observable())
-                .dispose(observable -> view.showUser(observable));
+        safetyReportError(useCase.react()).disposable(view::showUser);
     }
 
     public void goToSearchScreen() {

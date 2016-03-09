@@ -37,7 +37,7 @@ public class SearchUserDemoUseCase extends UseCase<UserDemoEntity> {
         this.name = name;
     }
 
-    @Override public Observable<UserDemoEntity> observable() {
+    @Override public Observable<UserDemoEntity> react() {
         return repository.searchByUserName(name);
     }
 }

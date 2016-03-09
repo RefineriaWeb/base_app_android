@@ -41,10 +41,9 @@ public class SearchUserDemoPresenter extends Presenter<UserView> {
     public void getUserByUserName(String username) {
         useCase.setName(username);
         if (username == null || username.isEmpty()) {
-            ui.showAnchoredScreenFeedback(ui.errorNonEmptyFields());
+            safetyReportErrorAnchored(ui.errorNonEmptyFields()).disposable(ui::showAnchoredScreenFeedback);
         } else {
-            safetyReportErrorAnchored(useCase.observable())
-                    .dispose(observable -> view.showUser(observable));
+            safetyReportErrorAnchored(useCase.react()).disposable(view::showUser);
         }
     }
 }

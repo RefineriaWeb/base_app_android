@@ -18,16 +18,27 @@ package domain.foundation.helpers;
 
 import javax.inject.Inject;
 
+import domain.foundation.UseCase;
+import domain.sections.UI;
+import rx.Observable;
 import rx.exceptions.CompositeException;
 
 /**
  * Created by victor on 09/03/16.
  */
-public class ParserException {
+public class ParserException extends UseCase<String> {
+    private Throwable throwable;
 
-    @Inject public ParserException() {}
+    @Inject public ParserException(UI ui) {
+        super(ui);
+    }
 
-    public String getInfo(Throwable throwable) {
+    public ParserException with(Throwable throwable) {
+        this.throwable = throwable;
+        return this;
+    }
+
+    @Override public Observable<String> react() {
         String message = throwable.getMessage();
 
         if (throwable instanceof CompositeException) {
@@ -41,7 +52,6 @@ public class ParserException {
             }
         }
 
-        return message;
-
+        return Observable.just(message);
     }
 }

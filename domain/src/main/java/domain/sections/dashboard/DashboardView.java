@@ -23,7 +23,7 @@ import rx.Observable;
 import rx.Subscription;
 
 public interface DashboardView extends BaseView {
-    Subscription loadItemsMenu(Observable<List<ItemMenu>> itemsMenu);
+    Subscription loadItemsMenu(Observable<List<ItemMenu>> oItemsMenu);
     void showUsers();
     void showUser();
     void showUserSearch();

@@ -67,7 +67,7 @@ public abstract class Presenter<V extends BaseView> {
      */
     protected <T> Disposing<T> safetyReportError(Observable<T> observable) {
         Observable<T> configured = schedulers(observable)
-                .doOnError(throwable -> ui.showFeedback(parserException.getInfo(throwable)))
+                .doOnError(throwable -> ui.showFeedback(parserException.with(throwable).react()))
                 .onErrorResumeNext(throwable -> Observable.empty());
 
         return new Disposing(configured, subscriptions);
@@ -78,7 +78,7 @@ public abstract class Presenter<V extends BaseView> {
      */
     protected <T> Disposing<T> safetyReportErrorAnchored(Observable<T> observable) {
         Observable<T> configured = schedulers(observable)
-                .doOnError(throwable -> ui.showAnchoredScreenFeedback(parserException.getInfo(throwable)))
+                .doOnError(throwable -> ui.showAnchoredScreenFeedback(parserException.with(throwable).react()))
                 .onErrorResumeNext(throwable -> Observable.empty());
 
         return new Disposing(configured, subscriptions);
@@ -120,7 +120,7 @@ public abstract class Presenter<V extends BaseView> {
             this.subscriptions = subscriptions;
         }
 
-        public void dispose(Disposable<T> disposable) {
+        public void disposable(Disposable<T> disposable) {
             subscriptions.add(disposable.subscription(observable));
         }
 

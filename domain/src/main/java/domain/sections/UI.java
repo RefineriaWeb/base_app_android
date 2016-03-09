@@ -16,10 +16,13 @@
 
 package domain.sections;
 
+import rx.Observable;
+import rx.Subscription;
+
 public interface UI {
-    String errorNonEmptyFields();
-    void showFeedback(String error);
-    void showAnchoredScreenFeedback(String error);
+    Observable<String> errorNonEmptyFields();
+    Subscription showFeedback(Observable<String> oFeedback);
+    Subscription showAnchoredScreenFeedback(Observable<String> oFeedback);
 
     void showLoading();
     void hideLoading();

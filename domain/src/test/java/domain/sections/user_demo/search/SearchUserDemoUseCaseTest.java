@@ -36,7 +36,7 @@ public class SearchUserDemoUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        searchUserDemoUseCaseUT = new SearchUserDemoUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, UIMock, getSelectedDemoUserListUseCase);
+        searchUserDemoUseCaseUT = new SearchUserDemoUseCase(UIMock, userDemoRepositoryMock);
     }
 
     @Test public void  When_Get_User_With_Valid_Name_Get_User() {
@@ -44,7 +44,7 @@ public class SearchUserDemoUseCaseTest extends BaseTest {
 
         TestSubscriber<UserDemoEntity> subscriberMock = new TestSubscriber<>();
         searchUserDemoUseCaseUT.setName("valid");
-        searchUserDemoUseCaseUT.observable().subscribe(subscriberMock);
+        searchUserDemoUseCaseUT.react().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         assertThat(subscriberMock.getOnCompletedEvents().size(), is(1));
@@ -55,7 +55,7 @@ public class SearchUserDemoUseCaseTest extends BaseTest {
 
         TestSubscriber<UserDemoEntity> subscriberMock = new TestSubscriber<>();
         searchUserDemoUseCaseUT.setName("invalid");
-        searchUserDemoUseCaseUT.observable().subscribe(subscriberMock);
+        searchUserDemoUseCaseUT.react().subscribe(subscriberMock);
         subscriberMock.awaitTerminalEvent();
 
         assertThat(subscriberMock.getOnErrorEvents().size(), is(1));

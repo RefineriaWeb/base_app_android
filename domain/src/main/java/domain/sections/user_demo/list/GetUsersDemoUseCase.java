@@ -34,7 +34,7 @@ public class GetUsersDemoUseCase extends UseCase<List<UserDemoEntity>> {
         this.repository = repository;
     }
 
-    @Override public Observable<List<UserDemoEntity>> observable() {
+    @Override public Observable<List<UserDemoEntity>> react() {
         return repository.askForUsers();
     }
 }

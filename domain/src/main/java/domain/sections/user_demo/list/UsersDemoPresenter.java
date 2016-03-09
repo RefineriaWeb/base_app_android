@@ -39,14 +39,12 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
     @Override public void attachView(UsersView view) {
         super.attachView(view);
 
-        safetyReportError(getUsersDemoUseCase.observable())
-                .dispose(observable -> view.showUsers(observable));
+        safetyReportError(getUsersDemoUseCase.react())
+                .disposable(view::showUsers);
     }
 
     public void goToDetail(UserDemoEntity user) {
-        saveUserDemoSelectedListUseCase.setUserDemoEntity(user);
-
-        safetyReportError(saveUserDemoSelectedListUseCase.observable())
-                .dispose(observable -> observable.subscribe(userDemoEntities -> wireframe.userScreen()));
+        safetyReportError(saveUserDemoSelectedListUseCase.with(user).react())
+                .disposable(oSuccess -> oSuccess.subscribe(_I -> wireframe.userScreen()));
     }
 }

@@ -33,11 +33,12 @@ public class SaveUserDemoSelectedListUseCase extends UseCase<Boolean> {
         this.repository = repository;
     }
 
-    public void setUserDemoEntity(UserDemoEntity userDemoEntity) {
+    public SaveUserDemoSelectedListUseCase with(UserDemoEntity userDemoEntity) {
         this.userDemoEntity = userDemoEntity;
+        return this;
     }
 
-    @Override public Observable<Boolean> observable() {
+    @Override public Observable<Boolean> react() {
         assert userDemoEntity != null;
         return repository.saveSelectedUserDemoList(userDemoEntity);
     }

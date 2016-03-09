@@ -36,8 +36,8 @@ public class DashboardPresenter extends Presenter<DashboardView> {
     @Override public void attachView(DashboardView view) {
         super.attachView(view);
 
-        safetyReportError(useCase.observable().doOnCompleted(() -> view.showUsers()))
-                .dispose(observable -> view.loadItemsMenu(observable));
+        safetyReportError(useCase.react().doOnCompleted(view::showUsers))
+                .disposable(view::loadItemsMenu);
     }
 
     public void setSelectedItemMenu(ItemMenu itemMenu) {
