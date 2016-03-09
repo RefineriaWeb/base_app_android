@@ -34,11 +34,11 @@ import javax.inject.Inject;
 import base.app.android.R;
 import butterknife.Bind;
 import butterknife.BindString;
-import butterknife.ButterKnife;
 import domain.sections.dashboard.DashboardPresenter;
 import domain.sections.dashboard.DashboardView;
 import domain.sections.dashboard.ItemMenu;
 import presentation.foundation.BaseFragmentActivity;
+import presentation.foundation.LayoutResActivity;
 import presentation.sections.user_demo.detail.UserFragment;
 import presentation.sections.user_demo.list.UsersFragment;
 import presentation.sections.user_demo.search.SearchUserFragment;
@@ -46,6 +46,7 @@ import presentation.utilities.recyclerview_adapter.RecyclerViewAdapter;
 import rx.Observable;
 import rx.Subscription;
 
+@LayoutResActivity(R.layout.dashboard_activity)
 public class DashBoardActivity extends BaseFragmentActivity implements DashboardView {
     @Inject protected DashboardPresenter presenter;
     @Bind(R.id.rv_menu_items) protected RecyclerView rv_menu_items;
@@ -53,25 +54,20 @@ public class DashBoardActivity extends BaseFragmentActivity implements Dashboard
     private ItemMenuDashboardAdapter adapter;
     private ActionBarDrawerToggle drawerToggle;
 
-
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard_activity);
+    @Override protected void injectDagger() {
         getApplicationComponent().inject(this);
-        ButterKnife.bind(this);
-        initViews();
+    }
+
+    @Override protected void initViews() {
+        adapter = new ItemMenuDashboardAdapter(this);
+        setUpDrawerToggle();
+        setUpRecyclerView();
+        presenter.attachView(this);
     }
 
     @Override protected void onDestroy() {
         super.onDestroy();
         drawer_layout.removeDrawerListener(drawerToggle);
-    }
-
-    private void initViews() {
-        adapter = new ItemMenuDashboardAdapter(this);
-        setUpDrawerToggle();
-        setUpRecyclerView();
-        presenter.attachView(this);
     }
 
     private void setUpDrawerToggle() {

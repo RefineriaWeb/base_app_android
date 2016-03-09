@@ -28,10 +28,11 @@ import butterknife.ButterKnife;
 public class SingleFragmentActivity extends BaseFragmentActivity {
     @BindString(R.string.app_name) protected String app_name;
 
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.host_single_fragment_activity);
         ButterKnife.bind(this);
     }
+
+    @Override protected void injectDagger() {}
 }

@@ -18,6 +18,7 @@ package presentation.foundation;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
@@ -34,23 +35,35 @@ import java.io.Serializable;
 
 import base.app.android.R;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import presentation.internal.di.ApplicationComponent;
 
 /**
  * Created by miguel on 04/03/16.
  */
-public class BaseFragmentActivity extends AppCompatActivity {
-    @Nullable @Bind(R.id.appBarLayout) protected AppBarLayout appBarLayout;
+public abstract class BaseFragmentActivity extends AppCompatActivity {
+    @Nullable @Bind(R.id.app_bar) protected AppBarLayout app_bar;
     @Nullable @Bind(R.id.toolbar) protected Toolbar toolbar;
     protected String app_name;
     private MaterialDialog materialDialog;
 
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app_name = getString(R.string.app_name);
+
+        if (layoutRes() != null) setContentView(layoutRes());
+
+        ButterKnife.bind(this);
+        injectDagger();
         initViews();
     }
+
+    private @LayoutRes Integer layoutRes() {
+        LayoutResActivity layoutRes = this.getClass().getAnnotation(LayoutResActivity.class);
+        return layoutRes != null? layoutRes.value() : null;
+    }
+
+    protected abstract void injectDagger();
 
     public BaseApp getBaseApp() {
         return ((BaseApp)getApplication());
@@ -60,8 +73,8 @@ public class BaseFragmentActivity extends AppCompatActivity {
         return getBaseApp().getApplicationComponent();
     }
 
-    private void initViews() {
-        getWindow().getDecorView().post(() -> configureToolbar(toolbar, appBarLayout));
+    protected void initViews() {
+        getWindow().getDecorView().post(() -> configureToolbar(toolbar, app_bar));
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null || bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY) == null) {

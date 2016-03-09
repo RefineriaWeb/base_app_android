@@ -17,48 +17,36 @@
 package presentation.sections.user_demo.search;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import base.app.android.R;
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.search.SearchUserDemoPresenter;
 import presentation.foundation.BaseFragmentActivity;
 import presentation.foundation.BasePresenterFragment;
+import presentation.foundation.LayoutResFragment;
 import presentation.sections.user_demo.UserViewGroup;
 import rx.Observable;
 import rx.Subscription;
 
+@LayoutResFragment(R.layout.user_search_fragment)
 public class SearchUserFragment extends BasePresenterFragment<SearchUserDemoPresenter> implements UserView, BaseFragmentActivity.BackButtonListener {
     public static final String HELLO_FROM_BUNDLE_WIREFRAME_KEY = "hello_from_bundle_key";
     @Bind(R.id.user_view_group) protected UserViewGroup user_view_group;
     @Bind(R.id.et_name) protected EditText et_name;
 
-
-    @Nullable
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_search_fragment, container, false);
+    @Override protected void injectDagger() {
         getApplicationComponent().inject(this);
-        ButterKnife.bind(this, view);
-        return view;
     }
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initViews();
-    }
-
-    private void initViews() {
+    @Override protected void initViews() {
         Bundle bundle = getArguments();
         String helloFromBundle = bundle != null ? bundle.getString(HELLO_FROM_BUNDLE_WIREFRAME_KEY, "") : "";
-        if (!helloFromBundle.isEmpty())showSnackBar(helloFromBundle);
+        if (!helloFromBundle.isEmpty()) showSnackBar(helloFromBundle);
     }
 
     @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {

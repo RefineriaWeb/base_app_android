@@ -16,8 +16,6 @@
 
 package presentation.sections.launch;
 
-import android.os.Bundle;
-
 import javax.inject.Inject;
 
 import domain.sections.launch.LaunchPresenter;
@@ -27,9 +25,12 @@ import presentation.foundation.BaseFragmentActivity;
 public class LaunchActivity extends BaseFragmentActivity implements LaunchView {
     @Inject protected LaunchPresenter launchPresenter;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override protected void injectDagger() {
         getApplicationComponent().inject(this);
+    }
+
+    @Override protected void initViews() {
+        super.initViews();
         launchPresenter.attachView(this);
     }
 }

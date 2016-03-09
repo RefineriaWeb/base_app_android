@@ -16,11 +16,8 @@
 
 package presentation.sections.user_demo.list;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,33 +25,28 @@ import java.util.List;
 
 import base.app.android.R;
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import domain.sections.user_demo.list.UsersDemoPresenter;
 import domain.sections.user_demo.list.UsersView;
 import presentation.foundation.BasePresenterFragment;
+import presentation.foundation.LayoutResFragment;
 import presentation.sections.user_demo.UserViewGroup;
 import presentation.utilities.recyclerview_adapter.RecyclerViewAdapter;
 import rx.Observable;
 import rx.Subscription;
 
 
+@LayoutResFragment(R.layout.users_fragment)
 public class UsersFragment extends BasePresenterFragment<UsersDemoPresenter> implements UsersView {
     @Bind(R.id.pb_loading) protected View pb_loading;
     @Bind(R.id.rv_users) protected RecyclerView rv_users;
     private RecyclerViewAdapter<UserDemoEntity, UserViewGroup> adapter;
 
-
-    @Nullable
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.users_fragment, container, false);
+    @Override protected void injectDagger() {
         getApplicationComponent().inject(this);
-        ButterKnife.bind(this, view);
-        initViews();
-        return view;
     }
 
-    private void initViews() {
+    @Override protected void initViews() {
         setUpRecyclerView();
     }
 

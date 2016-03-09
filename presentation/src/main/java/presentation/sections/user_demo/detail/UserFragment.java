@@ -16,34 +16,27 @@
 
 package presentation.sections.user_demo.detail;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import base.app.android.R;
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import domain.sections.user_demo.common.UserView;
 import domain.sections.user_demo.detail.UserDemoPresenter;
 import domain.sections.user_demo.entities.UserDemoEntity;
 import presentation.foundation.BasePresenterFragment;
+import presentation.foundation.LayoutResFragment;
 import presentation.sections.user_demo.UserViewGroup;
 import rx.Observable;
 import rx.Subscription;
 
+@LayoutResFragment(R.layout.user_fragment)
 public class UserFragment extends BasePresenterFragment<UserDemoPresenter> implements UserView {
     @Bind(R.id.pb_loading) protected View pb_loading;
     @Bind(R.id.user_view_group) protected UserViewGroup user_view_group;
 
-    @Nullable
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_fragment, container, false);
+    @Override protected void injectDagger() {
         getApplicationComponent().inject(this);
-        ButterKnife.bind(this, view);
-        return view;
     }
 
     @Override public Subscription showUser(Observable<UserDemoEntity> oUser) {

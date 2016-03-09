@@ -17,10 +17,14 @@
 package presentation.foundation;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -33,13 +37,29 @@ import presentation.internal.di.ApplicationComponent;
 public abstract class BasePresenterFragment<P extends Presenter> extends Fragment implements BaseView {
     @Inject protected P presenter;
 
+    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(layoutRes(), container, false);
+        ButterKnife.bind(this, view);
+
+        injectDagger();
+        return view;
+    }
+
+    private @LayoutRes Integer layoutRes() {
+        LayoutResFragment layoutRes = this.getClass().getAnnotation(LayoutResFragment.class);
+        return layoutRes != null? layoutRes.value() : null;
+    }
+
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initViews();
         presenter.attachView(this);
     }
 
-    @Override
-    public void onDestroyView() {
+    protected abstract void injectDagger();
+    protected void initViews() {}
+
+    @Override public void onDestroyView() {
         super.onDestroyView();
         presenter.dispose();
         ButterKnife.unbind(this);
