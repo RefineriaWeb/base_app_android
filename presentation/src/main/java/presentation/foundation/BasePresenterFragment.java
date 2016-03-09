@@ -17,7 +17,6 @@
 package presentation.foundation;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -45,9 +44,9 @@ public abstract class BasePresenterFragment<P extends Presenter> extends Fragmen
         return view;
     }
 
-    private @LayoutRes Integer layoutRes() {
+    private Integer layoutRes() {
         LayoutResFragment layoutRes = this.getClass().getAnnotation(LayoutResFragment.class);
-        return layoutRes != null? layoutRes.value() : null;
+        return layoutRes != null ? layoutRes.value() : null;
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {

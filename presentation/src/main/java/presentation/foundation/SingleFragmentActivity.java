@@ -16,23 +16,17 @@
 
 package presentation.foundation;
 
-import android.os.Bundle;
-
 import base.app.android.R;
 import butterknife.BindString;
-import butterknife.ButterKnife;
 
 /**
  * Created by victor on 23/11/15.
  */
+@LayoutResActivity(R.layout.single_fragment_activity)
 public class SingleFragmentActivity extends BaseFragmentActivity {
     @BindString(R.string.app_name) protected String app_name;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.host_single_fragment_activity);
-        ButterKnife.bind(this);
+    @Override
+    protected void injectDagger() {
     }
-
-    @Override protected void injectDagger() {}
 }

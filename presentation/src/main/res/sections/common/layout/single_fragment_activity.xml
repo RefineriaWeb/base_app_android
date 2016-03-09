@@ -7,7 +7,7 @@
     <include layout="@layout/app_bar" />
 
     <FrameLayout
-        android:id="@+id/fl_fragment"
+        android:id="@id/fl_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

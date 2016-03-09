@@ -18,7 +18,6 @@ package presentation.foundation;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
@@ -58,9 +57,9 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         initViews();
     }
 
-    private @LayoutRes Integer layoutRes() {
+    private Integer layoutRes() {
         LayoutResActivity layoutRes = this.getClass().getAnnotation(LayoutResActivity.class);
-        return layoutRes != null? layoutRes.value() : null;
+        return layoutRes != null ? layoutRes.value() : null;
     }
 
     protected abstract void injectDagger();
@@ -78,9 +77,10 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null || bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY) == null) {
-            Log.w("BaseFragmentActivity", "When using HostCommonActivity you need to supply " +
-                    "a valid type BaseFragment class by extra argument in the intent" +
-                    "with key " + Behaviour.FRAGMENT_CLASS_KEY);
+            Log.w(BaseFragmentActivity.class.getSimpleName(), "When using " + BaseFragmentActivity.class.getSimpleName() + " you could supply" +
+                    " a fragment which extends from " + BasePresenterFragment.class.getSimpleName() + " by extra argument in the intent" +
+                    " as value and " + Behaviour.FRAGMENT_CLASS_KEY + " as key, but a <FrameLayout android:id=\"@id/fl_fragment\" .../>" +
+                    " will be mandatory in your activity layout.");
             return;
         }
 

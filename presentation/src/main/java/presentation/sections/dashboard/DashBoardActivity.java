@@ -59,6 +59,7 @@ public class DashBoardActivity extends BaseFragmentActivity implements Dashboard
     }
 
     @Override protected void initViews() {
+        super.initViews();
         adapter = new ItemMenuDashboardAdapter(this);
         setUpDrawerToggle();
         setUpRecyclerView();
