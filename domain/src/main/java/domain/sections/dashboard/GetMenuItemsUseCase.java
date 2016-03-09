@@ -22,8 +22,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
-import domain.foundation.schedulers.ObserveOn;
-import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import rx.Observable;
 
@@ -31,12 +29,12 @@ public class GetMenuItemsUseCase extends UseCase<List<ItemMenu>> {
     public static final int ID_USERS = 1, ID_USER = 2, ID_SEARCH_USER = 3;
     private final DashboardItemsMenu dashboardItemsMenu;
 
-    @Inject GetMenuItemsUseCase(DashboardItemsMenu dashboardItemsMenu, UI ui, SubscribeOn subscribeOn, ObserveOn observeOn) {
-        super(ui, subscribeOn, observeOn);
+    @Inject GetMenuItemsUseCase(DashboardItemsMenu dashboardItemsMenu, UI ui) {
+        super(ui);
         this.dashboardItemsMenu = dashboardItemsMenu;
     }
 
-    @Override public Observable<List<ItemMenu>> builtObservable() {
+    @Override public Observable<List<ItemMenu>> observable() {
         ItemMenu users = new ItemMenu(ID_USERS);
         dashboardItemsMenu.configureUsers(users);
 

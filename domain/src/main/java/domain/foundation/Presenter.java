@@ -16,8 +16,12 @@
 
 package domain.foundation;
 
+import domain.foundation.helpers.ParserException;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.Wireframe;
+import rx.Observable;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -31,11 +35,17 @@ import rx.subscriptions.CompositeSubscription;
 public abstract class Presenter<V extends BaseView> {
     protected V view;
     protected final Wireframe wireframe;
+    private final SubscribeOn subscribeOn;
+    private final ObserveOn observeOn;
+    private final ParserException parserException;
     protected final UI ui;
     private final CompositeSubscription subscriptions;
 
-    public Presenter(Wireframe wireframe, UI ui) {
+    public Presenter(Wireframe wireframe, SubscribeOn subscribeOn, ObserveOn observeOn, ParserException parserException, UI ui) {
         this.wireframe = wireframe;
+        this.subscribeOn = subscribeOn;
+        this.observeOn = observeOn;
+        this.parserException = parserException;
         this.ui = ui;
         this.subscriptions = new CompositeSubscription();
     }
@@ -52,17 +62,70 @@ public abstract class Presenter<V extends BaseView> {
      */
     public void resumeView() {}
 
-    protected void subscriptions(Subscription subscription) {
-        this.subscriptions.add(subscription);
+    /**
+     * Handles observable subscriptions, not throw any exception and report it using feedback.
+     */
+    protected <T> Disposing<T> safetyReportError(Observable<T> observable) {
+        Observable<T> configured = schedulers(observable)
+                .doOnError(throwable -> ui.showFeedback(parserException.getInfo(throwable)))
+                .onErrorResumeNext(throwable -> Observable.empty());
+
+        return new Disposing(configured, subscriptions);
     }
 
-    private void unsubscribe() {
+    /**
+     * Handles observable subscriptions, not throw any exception and report it using anchoredScreenFeedback.
+     */
+    protected <T> Disposing<T> safetyReportErrorAnchored(Observable<T> observable) {
+        Observable<T> configured = schedulers(observable)
+                .doOnError(throwable -> ui.showAnchoredScreenFeedback(parserException.getInfo(throwable)))
+                .onErrorResumeNext(throwable -> Observable.empty());
+
+        return new Disposing(configured, subscriptions);
+    }
+
+    /**
+     * Handles observable subscriptions and not throw any exception.
+     */
+    protected <T> Disposing<T> safety(Observable<T> observable) {
+        Observable<T> configured = schedulers(observable)
+                .onErrorResumeNext(throwable -> Observable.empty());
+
+        return new Disposing(configured, subscriptions);
+    }
+
+    /**
+     * Handles observable schedulers.
+     */
+    private  <T> Observable<T> schedulers(Observable<T> observable) {
+        return observable.subscribeOn(subscribeOn.getScheduler())
+                .observeOn(observeOn.getScheduler());
+    }
+
+    public void dispose() {
         if (!subscriptions.isUnsubscribed()) {
             subscriptions.unsubscribe();
         }
     }
 
-    public void dispose() {
-        unsubscribe();
+    /**
+     * Wrapper to hold a reference to the observable and the expected subscription.
+     */
+    protected static class Disposing<T> {
+        private Observable<T> observable;
+        private final CompositeSubscription subscriptions;
+
+        private Disposing(Observable<T> observable, CompositeSubscription subscriptions) {
+            this.observable = observable;
+            this.subscriptions = subscriptions;
+        }
+
+        public void dispose(Disposable<T> disposable) {
+            subscriptions.add(disposable.subscription(observable));
+        }
+
+        public interface Disposable<T> {
+            Subscription subscription(Observable<T> observable);
+        }
     }
 }

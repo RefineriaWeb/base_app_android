@@ -19,6 +19,9 @@ package domain.sections.user_demo.list;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
+import domain.foundation.helpers.ParserException;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.entities.UserDemoEntity;
@@ -27,22 +30,23 @@ public class UsersDemoPresenter extends Presenter<UsersView> {
     private final GetUsersDemoUseCase getUsersDemoUseCase;
     private final SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase;
 
-    @Inject UsersDemoPresenter(GetUsersDemoUseCase getUsersDemoUseCase, Wireframe wireframe, UI UI, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
-        super(wireframe, UI);
+    @Inject public UsersDemoPresenter(Wireframe wireframe, SubscribeOn subscribeOn, ObserveOn observeOn, ParserException parserException, UI ui, GetUsersDemoUseCase getUsersDemoUseCase, SaveUserDemoSelectedListUseCase saveUserDemoSelectedListUseCase) {
+        super(wireframe, subscribeOn, observeOn, parserException, ui);
         this.getUsersDemoUseCase = getUsersDemoUseCase;
         this.saveUserDemoSelectedListUseCase = saveUserDemoSelectedListUseCase;
     }
 
     @Override public void attachView(UsersView view) {
         super.attachView(view);
-        subscriptions(view.showUsers(getUsersDemoUseCase.safetyReportErrorObservable()));
+
+        safetyReportError(getUsersDemoUseCase.observable())
+                .dispose(observable -> view.showUsers(observable));
     }
 
     public void goToDetail(UserDemoEntity user) {
         saveUserDemoSelectedListUseCase.setUserDemoEntity(user);
-        subscriptions(saveUserDemoSelectedListUseCase.safetyReportErrorObservable().subscribe(saved -> {
-            assert saved;
-            wireframe.userScreen();
-        }));
+
+        safetyReportError(saveUserDemoSelectedListUseCase.observable())
+                .dispose(observable -> observable.subscribe(userDemoEntities -> wireframe.userScreen()));
     }
 }

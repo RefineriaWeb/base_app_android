@@ -19,23 +19,25 @@ package domain.sections.dashboard;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
+import domain.foundation.helpers.ParserException;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.Wireframe;
 
 public class DashboardPresenter extends Presenter<DashboardView> {
     private final GetMenuItemsUseCase useCase;
 
-    @Inject DashboardPresenter(GetMenuItemsUseCase useCase, Wireframe wireframe, UI ui) {
-        super(wireframe, ui);
+    @Inject public DashboardPresenter(Wireframe wireframe, SubscribeOn subscribeOn, ObserveOn observeOn, ParserException parserException, UI ui, GetMenuItemsUseCase useCase) {
+        super(wireframe, subscribeOn, observeOn, parserException, ui);
         this.useCase = useCase;
     }
 
     @Override public void attachView(DashboardView view) {
         super.attachView(view);
-        subscriptions(view.loadItemsMenu(useCase.safetyReportErrorObservable().map(itemMenus -> {
-            view.showUsers();
-            return itemMenus;
-        })));
+
+        safetyReportError(useCase.observable().doOnCompleted(() -> view.showUsers()))
+                .dispose(observable -> view.loadItemsMenu(observable));
     }
 
     public void setSelectedItemMenu(ItemMenu itemMenu) {

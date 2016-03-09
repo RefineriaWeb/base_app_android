@@ -19,6 +19,9 @@ package domain.sections.user_demo.detail;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
+import domain.foundation.helpers.ParserException;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
@@ -26,14 +29,16 @@ import domain.sections.user_demo.common.UserView;
 public class UserDemoPresenter extends Presenter<UserView> {
     private final GetSelectedDemoUserListUseCase useCase;
 
-    @Inject UserDemoPresenter(GetSelectedDemoUserListUseCase useCase, Wireframe wireframe, UI ui) {
-        super(wireframe, ui);
+    @Inject public UserDemoPresenter(Wireframe wireframe, SubscribeOn subscribeOn, ObserveOn observeOn, ParserException parserException, UI ui, GetSelectedDemoUserListUseCase useCase) {
+        super(wireframe, subscribeOn, observeOn, parserException, ui);
         this.useCase = useCase;
     }
 
     @Override public void attachView(UserView view) {
         super.attachView(view);
-        subscriptions(view.showUser(useCase.safetyReportErrorObservable()));
+
+        safetyReportError(useCase.observable())
+                .dispose(observable -> view.showUser(observable));
     }
 
     public void goToSearchScreen() {

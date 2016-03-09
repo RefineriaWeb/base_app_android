@@ -21,8 +21,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
-import domain.foundation.schedulers.ObserveOn;
-import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
@@ -31,12 +29,12 @@ import rx.Observable;
 public class GetUsersDemoUseCase extends UseCase<List<UserDemoEntity>> {
     private final UserDemoRepository repository;
 
-    @Inject public GetUsersDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, UI ui) {
-        super(ui, subscribeOn, observeOn);
+    @Inject public GetUsersDemoUseCase(UI ui, UserDemoRepository repository) {
+        super(ui);
         this.repository = repository;
     }
 
-    @Override public Observable<List<UserDemoEntity>> builtObservable() {
+    @Override public Observable<List<UserDemoEntity>> observable() {
         return repository.askForUsers();
     }
 }

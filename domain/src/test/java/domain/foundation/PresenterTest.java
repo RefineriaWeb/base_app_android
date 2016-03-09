@@ -19,7 +19,7 @@ public class PresenterTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        presenterUT = new Presenter(null, UIMock) {};
+        presenterUT = new Presenter(null, subscribeOn, observeOn, parseException, UIMock) {};
     }
 
     @Test public void When_Unsubscribe_Subscription_Do_Not_Get_Response() {

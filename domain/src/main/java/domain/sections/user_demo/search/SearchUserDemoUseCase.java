@@ -19,8 +19,6 @@ package domain.sections.user_demo.search;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
-import domain.foundation.schedulers.ObserveOn;
-import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
@@ -30,8 +28,8 @@ public class SearchUserDemoUseCase extends UseCase<UserDemoEntity> {
     private final UserDemoRepository repository;
     private String name;
 
-    @Inject public SearchUserDemoUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, UI ui) {
-        super(ui, subscribeOn, observeOn);
+    @Inject public SearchUserDemoUseCase(UI ui, UserDemoRepository repository) {
+        super(ui);
         this.repository = repository;
     }
 
@@ -39,8 +37,7 @@ public class SearchUserDemoUseCase extends UseCase<UserDemoEntity> {
         this.name = name;
     }
 
-    @Override public Observable<UserDemoEntity> builtObservable() {
-        assert name != null;
+    @Override public Observable<UserDemoEntity> observable() {
         return repository.searchByUserName(name);
     }
 }

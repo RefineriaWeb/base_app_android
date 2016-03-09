@@ -36,7 +36,7 @@ public class SearchUserDemoUseCaseTest extends BaseTest {
 
     @Override public void setUp() {
         super.setUp();
-        searchUserDemoUseCaseUT = new SearchUserDemoUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, UIMock);
+        searchUserDemoUseCaseUT = new SearchUserDemoUseCase(userDemoRepositoryMock, subscribeOnMock, observeOnMock, UIMock, getSelectedDemoUserListUseCase);
     }
 
     @Test public void  When_Get_User_With_Valid_Name_Get_User() {

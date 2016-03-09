@@ -19,6 +19,9 @@ package domain.sections.user_demo.search;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
+import domain.foundation.helpers.ParserException;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.Wireframe;
 import domain.sections.user_demo.common.UserView;
@@ -26,8 +29,8 @@ import domain.sections.user_demo.common.UserView;
 public class SearchUserDemoPresenter extends Presenter<UserView> {
     private final SearchUserDemoUseCase useCase;
 
-    @Inject public SearchUserDemoPresenter(SearchUserDemoUseCase useCase, Wireframe wireframe, UI ui) {
-        super(wireframe, ui);
+    @Inject public SearchUserDemoPresenter(Wireframe wireframe, SubscribeOn subscribeOn, ObserveOn observeOn, ParserException parserException, UI ui, SearchUserDemoUseCase useCase) {
+        super(wireframe, subscribeOn, observeOn, parserException, ui);
         this.useCase = useCase;
     }
 
@@ -37,7 +40,11 @@ public class SearchUserDemoPresenter extends Presenter<UserView> {
 
     public void getUserByUserName(String username) {
         useCase.setName(username);
-        if (username == null || username.isEmpty()) ui.showAnchoredScreenFeedback(ui.errorNonEmptyFields());
-        else subscriptions(view.showUser(useCase.safetyReportErrorAnchoredObservable()));
+        if (username == null || username.isEmpty()) {
+            ui.showAnchoredScreenFeedback(ui.errorNonEmptyFields());
+        } else {
+            safetyReportErrorAnchored(useCase.observable())
+                    .dispose(observable -> view.showUser(observable));
+        }
     }
 }

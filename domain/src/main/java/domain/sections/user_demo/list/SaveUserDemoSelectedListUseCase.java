@@ -19,8 +19,6 @@ package domain.sections.user_demo.list;
 import javax.inject.Inject;
 
 import domain.foundation.UseCase;
-import domain.foundation.schedulers.ObserveOn;
-import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.user_demo.UserDemoRepository;
 import domain.sections.user_demo.entities.UserDemoEntity;
@@ -30,8 +28,8 @@ public class SaveUserDemoSelectedListUseCase extends UseCase<Boolean> {
     private final UserDemoRepository repository;
     private UserDemoEntity userDemoEntity;
 
-    @Inject public SaveUserDemoSelectedListUseCase(UserDemoRepository repository, SubscribeOn subscribeOn, ObserveOn observeOn, UI ui) {
-        super(ui, subscribeOn, observeOn);
+    @Inject public SaveUserDemoSelectedListUseCase(UI ui, UserDemoRepository repository) {
+        super(ui);
         this.repository = repository;
     }
 
@@ -39,7 +37,7 @@ public class SaveUserDemoSelectedListUseCase extends UseCase<Boolean> {
         this.userDemoEntity = userDemoEntity;
     }
 
-    @Override public Observable<Boolean> builtObservable() {
+    @Override public Observable<Boolean> observable() {
         assert userDemoEntity != null;
         return repository.saveSelectedUserDemoList(userDemoEntity);
     }

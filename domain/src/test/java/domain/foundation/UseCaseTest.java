@@ -100,7 +100,7 @@ public class UseCaseTest extends BaseTest {
             super(UIMock, subscribeOnMock, observeOnMock);
         }
 
-        @Override public Observable<String> builtObservable() {
+        @Override public Observable<String> observable() {
             return Observable.just(SUCCESS);
         }
     }
@@ -110,7 +110,7 @@ public class UseCaseTest extends BaseTest {
             super(UIMock, subscribeOnMock, observeOnMock);
         }
 
-        @Override public Observable<String> builtObservable() {
+        @Override public Observable<String> observable() {
             return Observable.just(SUCCESS).map(message -> {
                 throw new RuntimeException(FAILURE);
             });

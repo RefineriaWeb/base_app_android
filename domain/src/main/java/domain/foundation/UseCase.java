@@ -16,11 +16,8 @@
 
 package domain.foundation;
 
-import domain.foundation.schedulers.ObserveOn;
-import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import rx.Observable;
-import rx.exceptions.CompositeException;
 
 /**
  * Base class for any UseCase.
@@ -31,57 +28,13 @@ import rx.exceptions.CompositeException;
 
 public abstract class UseCase<D> {
     protected final UI ui;
-    private final SubscribeOn subscribeOn;
-    private final ObserveOn observeOn;
 
-    public UseCase(UI ui, SubscribeOn subscribeOn, ObserveOn observeOn) {
+    public UseCase(UI ui) {
         this.ui = ui;
-        this.subscribeOn = subscribeOn;
-        this.observeOn = observeOn;
-    }
-
-    public Observable<D> safetyObservable() {
-        return observable().onErrorResumeNext(throwable -> Observable.empty());
-    }
-
-    public Observable<D> safetyReportErrorObservable() {
-        return observable()
-                .doOnError(throwable -> ui.showFeedback(getInfoFromException(throwable)))
-                .onErrorResumeNext(throwable -> Observable.empty());
-    }
-
-    public Observable<D> safetyReportErrorAnchoredObservable() {
-        return observable()
-                .doOnError(throwable -> ui.showAnchoredScreenFeedback(getInfoFromException(throwable)))
-                .onErrorResumeNext(throwable -> Observable.empty());
-    }
-
-    private String getInfoFromException(Throwable throwable) {
-        String message = throwable.getMessage();
-
-        if (throwable instanceof CompositeException) {
-            message += System.getProperty("line.separator");
-            CompositeException compositeException = (CompositeException) throwable;
-
-            for (Throwable exception : compositeException.getExceptions()) {
-                String exceptionName = exception.getClass().getSimpleName();
-                String exceptionMessage = exception.getMessage() != null ? exception.getMessage() : "";
-                message += exceptionName + " -> " + exceptionMessage + System.getProperty("line.separator");
-            }
-        }
-
-        return message;
-    }
-
-    public Observable<D> observable() {
-        return builtObservable()
-                .unsubscribeOn(subscribeOn.getScheduler())
-                .subscribeOn(subscribeOn.getScheduler())
-                .observeOn(observeOn.getScheduler());
     }
 
     /**
      * Observable built for every use case
      */
-    protected abstract Observable<D> builtObservable();
+    protected abstract Observable<D> observable();
 }
