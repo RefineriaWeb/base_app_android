@@ -59,6 +59,8 @@ android {
             res.srcDirs =
                     [
                             'src/main/res/sections/common',
+                            'src/main/res/sections/user_demo',
+                            'src/main/res/sections/dashboard',
                             'src/main/res/sections',
                             'src/main/res'
                     ]
@@ -77,15 +79,8 @@ android {
     }
 }
 
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName "base.app.android"
-    }
-}
-
 configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
+    resolutionStrategy.force "com.android.support:support-annotations:${rootProject.ext.supportVersion}"
 }
 
 dependencies {

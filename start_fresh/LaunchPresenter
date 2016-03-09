@@ -19,13 +19,16 @@ package domain.sections.launch;
 import javax.inject.Inject;
 
 import domain.foundation.Presenter;
+import domain.foundation.helpers.ParserException;
+import domain.foundation.schedulers.ObserveOn;
+import domain.foundation.schedulers.SubscribeOn;
 import domain.sections.UI;
 import domain.sections.Wireframe;
 
 public class LaunchPresenter extends Presenter<LaunchView> {
 
-    @Inject LaunchPresenter(Wireframe wireframe, UI ui) {
-        super(wireframe, ui);
+    @Inject public LaunchPresenter(Wireframe wireframe, SubscribeOn subscribeOn, ObserveOn observeOn, ParserException parserException, UI ui) {
+        super(wireframe, subscribeOn, observeOn, parserException, ui);
     }
 
     @Override public void attachView(LaunchView view) {

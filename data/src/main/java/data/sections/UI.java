@@ -16,6 +16,8 @@
 
 package data.sections;
 
+import rx.Observable;
+
 public interface UI {
-    String genericError();
+    Observable<String> genericError();
 }

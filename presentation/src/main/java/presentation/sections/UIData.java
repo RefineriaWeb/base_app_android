@@ -3,6 +3,7 @@ package presentation.sections;
 import base.app.android.R;
 import data.sections.UI;
 import presentation.foundation.BaseApp;
+import rx.Observable;
 
 public class UIData implements UI {
     private final BaseApp baseApp;
@@ -11,7 +12,7 @@ public class UIData implements UI {
         this.baseApp = baseApp;
     }
 
-    @Override public String genericError() {
-        return baseApp.getString(R.string.generic_error);
+    @Override public Observable<String> genericError() {
+        return Observable.just(baseApp.getString(R.string.generic_error));
     }
 }
