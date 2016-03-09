@@ -79,15 +79,8 @@ android {
     }
 }
 
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName "base.app.android"
-    }
-}
-
 configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:23.1.0'
+    resolutionStrategy.force "com.android.support:support-annotations:${rootProject.ext.supportVersion}"
 }
 
 dependencies {
