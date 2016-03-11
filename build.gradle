@@ -151,7 +151,6 @@ task('freshStart') << {
     Helper.removeDir(domainTest+"sections/user_demo")
     Helper.removeDir(domainTest+"sections/dashboard")
 
-
     String presentation = "presentation/src/main/java/presentation/"
     Helper.removeDir(presentation+"sections/user_demo")
     Helper.removeDir(presentation+"sections/dashboard")

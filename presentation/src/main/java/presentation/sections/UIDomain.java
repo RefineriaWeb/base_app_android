@@ -16,6 +16,8 @@
 
 package presentation.sections;
 
+import android.widget.Toast;
+
 import base.app.android.R;
 import domain.sections.UI;
 import presentation.foundation.BaseApp;
@@ -35,8 +37,8 @@ public class UIDomain implements UI {
 
     @Override public Subscription showFeedback(Observable<String> oFeedback) {
         return oFeedback.subscribe(feedback -> {
-            baseApp.getLiveActivity()
-                    .getCurrentPresenterFragment().showToast(feedback);
+            Toast.makeText(baseApp, feedback, Toast.LENGTH_LONG)
+                    .show();
         });
     }
 
