@@ -10,7 +10,7 @@ Base skeleton structure to start every new project, based on the design patters 
 The project is divided in three modules:
 * **domain**: java library project. Every test is a unit test and all its dependencies are pure java libraries: dagger 2, rxjava, lombok, junit and mockito.
 * **data**: java library project. It’s the repository that supplies the data which will be consumed by the domain module. Dependencies: domain module, retrofit 2, dagger 2, rxjava, rxcache, lombok, junit, and mockito.
-* **presentation**: android app project. It links the two previous modules and implement all the views interfaces defined in domain module. Dependencies: domain and data module, dagger 2, rxAndroid, lombok, androidannotations and espresso.
+* **presentation**: android app project. It links the two previous modules and implement all the views interfaces defined in domain module. Dependencies: domain and data module, dagger 2, rxAndroid, lombok, butterknife and espresso.
 
 The application implements a minimal example using the Github Api. It's purpose is to illustrate in a simple way the natural workflow derived from this kind of architecture, using the classes created in the foundation packages in every one of the 3 layers. 
 
