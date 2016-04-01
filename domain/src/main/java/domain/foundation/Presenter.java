@@ -104,7 +104,7 @@ public abstract class Presenter<V extends BaseView> {
 
     public void dispose() {
         if (!subscriptions.isUnsubscribed()) {
-            subscriptions.unsubscribe();
+            subscriptions.clear();
         }
     }
 
