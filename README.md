@@ -12,7 +12,7 @@ The project is divided in three modules:
 * **data**: java library project. It’s the repository that supplies the data which will be consumed by the domain module. Dependencies: domain module, retrofit 2, dagger 2, rxjava, rxcache, lombok, junit, and mockito.
 * **presentation**: android app project. It links the two previous modules and implement all the views interfaces defined in domain module. Dependencies: domain and data module, dagger 2, rxAndroid, lombok, butterknife and espresso.
 
-The application implements a minimal example using the Github Api. It's purpose is to illustrate in a simple way the natural workflow derived from this kind of architecture, using the classes created in the foundation packages in every one of the 3 layers. 
+The application implements a minimal example using the Github Api. The purpose is to illustrate in a simple way the natural workflow derived from this kind of architecture, using the classes created in the foundation packages in every one of the 3 layers. 
 
 To facility the use of this project as a common base one for any new project, a gradle task called *freshStart* has been created. This task removes the earlier mentioned minimal example, leaving the appliaction in an optimal state to start any new project. 
 
