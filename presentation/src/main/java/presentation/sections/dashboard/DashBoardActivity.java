@@ -72,7 +72,6 @@ public class DashBoardActivity extends BaseFragmentActivity implements Dashboard
     }
 
     private void setUpDrawerToggle() {
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 

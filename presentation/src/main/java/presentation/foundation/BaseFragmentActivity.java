@@ -37,9 +37,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import presentation.internal.di.ApplicationComponent;
 
-/**
- * Created by miguel on 04/03/16.
- */
 public abstract class BaseFragmentActivity extends AppCompatActivity {
     @Nullable @Bind(R.id.app_bar) protected AppBarLayout app_bar;
     @Nullable @Bind(R.id.toolbar) protected Toolbar toolbar;
@@ -54,8 +51,13 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         injectDagger();
+
+        configureToolbar(toolbar, app_bar);
         initViews();
+        configureFragment();
     }
+
+    protected void initViews() {}
 
     private Integer layoutRes() {
         LayoutResActivity layoutRes = this.getClass().getAnnotation(LayoutResActivity.class);
@@ -70,26 +72,6 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     public ApplicationComponent getApplicationComponent() {
         return getBaseApp().getApplicationComponent();
-    }
-
-    protected void initViews() {
-        getWindow().getDecorView().post(() -> configureToolbar(toolbar, app_bar));
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle == null || bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY) == null) {
-            Log.w(BaseFragmentActivity.class.getSimpleName(), "When using " + BaseFragmentActivity.class.getSimpleName() + " you could supply" +
-                    " a fragment which extends from " + BasePresenterFragment.class.getSimpleName() + " by extra argument in the intent" +
-                    " as value and " + Behaviour.FRAGMENT_CLASS_KEY + " as key, but a <FrameLayout android:id=\"@id/fl_fragment\" .../>" +
-                    " will be mandatory in your activity layout.");
-            return;
-        }
-
-        Serializable serializable = bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY);
-        Class<BasePresenterFragment> clazz = (Class<BasePresenterFragment>) serializable;
-
-        BasePresenterFragment basePresenterFragment = replaceFragment(clazz);
-        Bundle bundleFragment = bundle.getBundle(Behaviour.BUNDLE_FOR_FRAGMENT);
-        basePresenterFragment.setArguments(bundleFragment);
     }
 
     protected <T extends BasePresenterFragment> BasePresenterFragment replaceFragmentIfItIsNotCurrentDisplayed(Class<T> clazz) {
@@ -124,6 +106,24 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         return (BasePresenterFragment) getSupportFragmentManager().findFragmentById(R.id.fl_fragment);
     }
 
+    private void configureFragment() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null || bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY) == null) {
+            Log.w(BaseFragmentActivity.class.getSimpleName(), "When using " + BaseFragmentActivity.class.getSimpleName() + " you could supply" +
+                    " a fragment which extends from " + BasePresenterFragment.class.getSimpleName() + " by extra argument in the intent" +
+                    " as value and " + Behaviour.FRAGMENT_CLASS_KEY + " as key, but a <FrameLayout android:id=\"@id/fl_fragment\" .../>" +
+                    " will be mandatory in your activity layout.");
+            return;
+        }
+
+        Serializable serializable = bundle.getSerializable(Behaviour.FRAGMENT_CLASS_KEY);
+        Class<BasePresenterFragment> clazz = (Class<BasePresenterFragment>) serializable;
+
+        BasePresenterFragment basePresenterFragment = replaceFragment(clazz);
+        Bundle bundleFragment = bundle.getBundle(Behaviour.BUNDLE_FOR_FRAGMENT);
+        basePresenterFragment.setArguments(bundleFragment);
+    }
+
     private void configureToolbar(Toolbar toolbar, @Nullable AppBarLayout appBarLayout) {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -136,11 +136,11 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
                 boolean showBackKey = bundle.getBoolean(Behaviour.SHOW_BACK_KEY, Behaviour.SHOW_BACK_AS_DEFAULT);
                 showToolbar = bundle.getBoolean(Behaviour.SHOW_TOOLBAR, showToolbar);
                 actionBar.setDisplayHomeAsUpEnabled(showBackKey);
-                String title = bundle.getString(Behaviour.TITLE_KEY, getString(R.string.app_name));
-                getSupportActionBar().setTitle(title);
+                String title = bundle.getString(Behaviour.TITLE_KEY);
+                actionBar.setTitle(title);
             } else {
                 actionBar.setDisplayHomeAsUpEnabled(Behaviour.SHOW_BACK_AS_DEFAULT);
-                getSupportActionBar().setTitle(app_name);
+                actionBar.setTitle(app_name);
             }
         }
 

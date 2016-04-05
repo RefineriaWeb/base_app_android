@@ -17,16 +17,10 @@
 package presentation.foundation;
 
 import base.app.android.R;
-import butterknife.BindString;
 
-/**
- * Created by victor on 23/11/15.
- */
 @LayoutResActivity(R.layout.single_fragment_activity)
 public class SingleFragmentActivity extends BaseFragmentActivity {
-    @BindString(R.string.app_name) protected String app_name;
 
-    @Override
-    protected void injectDagger() {
-    }
+    @Override protected void injectDagger() {}
+
 }

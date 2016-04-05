@@ -10,14 +10,8 @@
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:titleEnabled="false">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:elevation="@dimen/_4dp"
-            app:theme="@style/AppTheme.Toolbar"
-            app:titleTextAppearance="@style/AppTheme.Toolbar.Title" />
+        <include layout="@layout/toolbar"/>
+
     </android.support.design.widget.CollapsingToolbarLayout>
 
 </android.support.design.widget.AppBarLayout>
